@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\source\\repos\\rapid.core.app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\source\\repos\\rapid.core.app\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\source\\repos\\rapid.core.app\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\source\\repos\\rapid.core.app\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\source\\repos\\rapid.core.app\\services\\llmparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\llmparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\source\\repos\\rapid.core.app\\controllers\\commandcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\commandcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAEgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T02:17:39.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-31T01:48:18.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-31T01:32:55.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LLMParser.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Services\\LLMParser.cs",
+              "RelativeDocumentMoniker": "Services\\LLMParser.cs",
+              "ToolTip": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Services\\LLMParser.cs",
+              "RelativeToolTip": "Services\\LLMParser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T13:04:31.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CommandController.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Controllers\\CommandController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CommandController.cs",
+              "ToolTip": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\Controllers\\CommandController.cs",
+              "RelativeToolTip": "Controllers\\CommandController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-30T12:42:44.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-30T04:36:26.882Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
