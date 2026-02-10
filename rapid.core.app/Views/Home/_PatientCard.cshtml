@@ -1,0 +1,20 @@
+﻿@model rapid.core.app.Models.PatientAdmission
+
+<div class="patients patient-card" style="display:none" data-added-at="">
+    <div class="patient-card-inner">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <div class="fw-bold">@Model.PatientName</div>
+                <div class="muted mt-1">@Model.Complaint</div>
+            </div>
+            <div>
+                <span class="badge @Model.AcuityClassName">@Model.AcuityLabel</span>
+            </div>
+        </div>
+
+        <div class="muted d-flex align-items-center gap-2 mt-2 justify-content-between">
+            <div class="muted small">ID: @Model.Id</div>
+            <span class="added-time muted small ms-2">Just now</span>
+        </div>
+    </div>
+</div>
