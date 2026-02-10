@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "O6Mt2YoRE20=",
+  "dgSpecHash": "RN5GYBEA5Z4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\BOK\\source\\repos\\rapid.core.app\\rapid.core.app.csproj",
+  "projectFilePath": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\rapid.core.app.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\BOK\\.nuget\\packages\\buildwebcompiler\\1.12.405\\buildwebcompiler.1.12.405.nupkg.sha512",
     "C:\\Users\\BOK\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

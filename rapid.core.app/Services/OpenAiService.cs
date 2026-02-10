@@ -1,12 +1,13 @@
 ﻿using OpenAI.Chat;
+using OpenAI.Responses;
 
 namespace rapid.core.app.Services
 {
-    public class OpenAiService
+    public class OpenAIService
     {
         private readonly ChatClient _client;
 
-        public OpenAiService(IConfiguration config)
+        public OpenAIService(IConfiguration config)
         {
             _client = new ChatClient(
                 model: config["OpenAI:Model"],
@@ -26,5 +27,14 @@ namespace rapid.core.app.Services
 
             return result.Value.Content[0].Text;
         }
+
+        //Text Request
+        public OpenAIResponse Send(string text)
+        {
+            OpenAIResponse response = _client.CreateResponse(text);
+            string result = response.GetOutputText();
+            return response;
+        }
+
     }
 }
