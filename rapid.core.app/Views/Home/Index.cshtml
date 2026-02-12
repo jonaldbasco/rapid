@@ -8,16 +8,14 @@
 <div class="container-fluid py-3">
     <div class="row g-3">
 
-        <!-- LEFT -->
-        <div class="col-12 col-lg-3">
-
-            <div id="surgeCard" class="card p-3 mb-3">
+        <div class="col-12">
+            <div id="surgeCard" class="card p-3">
                 <div class="d-flex justify-content-between mb-2">
                     <div id="surgeLabel" class="fw-bold text-success">
                         <i class="fa-solid fa-shield-halved me-2"></i>
                         Normal Operations
                     </div>
-                    <div id="surgePercent">0%</div>
+                    @* <div id="surgePercent">0%</div> *@
                 </div>
                 <div class="progress">
                     <div id="surgeBar" class="progress-bar bg-info"
@@ -26,87 +24,28 @@
                     @* <div class="progress-bar" style="width:65%"></div> *@
                 </div>
             </div>
-
-            <div class="row g-3">
-                <div class="col-6">
-                    <div class="panel text-center">
-                        <div class="label">Patients</div>
-                        <div class="metric" id="statsPatients">0</div>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="panel text-center">
-                        <div class="label">Waiting</div>
-                        <div class="metric" id="statsWaiting">0</div>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="panel text-center alert-border">
-                        <div class="label">Wait Time</div>
-                        <div class="metric text-danger" id="statsWaitTime">0</div>
-                        <div class="muted">min</div>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="panel text-center">
-                        <div class="label">Velocity</div>
-                        <div class="metric" id="statsVelocity">0</div>
-                        <div class="muted">/hr</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 mb-2 label">AI Agents</div>
-
-            <div class="agent">
-                <div class="d-flex justify-content-between">
-                    <div><i class="fa-solid fa-brain me-2"></i>Analytics Agent</div>
-                    <span class="dot-gray"></span>
-                </div>
-                <div class="muted">Monitoring ER admissions</div>
-            </div>
-
-            <div class="agent">
-                <div class="d-flex justify-content-between">
-                    <div><i class="fa-solid fa-users me-2"></i>Staffing Agent</div>
-                    <span class="dot-gray"></span>
-                </div>
-                <div class="muted">Staff pool ready</div>
-            </div>
-
-            <div class="agent">
-                <div class="d-flex justify-content-between">
-                    <div><i class="fa-solid fa-comments me-2"></i>Negotiator Agent</div>
-                    <span class="dot-gray"></span>
-                </div>
-                <div class="muted">Awaiting assignments</div>
-            </div>
-
-            <div class="agent">
-                <div class="d-flex justify-content-between">
-                    <div><i class="fa-solid fa-network-wired me-2"></i>Orchestrator Agent</div>
-                    <span class="dot"></span>
-                </div>
-                <div class="muted">System nominal</div>
-            </div>
-
         </div>
 
-        <!-- CENTER -->
+        <!-- Left -->
         <div class="col-12 col-lg-6">
 
             <div id="staffReqFeed" class="card p-3 mb-3">
                 <div class="d-flex justify-content-between">
                     <div class="fw-bold">Staffing Requirements</div>
-                    <div class="muted">
-                        <span id="reqFilledAll">0</span>/<span id="reqTotalAll">0</span>
-                    </div>
+                </div>
+
+                <div id="staffReqHiddenState" class="empty" style="display:none;">
+                    Staffing requirements will appear during surge conditions.
                 </div>
 
                 <div id="staffReqFeedController">
+                    <div class="progress mt-2">
+                        <div id="staffReqBar"
+                             class="progress-bar req-bar-danger"
+                             style="width:0%"></div>
+                    </div>
+
+                    <div id="staffReqNotifiedList" class="muted small mt-1"></div>
                     <!-- Nurses -->
                     <div class="mt-2 mb-1 d-flex align-items-center gap-2">
                         <i class="fa-solid fa-user-nurse text-info"></i>
@@ -118,7 +57,7 @@
                     <div id="reqEmptyNurse" class="empty">No nurse requirements</div>
                     <div id="reqListNurse" class="mt-1"></div>
 
-                    <hr class="my-3" />
+                    @* <hr class="my-3" />
 
                     <!-- Doctors -->
                     <div class="mt-2 mb-1 d-flex align-items-center gap-2">
@@ -129,11 +68,11 @@
                         </div>
                     </div>
                     <div id="reqEmptyDoctor" class="empty">No doctor requirements</div>
-                    <div id="reqListDoctor" class="mt-1"></div>
+                    <div id="reqListDoctor" class="mt-1"></div> *@
                 </div>
             </div>
 
-            <div id="erFeedCard" class="card p-3">
+            @* <div id="erFeedCard" class="card p-3">
                 <div class="d-flex justify-content-between mb-3">
                     <div class="fw-bold">ER Admission Feed</div>
                     <div class="muted">
@@ -155,7 +94,6 @@
                                 @await Html.PartialAsync("_PatientCard", patient)
                             }
                         }
-                        @* <div id="emptyState" class="empty" @(Model != null ? "style=\"display:none\"" : "")>No recent admissions</div> *@
                     </section>
                 </div>
 
@@ -166,15 +104,15 @@
                     <div class="muted font-monospace">Rooms Occupied: <span id="roomsOccupied"></span></div>
                     <div class="muted font-monospace">Available Rooms: <span id="roomsAvailable"></span></div>
                 </div>
-            </div>
+            </div> *@
 
         </div>
 
         <!-- RIGHT -->
-        <div class="col-12 col-lg-3">
+        <div class="col-12 col-lg-6">
 
             <div id="staffFeedCard" class="card p-3 mb-3">
-                <div class="d-flex justify-content-between mb-3">
+                @* <div class="d-flex justify-content-between mb-3">
                     <div class="fw-bold">Staff Availability</div>
 
                     <div class="muted">
@@ -182,62 +120,50 @@
                         / @Model.Staff.Count() ready
                     </div>
 
+                </div> *@
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="fw-bold">Staff Availability</div>
+
+                    <div class="muted small d-flex gap-3 align-items-center">
+                        <span>
+                            <span class="text-warning fw-semibold" id="availPending">0</span> pending
+                        </span>
+
+                        <span>
+                            <span class="text-success fw-semibold" id="availConfirmed">0</span> confirmed
+                        </span>
+
+                        <span>
+                            <span class="text-danger fw-semibold" id="availDeclined">0</span> declined
+                        </span>
+
+                        <span id="availNegotiatingWrap" class="d-none">
+                            <i class="fa-solid fa-robot me-1 text-info"></i>
+                            <span class="text-info fw-semibold" id="availNegotiating">0</span> negotiating
+                        </span>
+                    </div>
                 </div>
 
 
                 <div id="staffFeedScrollContainer">
-                    @foreach (var staff in Model.Staff)
+                    @foreach (var staff in Model.Staff.Where(s => s.Role == "nurse"))
                     {
-                        <div class="staff mb-2">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <div class="fw-bold">@staff.Name</div>
-                                    <div class="muted">@staff.Specialty</div>
-                                </div>
-                                <div>
-                                    @if (staff.Status == "on_duty")
-                                    {
-                                        <span class="badge bg-success text-white">On Duty</span>
-                                    }
-                                    else if (staff.Status == "available")
-                                    {
-                                        <span class="badge bg-info text-black">Available</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-secondary text-muted-foreground">Off Duty</span>
-                                    }
-                                </div>
-                            </div>
-
-                            <div class="muted d-flex align-items-center gap-2 mt-2 justify-content-between">
-                                <div class="d-flex gap-2">
-                                    <div class="muted">@staff.DistanceMinutes<span>m</span></div>
-                                    <div class="muted">@staff.ResponseRate <span>resp</span></div>
-                                </div>
-                                <div>
-
-                                    @foreach (var cert in staff.Certifications)
-                                    {
-                                        <span class="px-1.5 py-0.5 rounded bg-secondary text-[10px] text-muted-foreground">@cert</span>
-                                    }
-
-                                </div>
-                            </div>
-                        </div>
+                    @await Html.PartialAsync("_StaffCard", staff, new ViewDataDictionary(ViewData) {
+                            ["Mode"] = "availability",
+                            ["Decision"] = rapid.core.app.Services.StaffCallDecisionStore.GetDecision(staff.Id)
+                       })
                     }
                 </div>
-
-
             </div>
 
-            <div class="card p-3">
+            @* <div class="card p-3">
                 <div class="d-flex justify-content-between">
                     <div class="fw-bold">AI Negotiations</div>
                     <div class="muted">0 pending</div>
                 </div>
                 <div class="empty">No active negotiations</div>
-            </div>
+            </div> *@
 
         </div>
 
@@ -247,327 +173,350 @@
 @section Scripts {
     <script>
         (function () {
-
-          // ---------- DOM Helpers ----------
           const $ = (id) => document.getElementById(id);
 
-          // ---------- Add Patient (your existing animation) ----------
-          const addBtn = $('btnAddPatient');
-          const container = $('patientsContainer');
-          const emptyState = $('emptyState');
-          const recentCountEl = $('recentCount');
+          const availabilityWrap = $('staffFeedScrollContainer');
+          const reqWrap = $('reqListNurse');
 
-          function timeAgo(fromDate) {
-            const now = new Date();
-            const diffMin = Math.floor((now - fromDate) / 60000);
-            if (diffMin <= 0) return 'Just now';
-            if (diffMin === 1) return 'a minute ago';
-            return `${diffMin} minutes ago`;
+          // ---------- State ----------
+          let surgePct = 0;
+          let requiredNurses = 0;
+          let surgeTriggered = false;
+
+          // ✅ Force 1–2 random nurses to auto-decline each surge run
+          let forcedDeclineIds = new Set();
+
+          // Hide availability list until Trigger Surge is pressed
+          if (availabilityWrap) availabilityWrap.style.display = 'none';
+
+          // ---------- Required nurses based on surge ----------
+          function calculateRequiredNurses(pct) {
+            if (pct < 100) return 0;
+            const steps = Math.floor((pct - 100) / 20);
+            return 6 + (steps * 2);
           }
 
-          function setNowIfMissing(card) {
-            if (!card.dataset.addedAt) card.dataset.addedAt = new Date().toISOString();
+          function getStaffId(card) {
+            return card?.getAttribute('data-staff-id') || '';
           }
 
-          function updatePerCardTimes() {
-            const cards = container.querySelectorAll('.patient-card');
-            cards.forEach(card => {
-              setNowIfMissing(card);
-              const added = new Date(card.dataset.addedAt);
-              const label = card.querySelector('.added-time');
-              if (label) label.textContent = timeAgo(added);
-            });
+          // ---------- Empty state ----------
+          function updateNurseEmptyState() {
+            const empty = $('reqEmptyNurse');
+            if (!reqWrap || !empty) return;
+
+            const hasCards = reqWrap.children.length > 0;
+            empty.textContent = (requiredNurses === 0) ? 'No nurse required' : 'No nurse confirmed yet';
+            empty.style.display = hasCards ? 'none' : 'block';
           }
 
-          function updateCounts() {
-            recentCountEl.textContent = container.querySelectorAll('.patient-card').length;
-          }
+          // ---------- Badge setter ----------
+          function setDecisionBadge(card, decision) {
+            card.dataset.decision = decision;
 
-          function updateAllCards() {
-            updatePerCardTimes();
-            updateCounts();
-          }
+            const badge = card.querySelector('.decision-badge');
+            if (!badge) return;
 
-          function slideDown(el, duration = 300) {
-            return new Promise(resolve => {
-              el.style.removeProperty('display');
-              let display = getComputedStyle(el).display;
-              if (display === 'none') display = 'block';
-              el.style.display = display;
+            badge.classList.remove(
+              'bg-secondary','bg-success','bg-danger','bg-info','bg-warning',
+              'text-white','text-black'
+            );
 
-              const targetHeight = el.scrollHeight + 'px';
-              el.style.overflow = 'hidden';
-              el.style.maxHeight = '0px';
-              el.style.transition = `max-height ${duration}ms ease`;
-
-              requestAnimationFrame(() => { el.style.maxHeight = targetHeight; });
-
-              const cleanup = () => {
-                el.style.removeProperty('max-height');
-                el.style.removeProperty('overflow');
-                el.style.removeProperty('transition');
-                el.removeEventListener('transitionend', onEnd);
-                resolve();
-              };
-
-              const fallback = setTimeout(() => {
-                el.removeEventListener('transitionend', onEnd);
-                cleanup();
-              }, duration + 80);
-
-              function onEnd(e) {
-                if (e.propertyName === 'max-height') {
-                  clearTimeout(fallback);
-                  cleanup();
-                }
-              }
-              el.addEventListener('transitionend', onEnd);
-            });
-          }
-
-          async function addPatient() {
-            try {
-              if (addBtn) addBtn.disabled = true;
-
-              const res = await fetch('@Url.Action("AddPatientCard", "Home")', {
-                method: 'GET',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' }
-              });
-              if (!res.ok) throw new Error('Network response was not ok');
-
-              const html = await res.text();
-              if (emptyState) emptyState.style.display = 'none';
-
-              const temp = document.createElement('template');
-              temp.innerHTML = html.trim();
-              const newCard = temp.content.firstElementChild;
-
-              newCard.dataset.addedAt = new Date().toISOString();
-
-              const inner = newCard.querySelector('.patient-card-inner');
-              if (inner) inner.classList.remove('slide-in');
-
-              container.insertBefore(newCard, container.firstElementChild);
-
-              await slideDown(newCard, 300);
-              await new Promise(r => setTimeout(r, 80));
-              if (inner) requestAnimationFrame(() => inner.classList.add('slide-in'));
-
-              updateAllCards();
-            } catch (err) {
-              console.error(err);
-              alert('Failed to add patient. Please try again.');
-            } finally {
-              if (addBtn) addBtn.disabled = false;
+            if (decision === 'confirmed') {
+              badge.textContent = 'Confirmed';
+              badge.classList.add('bg-success','text-white');
+            } else if (decision === 'accepted') {
+              // accepted state (waiting for user to click Confirm)
+              badge.textContent = 'Accepted';
+              badge.classList.add('bg-success','text-white');
+            } else if (decision === 'declined') {
+              badge.textContent = 'Declined';
+              badge.classList.add('bg-danger','text-white');
+            } else if (decision === 'negotiating') {
+              badge.textContent = 'Negotiating…';
+              badge.classList.add('bg-info','text-black');
+            } else if (decision === 'awaiting') {
+              badge.textContent = 'Awaiting';
+              badge.classList.add('bg-warning','text-black');
+            } else {
+              badge.textContent = 'Pending';
+              badge.classList.add('bg-secondary','text-white');
             }
           }
 
-          if (addBtn) {
-            addBtn.addEventListener('click', (e) => {
-              e.preventDefault();
-              addPatient();
+          function setButtonsEnabled(card, enabled) {
+            card.querySelectorAll('button[data-action]').forEach(btn => {
+              btn.disabled = !enabled;
             });
           }
 
-          // Reveal any server-seeded cards
-          document.querySelectorAll('.patient-card[style*="display:none"]').forEach(card => {
-            card.style.display = 'block';
-            const inner = card.querySelector('.patient-card-inner');
-            if (inner) inner.classList.add('slide-in');
-            setNowIfMissing(card);
+          function removeButtons(card) {
+            card.querySelectorAll('.action-confirm, .action-decline, button[data-action]').forEach(b => b.remove());
+            const btnRow = card.querySelector('.d-flex.gap-2.mt-3');
+            if (btnRow && btnRow.querySelectorAll('button').length === 0) btnRow.remove();
+          }
+
+          // ---------- Staff Availability header counts ----------
+          function updateAvailabilityHeader() {
+            const p = $('availPending');
+            const c = $('availConfirmed');
+            const d = $('availDeclined');
+            const n = $('availNegotiating');
+            const nWrap = $('availNegotiatingWrap');
+
+            // Keep header values at 0 until Trigger Surge is clicked
+            if (!surgeTriggered) {
+              if (p) p.textContent = '0';
+              if (c) c.textContent = '0';
+              if (d) d.textContent = '0';
+              if (n) n.textContent = '0';
+              if (nWrap) nWrap.classList.add('d-none');
+              return;
+            }
+
+            let pending = 0, declined = 0, negotiating = 0, awaiting = 0, accepted = 0;
+
+            if (availabilityWrap) {
+              const cards = availabilityWrap.querySelectorAll('.staff-card');
+              cards.forEach(card => {
+                const decision = (card.dataset.decision || 'pending').toLowerCase();
+                if (decision === 'declined') declined++;
+                else if (decision === 'negotiating') negotiating++;
+                else if (decision === 'awaiting') awaiting++;
+                else if (decision === 'accepted') accepted++;
+                else pending++;
+              });
+            }
+
+            const confirmed = reqWrap
+              ? reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"]').length
+              : 0;
+
+            // Treat awaiting + accepted as pending
+            if (p) p.textContent = String(pending + awaiting + accepted);
+            if (c) c.textContent = String(confirmed);
+            if (d) d.textContent = String(declined);
+            if (n) n.textContent = String(negotiating);
+            if (nWrap) nWrap.classList.toggle('d-none', negotiating === 0);
+          }
+
+          // ---------- Auto-resolve Awaiting -> Accepted/Declined ----------
+          const awaitingTimers = new WeakMap();
+
+          function cancelAutoResolve(card) {
+            const t = awaitingTimers.get(card);
+            if (t) clearTimeout(t);
+            awaitingTimers.delete(card);
+          }
+
+          function scheduleAutoResolve(card) {
+            if (!card) return;
+            if ((card.dataset.decision || '').toLowerCase() !== 'awaiting') return;
+            if (awaitingTimers.has(card)) return;
+
+            const id = getStaffId(card);
+            const delay = 2000 + Math.floor(Math.random() * 4000); // 2s–6s
+
+            const timer = setTimeout(() => {
+              awaitingTimers.delete(card);
+
+              if (!document.body.contains(card)) return;
+              if ((card.dataset.decision || '').toLowerCase() !== 'awaiting') return;
+
+              // ✅ Forced random declines: 1–2 nurses per run
+              if (forcedDeclineIds.has(id)) {
+                markDeclined(card);
+                return;
+              }
+
+              // ✅ Otherwise auto-accept (user must click Confirm to transfer)
+              setDecisionBadge(card, 'accepted');
+              setButtonsEnabled(card, true);
+              updateAvailabilityHeader();
+            }, delay);
+
+            awaitingTimers.set(card, timer);
+          }
+
+          // ---------- Update all progress UI ----------
+          function updateProgressUI() {
+            if (!reqWrap) return;
+
+            const confirmed = reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"]').length;
+
+            if ($('reqTotalNurse')) $('reqTotalNurse').textContent = requiredNurses;
+            if ($('reqFilledNurse')) $('reqFilledNurse').textContent = confirmed;
+
+            const pct = requiredNurses === 0 ? 0 : Math.min(100, Math.round((confirmed / requiredNurses) * 100));
+            const bar = $('staffReqBar');
+            if (bar) bar.style.width = `${pct}%`;
+
+            const notifiedList = $('staffReqNotifiedList');
+            if (notifiedList) {
+              const names = Array.from(reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"] .fw-bold'))
+                .map(x => (x.textContent || '').trim())
+                .filter(Boolean)
+                .join(', ');
+              notifiedList.innerHTML = names ? `Confirmed nurses: <b>${names}</b>` : 'Confirmed nurses: —';
+            }
+
+            updateNurseEmptyState();
+            updateAvailabilityHeader();
+          }
+
+          // ---------- Move/Decline actions ----------
+          function moveToRequirements(card) {
+            if (!card || !reqWrap) return;
+
+            cancelAutoResolve(card);
+            forcedDeclineIds.delete(getStaffId(card));
+
+            card.remove();
+            removeButtons(card);
+            setDecisionBadge(card, 'confirmed');
+            reqWrap.appendChild(card);
+
+            updateProgressUI();
+          }
+
+          function markDeclined(card) {
+            if (!card) return;
+
+            cancelAutoResolve(card);
+            forcedDeclineIds.delete(getStaffId(card));
+
+            setDecisionBadge(card, 'declined');
+            setButtonsEnabled(card, false);
+
+            updateProgressUI();
+          }
+
+          // ---------- Click handlers ----------
+          availabilityWrap?.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-action]');
+            if (!btn) return;
+
+            const action = btn.getAttribute('data-action');
+            const card = btn.closest('.staff-card');
+            if (!card) return;
+
+            const decision = (card.dataset.decision || '').toLowerCase();
+
+            if (action === 'confirm' && (decision === 'awaiting' || decision === 'accepted')) {
+              moveToRequirements(card);
+            }
+
+            if (action === 'decline') {
+              markDeclined(card);
+            }
           });
-          updateAllCards();
-          setInterval(updateAllCards, 60 * 1000);
 
-          // ---------- Staffing Requirements Renderer (per role) ----------
-          function renderReqSection(stats, key, listId, emptyId, totalId, filledId, roleBadgeLabel) {
-            const sect = stats[key] || {};
-            const items = sect.items || [];
-            const totalRequired = sect.totalRequired ?? 0;
-            const totalFilled   = sect.totalFilled   ?? 0;
+          // ---------- AI Negotiation mode ----------
+          function beginNegotiation() {
+            if (!availabilityWrap) return;
 
-            $(totalId).textContent  = totalRequired;
-            $(filledId).textContent = totalFilled;
+            // Reset forced declines each run
+            forcedDeclineIds = new Set();
 
-            if (!items.length) {
-              $(emptyId).style.display = 'block';
-              $(listId).innerHTML = '';
-              return { totalRequired, totalFilled };
-            }
+            const cards = Array.from(availabilityWrap.querySelectorAll('.staff-card'));
 
-            $(emptyId).style.display = 'none';
+            // Phase 1: Negotiating
+            cards.forEach(card => {
+              setDecisionBadge(card, 'negotiating');
+              setButtonsEnabled(card, false);
+              cancelAutoResolve(card);
+            });
+            updateAvailabilityHeader();
 
-            const rowHtml = items.map(it => {
-              const pct = Math.max(0, Math.min(100, Math.round(it.coverage || 0)));
-              let barClass = 'req-bar-danger';
-              if (pct >= 100) barClass = 'req-bar-success';
-              else if (pct >= 66) barClass = 'req-bar-warn';
+            // Phase 2: Awaiting -> pick 1–2 random declines -> schedule auto resolve
+            setTimeout(() => {
+              // Choose 1 or 2 random cards to force decline
+              const eligible = cards.slice();
+              const declineCount = Math.min(eligible.length, 1 + Math.floor(Math.random() * 2)); // 1 or 2
 
-              // return `
-              //   <div class="mb-2 staffReqCard">
-              //     <div class="d-flex justify-content-between align-items-center">
-              //       <div>
-              //         <span class="badge badge-dark2 me-2">${roleBadgeLabel}</span>
-              //         <span class="badge bg-secondary">${it.group}</span>
-              //       </div>
-              //       <div class="muted font-monospace">${it.filled}/${it.required}</div>
-              //     </div>
-              //     <div class="progress mt-1">
-              //       <div class="progress-bar ${barClass}" style="width:${pct}%"></div>
-              //     </div>
-              //   </div>
-              // `;
-              return `
-                <div class="mb-2 staffReqCard">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <span class="badge badge-dark2 me-2">${roleBadgeLabel}</span>
-                      <span class="badge bg-secondary">${it.group}</span>
-                    </div>
-                    <div class="muted font-monospace">${it.filled}/${it.required}</div>
-                  </div>
-                </div>
-              `;
-            }).join('');
+              // Shuffle
+              for (let i = eligible.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [eligible[i], eligible[j]] = [eligible[j], eligible[i]];
+              }
 
-            $(listId).innerHTML = rowHtml;
-            return { totalRequired, totalFilled };
-          }
-
-          // ---------- Surge Gauge + Stats Poll ----------
-          async function refreshStats() {
-            const res = await fetch('/Home/GetStats', { cache: 'no-store' });
-            if (!res.ok) return;
-            const stats = await res.json();
-
-            // Top metrics
-            $('statsPatients').textContent  = stats.patients;
-            $('statsWaiting').textContent   = stats.waiting;
-            $('statsWaitTime').textContent  = stats.avgWait;
-            $('statsVelocity').textContent  = stats.velocity;
-            $('roomsTotal').textContent     = stats.rooms.total;
-            $('roomsOccupied').textContent  = stats.rooms.occupied;
-            $('roomsAvailable').textContent = stats.rooms.available;
-
-            // Surge Gauge
-            const gauge     = stats.surge.percent;
-            const emergency = stats.surge.emergency;
-            const level     = stats.surge.level;
-
-            const bar     = $('surgeBar');
-            const label   = $('surgeLabel');
-            const percent = $('surgePercent');
-            const card    = $('surgeCard');
-
-            bar.style.width = `${gauge}%`;
-            percent.textContent = `${gauge}%`;
-
-            bar.classList.remove("bg-info", "bg-warning", "bg-orange", "bg-danger");
-            card.classList.remove("flash-red", "alert-level", "critical-level");
-            label.classList.remove("text-success", "text-warning", "text-danger");
-
-            switch (level) {
-              case "normal":
-                bar.classList.add("bg-info");
-                label.textContent = "Normal Operations";
-                label.classList.add("text-success");
-                break;
-              case "alert":
-                bar.classList.add("bg-warning");
-                label.textContent = "Alert Operations";
-                label.classList.add("text-warning");
-                card.classList.add("alert-level");
-                break;
-              case "critical":
-                bar.classList.add("bg-orange");
-                label.textContent = "Critical Load";
-                label.classList.add("text-danger");
-                card.classList.add("critical-level");
-                break;
-              case "surge":
-                bar.classList.add("bg-danger");
-                label.textContent = `SURGE — ${emergency}`;
-                label.classList.add("text-danger");
-                card.classList.add("flash-red");
-                break;
-            }
-
-            // ---------- ALWAYS render Requirements (Nurses & Doctors) ----------
-            const n = renderReqSection(
-              stats,
-              'staffingRequirementsNurses',
-              'reqListNurse', 'reqEmptyNurse',
-              'reqTotalNurse', 'reqFilledNurse',
-              'Nurse'
-            );
-
-            const d = renderReqSection(
-              stats,
-              'staffingRequirementsDoctors',
-              'reqListDoctor', 'reqEmptyDoctor',
-              'reqTotalDoctor', 'reqFilledDoctor',
-              'Doctor'
-            );
-
-            $('reqTotalAll').textContent  = (n.totalRequired || 0) + (d.totalRequired || 0);
-            $('reqFilledAll').textContent = (n.totalFilled   || 0) + (d.totalFilled   || 0);
-
-            // ---------- Suggestions (only if the card exists) ----------
-            const sDiv = $('staffingContent');
-            if (sDiv) {
-              const needN = stats.staffing?.need?.nurses  ?? 0;
-              const needD = stats.staffing?.need?.doctors ?? 0;
-
-              const norm = (x) => ({
-                Id: (x?.Id ?? x?.id) ?? '',
-                Name: (x?.Name ?? x?.name) ?? '',
-                DistanceMinutes: (x?.DistanceMinutes ?? x?.distanceMinutes) ?? 0,
-                ResponseRate: (x?.ResponseRate ?? x?.responseRate) ?? 0
+              eligible.slice(0, declineCount).forEach(card => {
+                forcedDeclineIds.add(getStaffId(card));
               });
 
-              const nurses  = (stats.suggestedStaff?.nurses  ?? []).map(norm);
-              const doctors = (stats.suggestedStaff?.doctors ?? []).map(norm);
+              // Set awaiting + enable buttons + schedule auto resolve
+              cards.forEach(card => {
+                if ((card.dataset.decision || '').toLowerCase() === 'negotiating') {
+                  setDecisionBadge(card, 'awaiting');
+                  setButtonsEnabled(card, true);
+                  scheduleAutoResolve(card);
+                }
+              });
 
-              sDiv.innerHTML = `
-                <div>Emergency: <b>${stats.staffing?.emergency ?? '-'}</b> ·
-                Level: <b>${(stats.surge?.level ?? '').toUpperCase()}</b></div>
-
-                <div>Need → Nurses: <b>${needN}</b>, Doctors: <b>${needD}</b></div>
-                <hr class="my-2"/>
-
-                <div><b>Suggested Nurses:</b>
-                  ${nurses.length ? nurses.map(n => `${n.Name} (${n.DistanceMinutes}m, ${Math.round(n.ResponseRate*100)}%)`).join(", ") : "—"}
-                </div>
-                <div><b>Suggested Doctors:</b>
-                  ${doctors.length ? doctors.map(d => `${d.Name} (${d.DistanceMinutes}m, ${Math.round(d.ResponseRate*100)}%)`).join(", ") : "—"}
-                </div>
-              `;
-
-              const btn = $('btnCallSuggested');
-              if (btn) {
-                const ids = [...nurses.map(n => n.Id), ...doctors.map(d => d.Id)].filter(Boolean);
-                btn.disabled = ids.length === 0;
-                btn.onclick = async () => {
-                  if (!ids.length) return;
-                  const r = await fetch('/Home/ActivateStaff', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(ids)
-                  });
-                  if (!r.ok) {
-                    console.error('ActivateStaff failed', await r.text());
-                    return;
-                  }
-                  await refreshStats();
-                };
-              }
-            }
+              updateAvailabilityHeader();
+            }, 1400);
           }
 
-          // First pull + poll every 5s
-          refreshStats();
-          setInterval(refreshStats, 5000);
+          // ---------- Surge UI ----------
+          function setSurgeUI(pct) {
+            surgePct = pct;
 
+            const sBar = $('surgeBar');
+            const sLabel = $('surgeLabel');
+
+            if (sBar) {
+              sBar.style.width = `${Math.min(100, pct)}%`;
+              sBar.classList.remove('bg-info','bg-warning','bg-danger');
+              if (pct >= 100) sBar.classList.add('bg-danger');
+              else if (pct >= 60) sBar.classList.add('bg-warning');
+              else sBar.classList.add('bg-info');
+            }
+
+            if (sLabel) {
+              if (pct >= 100) {
+                sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>SURGE OPERATIONS';
+                sLabel.classList.remove('text-success','text-warning');
+                sLabel.classList.add('text-danger');
+              } else if (pct >= 60) {
+                sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>ALERT OPERATIONS';
+                sLabel.classList.remove('text-success','text-danger');
+                sLabel.classList.add('text-warning');
+              } else {
+                sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>Normal Operations';
+                sLabel.classList.remove('text-warning','text-danger');
+                sLabel.classList.add('text-success');
+              }
+            }
+
+            const showReq = pct >= 100;
+            if ($('staffReqFeedController')) $('staffReqFeedController').style.display = showReq ? 'block' : 'none';
+            if ($('staffReqHiddenState')) $('staffReqHiddenState').style.display = showReq ? 'none' : 'block';
+
+            requiredNurses = calculateRequiredNurses(pct);
+
+            if (availabilityWrap) {
+              availabilityWrap.style.display = surgeTriggered ? 'block' : 'none';
+            }
+
+            updateProgressUI();
+          }
+
+          // ---------- Bind Trigger Surge button ----------
+          const triggerBtn = $('btnTriggerSurge');
+          if (triggerBtn) {
+            triggerBtn.addEventListener('click', () => {
+              surgeTriggered = true;
+              if (availabilityWrap) availabilityWrap.style.display = 'block';
+
+              setSurgeUI(120);
+              beginNegotiation();
+              updateAvailabilityHeader();
+            });
+          }
+
+          // Initial state
+          setSurgeUI(0);
+          updateAvailabilityHeader();
         })();
     </script>
 }

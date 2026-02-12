@@ -10,5 +10,6 @@
         public string Status { get; set; } = "off_duty";   // off_duty / available / on_duty
         public double ResponseRate { get; set; }           // 0.88 means 88%
         public int DistanceMinutes { get; set; }           // travel time
+        public string Phone { get; set; } = default!;
     }
 }

@@ -554,3 +554,250 @@ body {
             background: rgba(255,255,255,0.35);
         }
 
+/* =========================
+   Staffing Panel Animations
+========================= */
+
+/* Hidden state */
+.staffing-hidden {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+}
+
+/* Visible state */
+.staffing-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Progress bar animation */
+#staffReqBar {
+    transition: width 400ms ease;
+}
+
+/* Nurse card entrance */
+.staffReqCard {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: nurseFadeIn 320ms ease forwards;
+}
+
+@keyframes nurseFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#staffReqFeed {
+    height: 500px;
+}
+
+/* AI negotiating shimmer */
+.negotiating {
+  position: relative;
+  overflow: hidden;
+}
+.negotiating::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -60%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,234,255,0.18), transparent);
+  animation: shimmer 1.1s infinite;
+}
+@keyframes shimmer {
+  0% { left: -60%; }
+  100% { left: 120%; }
+}
+
+/* flying transfer clone */
+.transfer-clone {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+  transition: transform 520ms cubic-bezier(.2,.9,.2,1), opacity 520ms ease;
+  opacity: 0.98;
+}
+#staffReqBar { transition: width 400ms ease; }
+
+.staff-card[data-decision="negotiating"] {
+    position: relative;
+    overflow: hidden;
+}
+
+    .staff-card[data-decision="negotiating"]::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( 110deg, transparent 40%, rgba(0, 255, 255, 0.15) 50%, transparent 60% );
+        animation: shimmer 1.2s infinite;
+    }
+
+@keyframes shimmer {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* Nurse pages look centered on wide screens */
+.nurse-shell {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.dropdown-item:hover {
+    background-color: #0a1e3a;
+}
+
+/* =========================
+   Nurse Mobile Phone Frame
+========================= */
+
+.nurse-phone-frame {
+    max-width: 390px; /* iPhone-like width */
+    height: 780px; /* Phone-like height */
+    margin: 24px auto;
+    background: #05070c;
+    border-radius: 28px;
+    border: 1px solid hsl(222 30% 15%);
+    box-shadow: 0 0 0 6px #000, 0 20px 60px rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Simulated notch */
+.nurse-phone-notch {
+    height: 24px;
+    width: 140px;
+    background: #000;
+    border-radius: 0 0 14px 14px;
+    margin: 0 auto;
+}
+
+/* Scrollable app content */
+.nurse-phone-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+/* On real mobile, remove frame and go full screen */
+@media (max-width: 480px) {
+    .nurse-phone-frame {
+        max-width: 100%;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+    }
+
+    .nurse-phone-notch {
+        display: none;
+    }
+}
+
+/* =========================
+   Nurse View Readability Fix
+========================= */
+
+/* Nurse name */
+.nurse-phone-content .nurse-name {
+    color: #eaf6ff; /* bright white-blue */
+    font-weight: 700;
+}
+
+/* Nurse role / specialty */
+.nurse-phone-content .nurse-role {
+    color: #9fdfff; /* soft cyan */
+    font-size: 13px;
+}
+
+/* Section labels like "SURGE REQUESTS" */
+.nurse-phone-content .label {
+    color: #d6eeff !important; /* lighter for readability */
+    letter-spacing: 0.6px;
+}
+
+/* Icons inside nurse views */
+.nurse-phone-content i {
+    color: #9fdfff;
+}
+
+/* Muted / secondary text */
+.nurse-phone-content .muted {
+    color: #b6d4f0 !important;
+}
+
+/* Accepted / Declined visual cues on nurse cards */
+.badge.bg-success {
+    box-shadow: 0 0 8px rgba(0, 255, 170, 0.4);
+}
+
+.badge.bg-danger {
+    box-shadow: 0 0 8px rgba(255, 82, 82, 0.5);
+}
+
+.badge.bg-secondary {
+    background-color: #1a2945 !important;
+}
+
+/* =========================
+   Nurse Dashboard States
+========================= */
+
+/* ACCEPTED: dim card */
+.nurse-card-accepted {
+    opacity: 0.55;
+    filter: saturate(0.85);
+    border-color: rgba(0, 255, 163, 0.25) !important;
+}
+
+    /* Prevent hover lift for accepted */
+    .nurse-card-accepted:hover {
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+/* DECLINED: disabled look */
+.nurse-card-declined {
+    opacity: 0.45;
+    filter: grayscale(0.35);
+    border-color: rgba(255, 82, 82, 0.25) !important;
+}
+
+/* Disable clicking for declined cards */
+.nurse-link-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    display: block;
+}
+
+/* Cursor hint */
+.nurse-card-declined,
+.nurse-card-declined * {
+    cursor: not-allowed !important;
+}
+
+#btnTriggerSurge:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    filter: grayscale(0.2);
+}
+
+#btnTriggerSurge:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    filter: grayscale(0.2);
+}
+

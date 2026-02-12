@@ -4,85 +4,142 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - rapid.core.app</title>
-    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
-    <!-- Main styles for this application-->
-    @* <link href="css/style.css" rel="stylesheet"> *@
-    @* <link rel="stylesheet" href="~/coreui/dist/css/coreui.css" /> *@
-    @* <link rel="stylesheet" href="~/coreui/scss/style.scss"/> *@
-    @* <link rel="stylesheet" href="~/coreui/scss/simplebar.css"> *@
-    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
-    @* <link rel="stylesheet" href="~/rapid.core.app.styles.css" asp-append-version="true" /> *@
 
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/jquery-3.7.1.min.js"></script>
     <link href="~/css/main.css" rel="stylesheet" />
-    <script src="~/js/rapid-main.js"></script>
-    <link href="~/fontawesome/css/all.css" rel="stylesheet" />
+    @* <script src="~/js/rapid-main.js"></script> *@
+    <script src="~/js/rapid-main.js" asp-append-version="true"></script>
     <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
 </head>
-<body id="master-body">
-    <section>
-        <input type="hidden" id="isSurgeActive" name="isSurgeActive" value="false" />
-        <nav class="navbar navbar-expand-lg emergency-header px-3 py-3">
-            <div class="container-fluid">
-                <!-- Brand -->
-                <div class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-bolt text-info fs-4"></i>
-                    <div>
-                        <div class="fw-bold text-white fs-5">
-                            Emergency Surge Scheduler
-                        </div>
-                        <div class="text-secondary small d-none d-md-block">
-                            AI-Driven Hospital Resource Orchestration System
-                        </div>
-                    </div>
-                </div>
-                <!-- Mobile Toggle -->
-                <button class="navbar-toggler text-white border-0"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#headerActions">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <!-- Actions -->
-                <div class="collapse navbar-collapse justify-content-end mt-3 mt-lg-0"
-                     id="headerActions">
-                    <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
-                        <!-- Status -->
-                        <span id="statusPill"
-                              class="badge status-normal px-3 d-flex align-items-center gap-2">
-                            <i class="fa-solid fa-circle-check"></i>
-                            NORMAL
-                        </span>
-                        <button id="btnAddPatient" class="btn btn-dark border border-secondary d-flex align-items-center gap-2">
-                            <i class="fa-solid fa-user-plus"></i>
-                            Add Patient
-                        </button>
-                        @* <button class="btn btn-warning text-dark d-flex align-items-center gap-2"
-                                onclick="triggerSurge()">
-                            <i class="fa-solid fa-play"></i>
-                            Trigger Surge
-                        </button> *@
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </section>
-   
-            @RenderBody()
 
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - rapid.core.app - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer> *@
+<body id="master-body">
+
+    <section>
+        <input type="hidden" id="isSurgeActive" value="false" />
+
+        @if (!(ViewBag.HideHeader ?? false))
+        {
+            <nav class="navbar navbar-expand-lg emergency-header px-3 py-3">
+                <div class="container-fluid">
+
+                    <!-- Brand -->
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="fa-solid fa-bolt text-info fs-4"></i>
+                        <div>
+                            <div class="fw-bold text-white fs-5">
+                                RAPID Surge Scheduler
+                            </div>
+                            <div class="text-secondary small d-none d-md-block">
+                                AI-Driven Hospital Resource Orchestration System
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Toggle -->
+                    <button class="navbar-toggler text-white border-0"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#headerActions">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <!-- Actions -->
+                    <div class="collapse navbar-collapse justify-content-end mt-3 mt-lg-0"
+                         id="headerActions">
+                        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
+
+                            <!-- USER DROPDOWN -->
+                            <div class="dropdown">
+                                <button class="btn p-0 border-0 bg-transparent"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+
+                                    <div class="d-flex align-items-center gap-2 px-3 py-2 rounded"
+                                         style="background:#0b111e; border:1px solid hsl(222 30% 15%);">
+
+                                        <!-- Avatar Initials -->
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center"
+                                             style="width:34px;height:34px;background:#00eaff;color:#032b26;font-weight:700;">
+                                            AA
+                                        </div>
+
+                                        <div class="d-flex flex-column lh-sm text-start">
+                                            <span class="fw-semibold text-white">
+                                                Allen Aquino
+                                            </span>
+                                            <span class="badge badge-dark2 mt-1">
+                                                Manager
+                                            </span>
+                                        </div>
+
+                                        <i class="fa-solid fa-chevron-down text-muted ms-2"></i>
+                                    </div>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end shadow"
+                                    style="background:#0b111e; border:1px solid hsl(222 30% 15%);">
+
+                                    <li>
+                                        <a class="dropdown-item text-white" href="/Home/Profile">
+                                            <i class="fa-solid fa-user me-2"></i>
+                                            Profile
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <hr class="dropdown-divider bg-secondary" />
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item text-white" href="/Home/Logout">
+                                            <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Status -->
+                            <span id="statusPill"
+                                  class="badge status-normal px-3 d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-circle-check"></i>
+                                NORMAL
+                            </span>
+
+                            <!-- Reset Trigger Surge -->
+                            <button class="btn btn-outline-danger d-flex align-items-center gap-2"
+                                    id="btnResetSurge"
+                                    style="display:none;"
+                                    onclick="resetSurge()">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                Reset Surge
+                            </button>
+
+                            <!-- Trigger Surge -->
+                            <button class="btn btn-warning text-dark d-flex align-items-center gap-2"
+                                    id="btnTriggerSurge"
+                                    onclick="triggerSurge()">
+                                <i class="fa-solid fa-play"></i>
+                                Trigger Surge
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        }
+
+    </section>
+
+    @RenderBody()
 
     <footer class="footer-bar">
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
 
-                <!-- LEFT -->
                 <div class="footer-left d-flex align-items-center gap-3">
                     <div class="status-dot"></div>
                     <div class="footer-text">
@@ -91,7 +148,6 @@
                     </div>
                 </div>
 
-                <!-- RIGHT -->
                 <div class="footer-right">
                     R.A.P.I.D. AI
                     <span class="ms-3 muted">v1.0.0</span>
@@ -101,14 +157,52 @@
         </div>
     </footer>
 
+    <script>
+        (function () {
+            async function updateSurgeButtons() {
+                const triggerBtn = document.getElementById("btnTriggerSurge");
+                const resetBtn = document.getElementById("btnResetSurge");
+                if (!triggerBtn || !resetBtn) return;
 
-    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
-    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
-    @* <script src="~/coreui/dist/js/coreui.bundle.min.js"></script>
-    <script src="~/coreui/dist/simplebar.min.js"></script>
-    <script src="~/coreui/js/config.js"></script>
-    <script src="~/coreui/js/color-modes.js"></script> *@
-   @*  <script src="~/js/site.js" asp-append-version="true"></script> *@
+                try {
+                    const res = await fetch("/Home/GetSurgeStatus");
+                    const data = await res.json();
+
+                    if (data.active) {
+                        triggerBtn.disabled = true;
+                        triggerBtn.classList.add("disabled");
+                        triggerBtn.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Surge Active';
+                        resetBtn.style.display = "inline-flex";
+                    } else {
+                        triggerBtn.disabled = false;
+                        triggerBtn.classList.remove("disabled");
+                        triggerBtn.innerHTML = '<i class="fa-solid fa-play"></i> Trigger Surge';
+                        resetBtn.style.display = "none";
+                    }
+                } catch (e) {
+                    console.error("Failed to fetch surge status", e);
+                }
+            }
+
+            window.resetSurge = async function () {
+                const resetBtn = document.getElementById("btnResetSurge");
+                if (resetBtn) resetBtn.disabled = true;
+
+                try {
+                    await fetch("/Home/ResetSurge", { method: "POST" });
+                    await updateSurgeButtons();
+                    location.reload();
+                } catch (e) {
+                    console.error("Reset surge failed", e);
+                } finally {
+                    if (resetBtn) resetBtn.disabled = false;
+                }
+            };
+
+            document.addEventListener("DOMContentLoaded", updateSurgeButtons);
+            setInterval(updateSurgeButtons, 5000);
+        })();
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
