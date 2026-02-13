@@ -1,0 +1,132 @@
+﻿@model NurseDashboardViewModel
+
+<div class="nurse-phone-frame">
+    <div class="nurse-phone-notch"></div>
+
+    <div class="nurse-phone-content">
+
+        <!-- Nurse Header -->
+        <div class="mb-3">
+            <div class="nurse-name fs-5">@Model.Nurse.Name</div>
+            <div class="nurse-role">@Model.Nurse.Specialty Nurse</div>
+        </div>
+
+        <div class="label mb-2">SURGE REQUESTS</div>
+
+        @if (!Model.Requests.Any())
+        {
+            <div class="empty">No surge requests at the moment</div>
+        }
+        else
+        {
+            @foreach (var item in Model.Requests)
+            {
+                var req = item.Request;
+
+                string statusClass = item.Decision switch
+                {
+                    NurseDecision.Accepted => "bg-success",
+                    NurseDecision.Declined => "bg-danger",
+                    _ => "bg-secondary"
+                };
+
+                string statusText = item.Decision switch
+                {
+                    NurseDecision.Accepted => "ACCEPTED",
+                    NurseDecision.Declined => "DECLINED",
+                    _ => "PENDING"
+                };
+
+                string cardStateClass = item.Decision switch
+                {
+                    NurseDecision.Accepted => "nurse-card-accepted",
+                    NurseDecision.Declined => "nurse-card-declined",
+                    _ => ""
+                };
+
+                bool disableClick = item.Decision == NurseDecision.Declined;
+
+                if (disableClick)
+                {
+                    <div class="nurse-link-disabled">
+                        <div class="card mb-3 @(req.IsCritical ? "alert-border" : "") @cardStateClass">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge @statusClass">@statusText</span>
+
+                                    @if (req.IsCritical)
+                                    {
+                                        <span class="badge bg-danger">CRITICAL</span>
+                                    }
+                                </div>
+
+                                <div class="fw-bold">@req.Unit</div>
+                                <div class="muted">@req.Description</div>
+
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="muted">@item.TimeAgoLabel</span>
+                                    <span class="text-info fw-semibold">@req.PayMultiplier x</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <a href="/Home/NurseRespond/@req.Id" class="text-decoration-none">
+                        <div class="card mb-3 @(req.IsCritical ? "alert-border" : "") @cardStateClass">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge @statusClass">@statusText</span>
+
+                                    @if (req.IsCritical)
+                                    {
+                                        <span class="badge bg-danger">CRITICAL</span>
+                                    }
+                                </div>
+
+                                <div class="fw-bold">@req.Unit</div>
+                                <div class="muted">@req.Description</div>
+
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="muted">@item.TimeAgoLabel</span>
+                                    <span class="text-info fw-semibold">@req.PayMultiplier x</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            // If requests are already displayed, don't poll.
+            const hasCards = document.querySelectorAll('.card').length > 0;
+            if (hasCards) return;
+
+            const interval = setInterval(async () => {
+                try {
+                    const res = await fetch('/Home/GetSurgeStatus', { cache: 'no-store' });
+                    const data = await res.json();
+
+                    // Reload only when the server actually has requests.
+                    if (data.requestCount && data.requestCount > 0) {
+                        clearInterval(interval);
+                        location.reload();
+                    }
+                } catch (e) {
+                    console.log('Nurse dashboard polling failed:', e);
+                }
+            }, 2000); // check every 2 seconds
+        })();
+    </script>
+}

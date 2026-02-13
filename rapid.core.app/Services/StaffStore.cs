@@ -1,4 +1,5 @@
-﻿using rapid.core.app.Models;
+﻿using System.Linq;
+using rapid.core.app.Models;
 
 namespace rapid.core.app.Services
 {
@@ -92,21 +93,53 @@ namespace rapid.core.app.Services
                 Status = "on_duty",
                 ResponseRate = 0.94,
                 DistanceMinutes = 0
+            },
+
+            new StaffMember {
+                Id = "s9",
+                Name = "RN Carlos Mendoza",
+                Role = "nurse",
+                Specialty = "Emergency",
+                Certifications = new() { "BLS", "CEN" },
+                Status = "off_duty",
+                ResponseRate = 0.87,
+                DistanceMinutes = 18
+            },
+
+            new StaffMember {
+                Id = "s10",
+                Name = "RN Julia Reyes",
+                Role = "nurse",
+                Specialty = "ICU",
+                Certifications = new() { "CCRN", "BLS" },
+                Status = "off_duty",
+                ResponseRate = 0.93,
+                DistanceMinutes = 10
             }
         };
 
+
+        private static readonly Dictionary<string, string> _initialStatus =
+            _staff.ToDictionary(s => s.Id, s => s.Status);
+
         public static IEnumerable<StaffMember> GetAll() => _staff;
+
         public static IEnumerable<StaffMember> GetOffDuty() =>
             _staff.Where(s => s.Status == "off_duty");
 
         public static IEnumerable<StaffMember> GetAvailable() =>
             _staff.Where(s => s.Status == "available" || s.Status == "on_duty");
 
-        // Optional: controlled status change (used by controller, not by StatsService)
+        // ✅ Keep ONLY ONE GetById method (fixes CS0111)
+        public static StaffMember? GetById(string id) =>
+            _staff.FirstOrDefault(s => s.Id == id);
+
+        // Controlled status change
         public static bool SetStatus(string id, string status)
         {
             var staff = _staff.FirstOrDefault(s => s.Id == id);
             if (staff == null) return false;
+
             staff.Status = status;
             return true;
         }
@@ -125,6 +158,14 @@ namespace rapid.core.app.Services
             return pick;
         }
 
+        public static void ResetStatusesToInitial()
+        {
+            foreach (var s in _staff)
+            {
+                if (_initialStatus.TryGetValue(s.Id, out var status))
+                    s.Status = status;
+            }
+        }
 
     }
 }

@@ -57,6 +57,8 @@ namespace rapid.core.app.Services
             else
                 surgeLevel = "normal";
 
+            StaffNotificationStore.ResetIfNewSurge(surgeLevel);
+
             // Velocity: admissions in the last 15 minutes → per hour
             var windowStart = now.AddMinutes(-15);
             var admissionsLast15 = active.Count(p => p.AddedAtUtc >= windowStart);
@@ -192,8 +194,66 @@ namespace rapid.core.app.Services
             int doctorTotalReq = doctorItems.Sum(x => (int)x.GetType().GetProperty("required")!.GetValue(x)!);
             int doctorTotalFill = doctorItems.Sum(x => (int)x.GetType().GetProperty("filled")!.GetValue(x)!);
 
+            // Nurse gap (how many still needed)
+            var nursesNeeded = Math.Max(0, nurseTotalReq - nurseTotalFill);
+
+            // Count notified nurses (only nurses)
+            var notifiedIds = StaffNotificationStore.AllNotifiedIds();
+            var notifiedNursesCount = StaffStore.GetAll()
+                .Where(s => s.Role == "nurse" && notifiedIds.Contains(s.Id))
+                .Count();
+
+            // percent notified vs needed (if needed=0 -> 100%)
+            double staffReqPercent = nursesNeeded == 0 ? 100 : (double)notifiedNursesCount / nursesNeeded * 100;
+            staffReqPercent = Math.Max(0, Math.Min(100, staffReqPercent));
+
+            // ===== Nurse response feed (for staffReqFeed) =====
+
+            var nurseIds = StaffStore.GetAll()
+                .Where(s => s.Role == "nurse")
+                .Select(s => s.Id)
+                .ToList();
+
+            var nurseResponses = StaffStore.GetAll()
+                .Where(s => s.Role == "nurse")
+                .Select(s => new
+                {
+                    s.Id,
+                    s.Name,
+                    s.Specialty,
+                    s.DistanceMinutes,
+                    s.ResponseRate,
+                    Response = StaffResponseStore.GetResponse(s.Id) // none | notified | accepted | declined
+                })
+                .ToList();
+
+            int acceptedCount = nurseResponses.Count(n => n.Response == "accepted");
+            int notifiedCount = nurseResponses.Count(n => n.Response == "notified");
+
+            // progress = accepted / needed
+            double reqPercent =
+                nursesNeeded == 0 ? 100 :
+                Math.Min(100, (double)acceptedCount / nursesNeeded * 100);
+
             // ===== Existing suggested staff (keep what you already have) =====
             // Assuming you've built: suggestedNurses, suggestedDoctors (IEnumerable<StaffMember>)
+
+            var nursePool = StaffStore.GetAll()
+            .Where(s => s.Role == "nurse")
+            .Select(s => new {
+                s.Id,
+                s.Name,
+                s.Specialty,
+                s.DistanceMinutes,
+                s.ResponseRate,
+                s.Status,
+                Decision = StaffDecisionStore.Get(s.Id) // pending|confirmed|declined
+            })
+            .ToList();
+
+            var confirmedNurses = nursePool.Where(n => n.Decision == "confirmed").ToList();
+            StaffDecisionStore.SeedConfirmed("s7");
+
 
             return new
             {
@@ -210,7 +270,7 @@ namespace rapid.core.app.Services
 
                 surge = new
                 {
-                    percent = Math.Round(gauge, 0),
+                    percent = Math.Min(100, Math.Round(gauge, 0)),
                     threshold,
                     emergency = emergencyType,
                     level = surgeLevel
@@ -245,6 +305,25 @@ namespace rapid.core.app.Services
                     totalRequired = doctorTotalReq,
                     totalFilled = doctorTotalFill,
                     items = doctorItems
+                },
+                staffReqFeed = new
+                {
+                    role = "nurse",
+                    required = nurseTotalReq,
+                    filled = nurseTotalFill,
+                    needed = nursesNeeded,
+
+                    accepted = acceptedCount,
+                    notified = notifiedCount,
+                    percent = Math.Round(reqPercent, 0),
+
+                    nurses = nurseResponses
+                },
+
+                staffingUI = new
+                {
+                    nursePool,
+                    confirmedNurses
                 }
 
             };

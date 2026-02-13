@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using rapid.core.app.Models;
 using rapid.core.app.Services;
 using System.Diagnostics;
+using System.Linq;
 using static rapid.core.app.Models.PatientAdmission;
 
 namespace rapid.core.app.Controllers
@@ -15,9 +16,12 @@ namespace rapid.core.app.Controllers
             _logger = logger;
         }
 
+        // ============================
+        // OPS / SURGE DASHBOARD
+        // ============================
         public IActionResult Index()
         {
-            Bringdown();
+            //Bringdown();
 
             var patients = PatientStore.GetActive();
             var staff = StaffStore.GetAll();
@@ -29,9 +33,111 @@ namespace rapid.core.app.Controllers
             };
 
             return View(vm);
-
         }
 
+        // ============================
+        // NURSE DASHBOARD
+        // URL: /Home/Nurse
+        // ============================
+        [HttpGet("/Home/Nurse")]
+        public IActionResult Nurse()
+        {
+            ViewBag.HideHeader = true;
+            // TEMP: simulate logged-in nurse
+            var nurse = StaffStore.GetById("s3"); // RN Emily Rodriguez
+
+            if (nurse == null || nurse.Role != "nurse")
+                return Unauthorized();
+
+            var requests = SurgeStore.GetActiveForSpecialty(nurse.Specialty)
+                .Select(r => new NurseRequestItem
+                {
+                    Request = r,
+                    Decision = SurgeStore.GetDecision(r.Id, nurse.Id),
+                    TimeAgoLabel = TimeAgo(r.CreatedAtUtc)
+                })
+                .ToList();
+
+            var vm = new NurseDashboardViewModel
+            {
+                Nurse = nurse,
+                Requests = requests
+            };
+
+            return View("NurseDashboard", vm);
+        }
+
+        // ============================
+        // NURSE RESPOND VIEW
+        // URL: /Home/NurseRespond/{id}
+        // ============================
+        [HttpGet("/Home/NurseRespond/{id}")]
+        public IActionResult NurseRespond(string id)
+        {
+            ViewBag.HideHeader = true;
+            var nurse = StaffStore.GetById("s3");
+            if (nurse == null) return Unauthorized();
+
+            var req = SurgeStore.GetById(id);
+            if (req == null) return NotFound();
+
+            var vm = new NurseRespondViewModel
+            {
+                Nurse = nurse,
+                Request = req,
+                CurrentDecision = SurgeStore.GetDecision(req.Id, nurse.Id)
+            };
+
+            return View("NurseRespond", vm);
+        }
+
+        // ============================
+        // NURSE DECISIONS
+        // ============================
+        [HttpPost("/Home/NurseAccept")]
+        public IActionResult NurseAccept(string requestId)
+        {
+            var nurse = StaffStore.GetById("s3");
+            if (nurse == null) return Unauthorized();
+
+            SurgeStore.Accept(requestId, nurse.Id);
+
+            StaffCallDecisionStore.SetAccepted(nurse.Id);
+
+            // Optional: reflect nurse is now available
+            StaffStore.SetStatus(nurse.Id, "available");
+
+            return RedirectToAction("Nurse");
+        }
+
+        [HttpPost("/Home/NurseDecline")]
+        public IActionResult NurseDecline(string requestId)
+        {
+            var nurse = StaffStore.GetById("s3");
+            if (nurse == null) return Unauthorized();
+
+            SurgeStore.Decline(requestId, nurse.Id);
+
+            StaffCallDecisionStore.SetDeclined(nurse.Id);
+
+            return RedirectToAction("Nurse");
+        }
+
+        // ============================
+        // HELPER
+        // ============================
+        private static string TimeAgo(DateTime utc)
+        {
+            var span = DateTime.UtcNow - utc;
+
+            if (span.TotalMinutes < 60) return $"{(int)span.TotalMinutes} minutes ago";
+            if (span.TotalHours < 24) return $"{(int)span.TotalHours} hours ago";
+            return $"{(int)span.TotalDays} days ago";
+        }
+
+        // ============================
+        // EXISTING PATIENT / SIM LOGIC
+        // ============================
         private static readonly string[] Names = {
             "John Smith", "Maria Garcia", "James Johnson", "Sarah Williams", "Michael Brown",
             "Emily Davis", "David Miller", "Jennifer Wilson", "Robert Moore", "Lisa Taylor"
@@ -42,7 +148,6 @@ namespace rapid.core.app.Controllers
             "Fracture", "Laceration", "Abdominal pain", "Head injury", "Cardiac arrest",
             "Allergic reaction", "Stroke symptoms", "Severe bleeding"
         };
-
 
         private PatientAdmission GenerateRandomPatient()
         {
@@ -65,24 +170,16 @@ namespace rapid.core.app.Controllers
             };
         }
 
-
-        public void Bringdown()
-        {
-
-        }
         public IActionResult PatientAdmission()
         {
-            var patientAdmission = GenerateRandomPatient();
-            return View(patientAdmission);
+            return View(GenerateRandomPatient());
         }
-
 
         [HttpGet]
         public IActionResult AddPatientCard()
         {
             var patient = GenerateRandomPatient();
 
-            // Assign room if available; else remain Waiting
             if (RoomStore.TryAssign(patient.Id))
             {
                 patient.Status = PatientStatus.InRoom;
@@ -93,92 +190,165 @@ namespace rapid.core.app.Controllers
             return PartialView("_PatientCard", patient);
         }
 
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        public IActionResult Privacy() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
 
-
-        // === STATS ENDPOINT ===
+        // ============================
+        // STATS / SURGE ENDPOINTS
+        // ============================
         [HttpGet]
         public IActionResult GetStats()
         {
-            var stats = StatsService.Compute();
-            return Json(stats);
-        }
-
-
-        // === SEED endpoint (for simulation control) ===
-        // Examples:
-        //   /Home/Seed?rooms=8&waiting=12&inRoom=6
-        // Seeds random patients to reach desired counts.
-        [HttpPost]
-        public IActionResult Seed(int rooms = 10, int waiting = 8, int inRoom = 4)
-        {
-            RoomStore.Configure(rooms);
-
-            // Simple reset: for a quick simulation, we can clear and reseed.
-            // If you don't want to clear, comment out the following two lines.
-            // (We didn't include a clear in PatientStore; add one if you want full reset.)
-            // ---- Optional reset (uncomment if you add Clear method) ----
-            // PatientStore.Clear();
-            // (For now, we’ll just add on top.)
-
-            // Fill rooms first
-            for (int i = 0; i < inRoom; i++)
-            {
-                var p = GenerateRandomPatient();
-                p.Status = PatientStatus.InRoom;
-                p.AssignedAtUtc = DateTime.UtcNow.AddMinutes(-Random.Shared.Next(5, 45));
-                PatientStore.Add(p);
-                RoomStore.TryAssign(p.Id);
-            }
-
-            // Then seed waiting
-            for (int i = 0; i < waiting; i++)
-            {
-                var p = GenerateRandomPatient();
-                p.Status = PatientStatus.Waiting;
-                p.AddedAtUtc = DateTime.UtcNow.AddMinutes(-Random.Shared.Next(1, 60));
-                PatientStore.Add(p);
-            }
-
-            return Ok(new { ok = true, rooms, waiting, inRoom });
-        }
-
-        [HttpPost]
-        public IActionResult SetRooms(int rooms)
-        {
-            if (rooms < 0)
-                return BadRequest("Room count cannot be negative.");
-
-            RoomStore.Configure(rooms);
-
-            return Ok(new
-            {
-                ok = true,
-                rooms = RoomStore.TotalRooms,
-                available = RoomStore.AvailableCount,
-                occupied = RoomStore.OccupiedCount
-            });
+            return Json(StatsService.Compute());
         }
 
         [HttpPost]
         public IActionResult ActivateStaff([FromBody] string[] ids)
         {
-            if (ids == null || ids.Length == 0) return BadRequest("No staff ids were provided.");
+            if (ids == null || ids.Length == 0)
+                return BadRequest("No staff ids were provided.");
+
+            StaffResponseStore.MarkNotified(ids);
+
             int changed = 0;
             foreach (var id in ids)
-                if (StaffStore.SetStatus(id, "available")) changed++;
+            {
+                if (StaffStore.SetStatus(id, "available"))
+                    changed++;
+            }
 
-            return Ok(new { ok = true, activated = changed });
+            return Ok(new { ok = true, notified = ids.Length, activated = changed });
+        }
+
+        [HttpPost]
+        public IActionResult StaffDecision(string id, string decision)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return BadRequest("Missing id.");
+
+            decision = (decision ?? "").ToLowerInvariant();
+            if (decision == "confirmed")
+            {
+                StaffDecisionStore.Confirm(id);
+                StaffStore.SetStatus(id, "on_duty");
+            }
+            else if (decision == "declined")
+            {
+                StaffDecisionStore.Decline(id);
+            }
+            else
+            {
+                return BadRequest("Invalid decision.");
+            }
+
+            return Ok(new { ok = true, id, decision });
+        }
+
+        // ============================
+        // TRIGGER SURGE
+        // ============================
+        [HttpPost]
+        public IActionResult TriggerSurge(int count = 10)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var patient = GenerateRandomPatient();
+
+                if (RoomStore.TryAssign(patient.Id))
+                {
+                    patient.Status = PatientStatus.InRoom;
+                    patient.AssignedAtUtc = DateTime.UtcNow;
+                }
+
+                PatientStore.Add(patient);
+            }
+
+            SurgeStore.ActivateSurge();
+            SurgeStore.CreateRequest(
+                unit: "Trauma Bay",
+                specialtyTag: "Trauma",
+                critical: true,
+                description: "Mass casualty event. Trauma support urgently needed.",
+                location: "Metro General Hospital - Trauma Bay",
+                payMultiplier: 1.5,
+                durationHours: 4
+            );
+
+            return Ok(new
+            {
+                ok = true,
+                added = count,
+                surgeActive = SurgeStore.IsSurgeActive()
+            });
+
+        }
+
+        [HttpGet]
+        public IActionResult GetSurgeStatus()
+        {
+            return Json(new
+            {
+                active = SurgeStore.IsSurgeActive(),
+            });
+        }
+
+
+        [HttpPost("/Home/ResetSurge")]
+        public IActionResult ResetSurge()
+        {
+            SurgeStore.ResetSurge();
+
+            // optional but recommended
+            StaffStore.ResetStatusesToInitial();
+
+            return Ok(new { ok = true, active = SurgeStore.IsSurgeActive() });
+        }
+
+
+        [HttpGet("/Home/NurseRequests")]
+        public IActionResult NurseRequests()
+        {
+            var nurse = StaffStore.GetById("s3");
+            if (nurse == null) return Unauthorized();
+
+            var reqs = SurgeStore.GetActiveForSpecialty(nurse.Specialty).ToList();
+            return Json(new { count = reqs.Count });
+        }
+
+        [HttpGet]
+        public IActionResult NurseRequestsPartial()
+        {
+            var nurse = StaffStore.GetById("s3");
+            if (nurse == null) return Unauthorized();
+
+            var requests = SurgeStore.GetActiveForSpecialty(nurse.Specialty)
+                .Select(r => new NurseRequestItem
+                {
+                    Request = r,
+                    Decision = SurgeStore.GetDecision(r.Id, nurse.Id),
+                    TimeAgoLabel = TimeAgo(r.CreatedAtUtc)
+                })
+                .ToList();
+
+            return PartialView("_NurseRequestList", requests);
+        }
+
+        [HttpGet]
+        public IActionResult GetPatientCounts()
+        {
+            var patients = PatientStore.GetActive();
+
+            var inpatient = patients.Count(p => p.Status == PatientStatus.InRoom);
+            var incoming = patients.Count(p => p.Status == PatientStatus.Waiting);
+
+            return Json(new { inpatient, incoming });
         }
 
     }
