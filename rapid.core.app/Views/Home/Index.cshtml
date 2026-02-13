@@ -38,6 +38,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="small text-muted">Surge Level</span>
+                    <span id="surgeBarPct" class="fw-semibold text-muted">0%</span>
+                </div>
+
                 <div class="progress">
                     <div id="surgeBar" class="progress-bar bg-info"
                          role="progressbar"
@@ -221,6 +227,8 @@
             function setSurgeVisual(pct) {
               const sBar = $('surgeBar');
               const sLabel = $('surgeLabel');
+                      const pctLabel = $('surgeBarPct');
+        
 
               if (sBar) {
                 sBar.style.width = `${Math.min(100, pct)}%`;
@@ -229,6 +237,12 @@
                 else if (pct >= 60) sBar.classList.add('bg-warning');
                 else sBar.classList.add('bg-info');
               }
+
+              if (pctLabel) pctLabel.textContent = `${Math.min(100, pct)}%`;
+                      if (pctLabel) {
+          pctLabel.classList.remove('text-dark','text-white');
+          pctLabel.classList.add(pct >= 60 ? 'text-dark' : 'text-white');
+        }
 
               if (sLabel) {
                 if (pct >= 100) {
