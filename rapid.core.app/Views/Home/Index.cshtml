@@ -10,12 +10,33 @@
 
         <div class="col-12">
             <div id="surgeCard" class="card p-3">
-                <div class="d-flex justify-content-between mb-2">
+                @* <div class="d-flex justify-content-between mb-2">
                     <div id="surgeLabel" class="fw-bold text-success">
                         <i class="fa-solid fa-shield-halved me-2"></i>
                         Normal Operations
                     </div>
-                    @* <div id="surgePercent">0%</div> *@
+                    <div id="surgePercent">0%</div>
+                </div> *@
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                        <div id="surgeLabel" class="fw-bold text-success">
+                            <i class="fa-solid fa-shield-halved me-2"></i>
+                            Normal Operations
+                        </div>
+
+                        <!-- NEW: patient counts beside label -->
+                        <div class="d-flex gap-2 mt-1 flex-wrap">
+                            <span class="badge badge-dark2">
+                                <i class="fa-solid fa-bed-pulse me-1 text-info"></i>
+                                Inpatient: <span id="surgeInpatient">0</span>
+                            </span>
+
+                            <span class="badge badge-dark2">
+                                <i class="fa-solid fa-truck-medical me-1 text-warning"></i>
+                                Incoming: <span id="surgeIncoming">0</span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="progress">
                     <div id="surgeBar" class="progress-bar bg-info"
@@ -173,338 +194,350 @@
 @section Scripts {
     <script>
         (function () {
-          const $ = (id) => document.getElementById(id);
+          try {
+            const $ = (id) => document.getElementById(id);
 
-          const availabilityWrap = $('staffFeedScrollContainer');
-          const reqWrap = $('reqListNurse');
+            // ------------------------------------------------------------
+            // 0) Grab elements early + always hide staff list on load
+            // ------------------------------------------------------------
+            const availabilityWrap = $('staffFeedScrollContainer');
+            const reqWrap = $('reqListNurse');
 
-          // ---------- State ----------
-          let surgePct = 0;
-          let requiredNurses = 0;
-          let surgeTriggered = false;
+            if (availabilityWrap) availabilityWrap.style.display = 'none';
 
-          // ✅ Force 1–2 random nurses to auto-decline each surge run
-          let forcedDeclineIds = new Set();
-
-          // Hide availability list until Trigger Surge is pressed
-          if (availabilityWrap) availabilityWrap.style.display = 'none';
-
-          // ---------- Required nurses based on surge ----------
-          function calculateRequiredNurses(pct) {
-            if (pct < 100) return 0;
-            const steps = Math.floor((pct - 100) / 20);
-            return 6 + (steps * 2);
-          }
-
-          function getStaffId(card) {
-            return card?.getAttribute('data-staff-id') || '';
-          }
-
-          // ---------- Empty state ----------
-          function updateNurseEmptyState() {
-            const empty = $('reqEmptyNurse');
-            if (!reqWrap || !empty) return;
-
-            const hasCards = reqWrap.children.length > 0;
-            empty.textContent = (requiredNurses === 0) ? 'No nurse required' : 'No nurse confirmed yet';
-            empty.style.display = hasCards ? 'none' : 'block';
-          }
-
-          // ---------- Badge setter ----------
-          function setDecisionBadge(card, decision) {
-            card.dataset.decision = decision;
-
-            const badge = card.querySelector('.decision-badge');
-            if (!badge) return;
-
-            badge.classList.remove(
-              'bg-secondary','bg-success','bg-danger','bg-info','bg-warning',
-              'text-white','text-black'
-            );
-
-            if (decision === 'confirmed') {
-              badge.textContent = 'Confirmed';
-              badge.classList.add('bg-success','text-white');
-            } else if (decision === 'accepted') {
-              // accepted state (waiting for user to click Confirm)
-              badge.textContent = 'Accepted';
-              badge.classList.add('bg-success','text-white');
-            } else if (decision === 'declined') {
-              badge.textContent = 'Declined';
-              badge.classList.add('bg-danger','text-white');
-            } else if (decision === 'negotiating') {
-              badge.textContent = 'Negotiating…';
-              badge.classList.add('bg-info','text-black');
-            } else if (decision === 'awaiting') {
-              badge.textContent = 'Awaiting';
-              badge.classList.add('bg-warning','text-black');
-            } else {
-              badge.textContent = 'Pending';
-              badge.classList.add('bg-secondary','text-white');
-            }
-          }
-
-          function setButtonsEnabled(card, enabled) {
-            card.querySelectorAll('button[data-action]').forEach(btn => {
-              btn.disabled = !enabled;
-            });
-          }
-
-          function removeButtons(card) {
-            card.querySelectorAll('.action-confirm, .action-decline, button[data-action]').forEach(b => b.remove());
-            const btnRow = card.querySelector('.d-flex.gap-2.mt-3');
-            if (btnRow && btnRow.querySelectorAll('button').length === 0) btnRow.remove();
-          }
-
-          // ---------- Staff Availability header counts ----------
-          function updateAvailabilityHeader() {
-            const p = $('availPending');
-            const c = $('availConfirmed');
-            const d = $('availDeclined');
-            const n = $('availNegotiating');
-            const nWrap = $('availNegotiatingWrap');
-
-            // Keep header values at 0 until Trigger Surge is clicked
-            if (!surgeTriggered) {
-              if (p) p.textContent = '0';
-              if (c) c.textContent = '0';
-              if (d) d.textContent = '0';
-              if (n) n.textContent = '0';
-              if (nWrap) nWrap.classList.add('d-none');
-              return;
+            // ------------------------------------------------------------
+            // 1) Forecast helpers (VISUAL ONLY)  ✅ safe integration
+            // ------------------------------------------------------------
+            function calculateSurgePctFromPatients(inpatient, incoming) {
+              const score = (inpatient * 2) + (incoming * 4);
+              return Math.min(140, Math.round(score));
             }
 
-            let pending = 0, declined = 0, negotiating = 0, awaiting = 0, accepted = 0;
+            // ✅ Visual update ONLY (does NOT touch staff workflow)
+            function setSurgeVisual(pct) {
+              const sBar = $('surgeBar');
+              const sLabel = $('surgeLabel');
 
-            if (availabilityWrap) {
-              const cards = availabilityWrap.querySelectorAll('.staff-card');
-              cards.forEach(card => {
-                const decision = (card.dataset.decision || 'pending').toLowerCase();
-                if (decision === 'declined') declined++;
-                else if (decision === 'negotiating') negotiating++;
-                else if (decision === 'awaiting') awaiting++;
-                else if (decision === 'accepted') accepted++;
-                else pending++;
+              if (sBar) {
+                sBar.style.width = `${Math.min(100, pct)}%`;
+                sBar.classList.remove('bg-info','bg-warning','bg-danger');
+                if (pct >= 100) sBar.classList.add('bg-danger');
+                else if (pct >= 60) sBar.classList.add('bg-warning');
+                else sBar.classList.add('bg-info');
+              }
+
+              if (sLabel) {
+                if (pct >= 100) {
+                  sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>SURGE OPERATIONS';
+                  sLabel.classList.remove('text-success','text-warning');
+                  sLabel.classList.add('text-danger');
+                } else if (pct >= 60) {
+                  sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>ALERT OPERATIONS';
+                  sLabel.classList.remove('text-success','text-danger');
+                  sLabel.classList.add('text-warning');
+                } else {
+                  sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>Normal Operations';
+                  sLabel.classList.remove('text-warning','text-danger');
+                  sLabel.classList.add('text-success');
+                }
+              }
+            }
+
+            // --- Patient counters + visual forecast update ---
+            async function refreshPatientCounts() {
+              try {
+                const res = await fetch('/Home/GetPatientCounts', { cache: 'no-store' });
+                const data = await res.json();
+
+                const inpatient = (data && data.inpatient != null) ? data.inpatient : 0;
+                const incoming  = (data && data.incoming  != null) ? data.incoming  : 0;
+
+                const inpatientEl = $('surgeInpatient');
+                const incomingEl  = $('surgeIncoming');
+
+                if (inpatientEl) inpatientEl.textContent = inpatient;
+                if (incomingEl)  incomingEl.textContent  = incoming;
+
+                // ✅ VISUAL ONLY
+                const pct = calculateSurgePctFromPatients(inpatient, incoming);
+                setSurgeVisual(pct);
+              } catch (e) {
+                console.log('refreshPatientCounts failed', e);
+              }
+            }
+
+            // ------------------------------------------------------------
+            // 2) STAFF WORKFLOW (YOUR WORKING LOGIC — unchanged)
+            // ------------------------------------------------------------
+            let surgePct = 0;
+            let requiredNurses = 0;
+            let surgeTriggered = false;
+
+            let forcedDeclineIds = new Set();
+            const awaitingTimers = new WeakMap();
+
+            function calculateRequiredNurses(pct) {
+              if (pct < 100) return 0;
+              const steps = Math.floor((pct - 100) / 20);
+              return 6 + (steps * 2);
+            }
+
+            function getStaffId(card) {
+              return card?.getAttribute('data-staff-id') || '';
+            }
+
+            function updateNurseEmptyState() {
+              const empty = $('reqEmptyNurse');
+              if (!reqWrap || !empty) return;
+
+              const hasCards = reqWrap.children.length > 0;
+              empty.textContent = (requiredNurses === 0) ? 'No nurse required' : 'No nurse confirmed yet';
+              empty.style.display = hasCards ? 'none' : 'block';
+            }
+
+            function setDecisionBadge(card, decision) {
+              card.dataset.decision = decision;
+
+              const badge = card.querySelector('.decision-badge');
+              if (!badge) return;
+
+              badge.classList.remove(
+                'bg-secondary','bg-success','bg-danger','bg-info','bg-warning',
+                'text-white','text-black'
+              );
+
+              if (decision === 'confirmed') {
+                badge.textContent = 'Confirmed';
+                badge.classList.add('bg-success','text-white');
+              } else if (decision === 'accepted') {
+                badge.textContent = 'Accepted';
+                badge.classList.add('bg-success','text-white');
+              } else if (decision === 'declined') {
+                badge.textContent = 'Declined';
+                badge.classList.add('bg-danger','text-white');
+              } else if (decision === 'negotiating') {
+                badge.textContent = 'Negotiating…';
+                badge.classList.add('bg-info','text-black');
+              } else if (decision === 'awaiting') {
+                badge.textContent = 'Awaiting';
+                badge.classList.add('bg-warning','text-black');
+              } else {
+                badge.textContent = 'Pending';
+                badge.classList.add('bg-secondary','text-white');
+              }
+            }
+
+            function setButtonsEnabled(card, enabled) {
+              card.querySelectorAll('button[data-action]').forEach(btn => {
+                btn.disabled = !enabled;
               });
             }
 
-            const confirmed = reqWrap
-              ? reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"]').length
-              : 0;
+            function removeButtons(card) {
+              card.querySelectorAll('.action-confirm, .action-decline, button[data-action]').forEach(b => b.remove());
+              const btnRow = card.querySelector('.d-flex.gap-2.mt-3');
+              if (btnRow && btnRow.querySelectorAll('button').length === 0) btnRow.remove();
+            }
 
-            // Treat awaiting + accepted as pending
-            if (p) p.textContent = String(pending + awaiting + accepted);
-            if (c) c.textContent = String(confirmed);
-            if (d) d.textContent = String(declined);
-            if (n) n.textContent = String(negotiating);
-            if (nWrap) nWrap.classList.toggle('d-none', negotiating === 0);
-          }
+            function updateAvailabilityHeader() {
+              const p = $('availPending');
+              const c = $('availConfirmed');
+              const d = $('availDeclined');
+              const n = $('availNegotiating');
+              const nWrap = $('availNegotiatingWrap');
 
-          // ---------- Auto-resolve Awaiting -> Accepted/Declined ----------
-          const awaitingTimers = new WeakMap();
-
-          function cancelAutoResolve(card) {
-            const t = awaitingTimers.get(card);
-            if (t) clearTimeout(t);
-            awaitingTimers.delete(card);
-          }
-
-          function scheduleAutoResolve(card) {
-            if (!card) return;
-            if ((card.dataset.decision || '').toLowerCase() !== 'awaiting') return;
-            if (awaitingTimers.has(card)) return;
-
-            const id = getStaffId(card);
-            const delay = 2000 + Math.floor(Math.random() * 4000); // 2s–6s
-
-            const timer = setTimeout(() => {
-              awaitingTimers.delete(card);
-
-              if (!document.body.contains(card)) return;
-              if ((card.dataset.decision || '').toLowerCase() !== 'awaiting') return;
-
-              // ✅ Forced random declines: 1–2 nurses per run
-              if (forcedDeclineIds.has(id)) {
-                markDeclined(card);
+              if (!surgeTriggered) {
+                if (p) p.textContent = '0';
+                if (c) c.textContent = '0';
+                if (d) d.textContent = '0';
+                if (n) n.textContent = '0';
+                if (nWrap) nWrap.classList.add('d-none');
                 return;
               }
 
-              // ✅ Otherwise auto-accept (user must click Confirm to transfer)
-              setDecisionBadge(card, 'accepted');
-              setButtonsEnabled(card, true);
-              updateAvailabilityHeader();
-            }, delay);
+              let pending = 0, declined = 0, negotiating = 0, awaiting = 0, accepted = 0;
 
-            awaitingTimers.set(card, timer);
-          }
-
-          // ---------- Update all progress UI ----------
-          function updateProgressUI() {
-            if (!reqWrap) return;
-
-            const confirmed = reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"]').length;
-
-            if ($('reqTotalNurse')) $('reqTotalNurse').textContent = requiredNurses;
-            if ($('reqFilledNurse')) $('reqFilledNurse').textContent = confirmed;
-
-            const pct = requiredNurses === 0 ? 0 : Math.min(100, Math.round((confirmed / requiredNurses) * 100));
-            const bar = $('staffReqBar');
-            if (bar) bar.style.width = `${pct}%`;
-
-            const notifiedList = $('staffReqNotifiedList');
-            if (notifiedList) {
-              const names = Array.from(reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"] .fw-bold'))
-                .map(x => (x.textContent || '').trim())
-                .filter(Boolean)
-                .join(', ');
-              notifiedList.innerHTML = names ? `Confirmed nurses: <b>${names}</b>` : 'Confirmed nurses: —';
-            }
-
-            updateNurseEmptyState();
-            updateAvailabilityHeader();
-          }
-
-          // ---------- Move/Decline actions ----------
-          function moveToRequirements(card) {
-            if (!card || !reqWrap) return;
-
-            cancelAutoResolve(card);
-            forcedDeclineIds.delete(getStaffId(card));
-
-            card.remove();
-            removeButtons(card);
-            setDecisionBadge(card, 'confirmed');
-            reqWrap.appendChild(card);
-
-            updateProgressUI();
-          }
-
-          function markDeclined(card) {
-            if (!card) return;
-
-            cancelAutoResolve(card);
-            forcedDeclineIds.delete(getStaffId(card));
-
-            setDecisionBadge(card, 'declined');
-            setButtonsEnabled(card, false);
-
-            updateProgressUI();
-          }
-
-          // ---------- Click handlers ----------
-          availabilityWrap?.addEventListener('click', (e) => {
-            const btn = e.target.closest('button[data-action]');
-            if (!btn) return;
-
-            const action = btn.getAttribute('data-action');
-            const card = btn.closest('.staff-card');
-            if (!card) return;
-
-            const decision = (card.dataset.decision || '').toLowerCase();
-
-            if (action === 'confirm' && (decision === 'awaiting' || decision === 'accepted')) {
-              moveToRequirements(card);
-            }
-
-            if (action === 'decline') {
-              markDeclined(card);
-            }
-          });
-
-          // ---------- AI Negotiation mode ----------
-          function beginNegotiation() {
-            if (!availabilityWrap) return;
-
-            // Reset forced declines each run
-            forcedDeclineIds = new Set();
-
-            const cards = Array.from(availabilityWrap.querySelectorAll('.staff-card'));
-
-            // Phase 1: Negotiating
-            cards.forEach(card => {
-              setDecisionBadge(card, 'negotiating');
-              setButtonsEnabled(card, false);
-              cancelAutoResolve(card);
-            });
-            updateAvailabilityHeader();
-
-            // Phase 2: Awaiting -> pick 1–2 random declines -> schedule auto resolve
-            setTimeout(() => {
-              // Choose 1 or 2 random cards to force decline
-              const eligible = cards.slice();
-              const declineCount = Math.min(eligible.length, 1 + Math.floor(Math.random() * 2)); // 1 or 2
-
-              // Shuffle
-              for (let i = eligible.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [eligible[i], eligible[j]] = [eligible[j], eligible[i]];
+              if (availabilityWrap) {
+                availabilityWrap.querySelectorAll('.staff-card').forEach(card => {
+                  const decision = (card.dataset.decision || 'pending').toLowerCase();
+                  if (decision === 'declined') declined++;
+                  else if (decision === 'negotiating') negotiating++;
+                  else if (decision === 'awaiting') awaiting++;
+                  else if (decision === 'accepted') accepted++;
+                  else pending++;
+                });
               }
 
-              eligible.slice(0, declineCount).forEach(card => {
-                forcedDeclineIds.add(getStaffId(card));
-              });
+              const confirmed = reqWrap
+                ? reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"]').length
+                : 0;
 
-              // Set awaiting + enable buttons + schedule auto resolve
-              cards.forEach(card => {
-                if ((card.dataset.decision || '').toLowerCase() === 'negotiating') {
-                  setDecisionBadge(card, 'awaiting');
-                  setButtonsEnabled(card, true);
-                  scheduleAutoResolve(card);
+              if (p) p.textContent = String(pending + awaiting + accepted);
+              if (c) c.textContent = String(confirmed);
+              if (d) d.textContent = String(declined);
+              if (n) n.textContent = String(negotiating);
+              if (nWrap) nWrap.classList.toggle('d-none', negotiating === 0);
+            }
+
+            function cancelAutoResolve(card) {
+              const t = awaitingTimers.get(card);
+              if (t) clearTimeout(t);
+              awaitingTimers.delete(card);
+            }
+
+            function scheduleAutoResolve(card) {
+              if (!card) return;
+              if ((card.dataset.decision || '').toLowerCase() !== 'awaiting') return;
+              if (awaitingTimers.has(card)) return;
+
+              const id = getStaffId(card);
+              const delay = 2000 + Math.floor(Math.random() * 4000);
+
+              const timer = setTimeout(() => {
+                awaitingTimers.delete(card);
+                if (!document.body.contains(card)) return;
+                if ((card.dataset.decision || '').toLowerCase() !== 'awaiting') return;
+
+                if (forcedDeclineIds.has(id)) {
+                  markDeclined(card);
+                  return;
                 }
-              });
 
-              updateAvailabilityHeader();
-            }, 1400);
-          }
+                setDecisionBadge(card, 'accepted');
+                setButtonsEnabled(card, true);
+                updateAvailabilityHeader();
+              }, delay);
 
-          // ---------- Surge UI ----------
-          function setSurgeUI(pct) {
-            surgePct = pct;
-
-            const sBar = $('surgeBar');
-            const sLabel = $('surgeLabel');
-
-            if (sBar) {
-              sBar.style.width = `${Math.min(100, pct)}%`;
-              sBar.classList.remove('bg-info','bg-warning','bg-danger');
-              if (pct >= 100) sBar.classList.add('bg-danger');
-              else if (pct >= 60) sBar.classList.add('bg-warning');
-              else sBar.classList.add('bg-info');
+              awaitingTimers.set(card, timer);
             }
 
-            if (sLabel) {
-              if (pct >= 100) {
-                sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>SURGE OPERATIONS';
-                sLabel.classList.remove('text-success','text-warning');
-                sLabel.classList.add('text-danger');
-              } else if (pct >= 60) {
-                sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>ALERT OPERATIONS';
-                sLabel.classList.remove('text-success','text-danger');
-                sLabel.classList.add('text-warning');
-              } else {
-                sLabel.innerHTML = '<i class="fa-solid fa-shield-halved me-2"></i>Normal Operations';
-                sLabel.classList.remove('text-warning','text-danger');
-                sLabel.classList.add('text-success');
+            function updateProgressUI() {
+              if (!reqWrap) return;
+
+              const confirmed = reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"]').length;
+
+              if ($('reqTotalNurse')) $('reqTotalNurse').textContent = requiredNurses;
+              if ($('reqFilledNurse')) $('reqFilledNurse').textContent = confirmed;
+
+              const pct = requiredNurses === 0 ? 0 : Math.min(100, Math.round((confirmed / requiredNurses) * 100));
+              const bar = $('staffReqBar');
+              if (bar) bar.style.width = `${pct}%`;
+
+              const notifiedList = $('staffReqNotifiedList');
+              if (notifiedList) {
+                const names = Array.from(reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"] .fw-bold'))
+                  .map(x => (x.textContent || '').trim())
+                  .filter(Boolean)
+                  .join(', ');
+                notifiedList.innerHTML = names ? `Confirmed nurses: <b>${names}</b>` : 'Confirmed nurses: —';
               }
+
+              updateNurseEmptyState();
+              updateAvailabilityHeader();
             }
 
-            const showReq = pct >= 100;
-            if ($('staffReqFeedController')) $('staffReqFeedController').style.display = showReq ? 'block' : 'none';
-            if ($('staffReqHiddenState')) $('staffReqHiddenState').style.display = showReq ? 'none' : 'block';
+            function moveToRequirements(card) {
+              if (!card || !reqWrap) return;
 
-            requiredNurses = calculateRequiredNurses(pct);
+              cancelAutoResolve(card);
+              forcedDeclineIds.delete(getStaffId(card));
 
-            if (availabilityWrap) {
-              availabilityWrap.style.display = surgeTriggered ? 'block' : 'none';
+              card.remove();
+              removeButtons(card);
+              setDecisionBadge(card, 'confirmed');
+              reqWrap.appendChild(card);
+
+              updateProgressUI();
             }
 
-            updateProgressUI();
-          }
+            function markDeclined(card) {
+              if (!card) return;
 
-          // ---------- Bind Trigger Surge button ----------
-          const triggerBtn = $('btnTriggerSurge');
-          if (triggerBtn) {
-            triggerBtn.addEventListener('click', () => {
+              cancelAutoResolve(card);
+              forcedDeclineIds.delete(getStaffId(card));
+
+              setDecisionBadge(card, 'declined');
+              setButtonsEnabled(card, false);
+
+              updateProgressUI();
+            }
+
+            availabilityWrap?.addEventListener('click', (e) => {
+              const btn = e.target.closest('button[data-action]');
+              if (!btn) return;
+
+              const action = btn.getAttribute('data-action');
+              const card = btn.closest('.staff-card');
+              if (!card) return;
+
+              const decision = (card.dataset.decision || '').toLowerCase();
+
+              if (action === 'confirm' && (decision === 'awaiting' || decision === 'accepted')) {
+                moveToRequirements(card);
+              }
+
+              if (action === 'decline') {
+                markDeclined(card);
+              }
+            });
+
+            function beginNegotiation() {
+              if (!availabilityWrap) return;
+
+              forcedDeclineIds = new Set();
+              const cards = Array.from(availabilityWrap.querySelectorAll('.staff-card'));
+
+              cards.forEach(card => {
+                setDecisionBadge(card, 'negotiating');
+                setButtonsEnabled(card, false);
+                cancelAutoResolve(card);
+              });
+              updateAvailabilityHeader();
+
+              setTimeout(() => {
+                const eligible = cards.slice();
+                const declineCount = Math.min(eligible.length, 1 + Math.floor(Math.random() * 2));
+
+                for (let i = eligible.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [eligible[i], eligible[j]] = [eligible[j], eligible[i]];
+                }
+
+                eligible.slice(0, declineCount).forEach(card => forcedDeclineIds.add(getStaffId(card)));
+
+                cards.forEach(card => {
+                  if ((card.dataset.decision || '').toLowerCase() === 'negotiating') {
+                    setDecisionBadge(card, 'awaiting');
+                    setButtonsEnabled(card, true);
+                    scheduleAutoResolve(card);
+                  }
+                });
+
+                updateAvailabilityHeader();
+              }, 1400);
+            }
+
+            function setSurgeUI(pct) {
+              surgePct = pct;
+
+              const showReq = pct >= 100;
+              if ($('staffReqFeedController')) $('staffReqFeedController').style.display = showReq ? 'block' : 'none';
+              if ($('staffReqHiddenState')) $('staffReqHiddenState').style.display = showReq ? 'none' : 'block';
+
+              requiredNurses = calculateRequiredNurses(pct);
+
+              if (availabilityWrap) {
+                availabilityWrap.style.display = surgeTriggered ? 'block' : 'none';
+              }
+
+              updateProgressUI();
+            }
+
+            // ✅ DELEGATED trigger handler so it works even if button is in _Layout
+            document.addEventListener('click', (e) => {
+              const btn = e.target.closest('#btnTriggerSurge');
+              if (!btn) return;
+
               surgeTriggered = true;
               if (availabilityWrap) availabilityWrap.style.display = 'block';
 
@@ -512,11 +545,19 @@
               beginNegotiation();
               updateAvailabilityHeader();
             });
-          }
 
-          // Initial state
-          setSurgeUI(0);
-          updateAvailabilityHeader();
+            // ------------------------------------------------------------
+            // INIT
+            // ------------------------------------------------------------
+            setInterval(refreshPatientCounts, 2000);
+            refreshPatientCounts();
+
+            setSurgeUI(0);
+            updateAvailabilityHeader();
+
+          } catch (err) {
+            console.error('Index.cshtml script failed:', err);
+          }
         })();
     </script>
 }

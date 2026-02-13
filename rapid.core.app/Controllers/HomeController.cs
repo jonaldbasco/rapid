@@ -340,5 +340,16 @@ namespace rapid.core.app.Controllers
             return PartialView("_NurseRequestList", requests);
         }
 
+        [HttpGet]
+        public IActionResult GetPatientCounts()
+        {
+            var patients = PatientStore.GetActive();
+
+            var inpatient = patients.Count(p => p.Status == PatientStatus.InRoom);
+            var incoming = patients.Count(p => p.Status == PatientStatus.Waiting);
+
+            return Json(new { inpatient, incoming });
+        }
+
     }
 }
