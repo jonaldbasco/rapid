@@ -116,7 +116,7 @@ span#statusPill {
 
 /* progress */
 .progress {
-    height: 8px;
+    height: 12px;
     background: #02101f;
 }
 
