@@ -91,6 +91,15 @@ namespace rapid.core.app.Agents
 
                 if (nurseResponse == "Accept")
                 {
+                    //var id = negotiation.StaffId;
+                    //var staff =  await _db.Staff.Where(s => s.Id == id).FirstOrDefault();
+
+                    //if (staff == null)
+                    //    return;
+
+                    //staff.Status = "Accepted";
+
+                    //await _db.SaveChangesAsync();
                     //negotiation.Status = "Accepted";
                     //await SaveMessage(negotiationId, negotiation.NurseName,
                     //    "I can take the shift.", negotiation.CurrentRound);

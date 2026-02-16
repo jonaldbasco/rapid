@@ -7,17 +7,12 @@ namespace rapid.core.app.Agents
 {
     public class AnalyticsAgent
     {
-        private readonly OpenAIService _openAi;
-        private readonly OpenAIClass openAi;
+        private readonly OpenAIService _ai;
 
-        //public async Task<List<SurgeForecast>> ForecastAsync(RapidDBContext context)//SurgeContext context)
-        //{
-        //    var prompt = PromptBuilder.BuildForecastPrompt(context);
-
-        //    var response = await openAi.ChatAsync(prompt);
-
-        //    return JsonSerializer.Deserialize<List<SurgeForecast>>(response);
-        //}
+        public AnalyticsAgent(OpenAIService ai)
+        {
+            _ai = ai;
+        }
 
         public Task<List<StaffingForecast>> ForecastAsync()
         {

@@ -1,4 +1,5 @@
-﻿using rapid.core.app.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using rapid.core.app.Models;
 using rapid.core.app.Source;
 using System;
 
@@ -27,14 +28,11 @@ namespace rapid.core.app.Agents
                 ))
                 .ToList();
         }
-        //public List<(string Unit, int Shortage)> Detect(
-        //        List<StaffingForecast> forecasts,
-        //        Dictionary<string, int> current)
-        //{
-        //    return forecasts
-        //        .Where(f => f.ForecastDemand > current[f.Unit])
-        //        .Select(f => (f.Unit, f.ForecastDemand - current[f.Unit]))
-        //        .ToList();
-        //}
+        public async Task<List<StaffClass>> GetStaff()
+        {
+            return await _db.Staff
+            .Where(s => s.Role == "RN")
+            .ToListAsync();
+        }
     }
 }

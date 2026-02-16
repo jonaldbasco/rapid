@@ -1,7 +1,7 @@
 ﻿using rapid.core.app.Models;
 using rapid.core.app.Source;
 
-namespace rapid.core.app.Agents
+namespace rapid.core.app.Interface
 {
     public interface IAgent
     {

@@ -178,13 +178,15 @@
 
 
                 <div id="staffFeedScrollContainer">
-                    @foreach (var staff in Model.Staff.Where(s => s.Role == "nurse"))
+                    @await Html.PartialAsync("_StaffList", Model.Staff)
+                    
+@*                     @foreach (var staff in Model.Staff.Where(s => s.Role == "nurse"))
                     {
                     @await Html.PartialAsync("_StaffCard", staff, new ViewDataDictionary(ViewData) {
                             ["Mode"] = "availability",
                             ["Decision"] = rapid.core.app.Services.StaffCallDecisionStore.GetDecision(staff.Id)
                        })
-                    }
+                    } *@
                 </div>
             </div>
 
@@ -577,5 +579,18 @@
             console.error('Index.cshtml script failed:', err);
           }
         })();
+         let lastUpdate = new Date($('#staffFeedScrollContainer').find('#staffList').data('lastupdate'));
+        function loadStaffFeed() {
+            $.get('/Dashboard/StaffListPartial', { lastUpdate: lastUpdate.toISOString() }, function(html) {
+                if (html) {
+                    // Replace only if server returned updated HTML
+                    $('#staffFeedScrollContainer').html(html);
+
+                    // Update lastUpdate from the new partial
+                    lastUpdate = new Date($('#staffFeedScrollContainer').find('#staffList').data('lastupdate'));
+                }
+            });
+        }
+       // setInterval(loadStaffFeed, 30000);
     </script>
 }

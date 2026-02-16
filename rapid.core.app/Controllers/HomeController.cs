@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Maui.Devices.Sensors;
 using rapid.core.app.Agents;
+using rapid.core.app.Interface;
 using rapid.core.app.Models;
 using rapid.core.app.Services;
 using rapid.core.app.Source;
@@ -17,30 +18,50 @@ namespace rapid.core.app.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly RapidDBContext _db;
         private readonly OrchestratorAgent _orchestrator;
-        public HomeController(ILogger<HomeController> logger, OrchestratorAgent orchestrator, RapidDBContext db)
+        private readonly IStaffService _staffService;
+        public HomeController(ILogger<HomeController> logger, OrchestratorAgent orchestrator, RapidDBContext db, IStaffService staffService)
         {
             _logger = logger;
             _orchestrator = orchestrator;
             _db = db;
+            _staffService = staffService;
         }
 
         // ============================
         // OPS / SURGE DASHBOARD
         // ============================
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             //Bringdown();
 
             var patients = PatientStore.GetActive();
-            var staff = StaffStore.GetAll();
-
+            //var staff = StaffStore.GetAll();
+            var staff = await _staffService.GetStaffAsync();
             var vm = new DashboardViewModel
             {
-                Patients = patients.ToList(),
-                Staff = staff.ToList()
+                Patients = patients.ToList()
             };
 
             return View(vm);
+        }
+        public async Task<IActionResult> StaffListPartial(DateTime? lastUpdate)
+        {
+            var staff = await _staffService.GetStaffAsync();
+
+            //var latestUpdate = staff.Max(s => s.UpdatedAt);
+
+            //if (lastUpdate.HasValue && lastUpdate.Value >= latestUpdate)
+            //{
+            //    // No changes, return empty result
+            //    return new EmptyResult();
+            //}
+            //// Pass the latest timestamp via data attribute
+            //ViewData["LatestUpdate"] = latestUpdate;
+            var vm = new DashboardViewModel
+            {
+                Staff = staff
+            };
+            return PartialView("_StaffList", staff);
         }
 
         [HttpPost]
@@ -285,6 +306,7 @@ namespace rapid.core.app.Controllers
             }
             await RunSurge();
 
+
             SurgeStore.ActivateSurge();
             var _id = Guid.NewGuid().ToString("N");
 
@@ -382,6 +404,7 @@ namespace rapid.core.app.Controllers
 
             return Json(new { inpatient, incoming });
         }
+
 
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
 using rapid.core.app.Agents;
 using rapid.core.app.Hub;
+using rapid.core.app.Interface;
 using rapid.core.app.Models;
 using rapid.core.app.Plugin;
 using rapid.core.app.Prompts;
@@ -43,7 +44,7 @@ var connectionString = builder.Configuration.GetConnectionString("DatabaseConnec
 builder.Services.AddDbContext<RapidDBContext>(options =>
     options.UseSqlite(connectionString));
 
-//Adding services agents
+//Agents Services
 builder.Services.AddScoped<AnalyticsAgent>();
 builder.Services.AddScoped<StaffingAgent>();
 builder.Services.AddScoped<NegotiationAgent>();
@@ -52,6 +53,8 @@ builder.Services.AddScoped<OrchestratorAgent>();
 //OpenAi Service
 builder.Services.AddSingleton<OpenAIService>();
 
+//Staffing Services
+builder.Services.AddScoped<IStaffService, StaffService>();
 // -----------------------------
 // Register Kernel
 // -----------------------------

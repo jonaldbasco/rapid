@@ -44,7 +44,7 @@ namespace rapid.core.app.Agents
                 //await _hub.Clients.All.SendAsync(
                 //    "Update",
                 //    $"⚠️ {shortage.Unit} shortage: {shortage.Shortage}");
-
+                await _staffing.GetStaff();
                 await _negotiation.RunAsync(shortage.Unit, shortage.Shortage);
             }    
         }

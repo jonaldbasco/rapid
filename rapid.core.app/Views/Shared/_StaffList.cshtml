@@ -1,0 +1,9 @@
+﻿@model List<StaffClass>
+
+    <div id="staffList" data-lastupdate="@ViewData["LatestUpdate"]">
+
+        @foreach (var staff in Model)
+        {
+            @await Html.PartialAsync("_StaffCard", staff)
+        }
+    </div>

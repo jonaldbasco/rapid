@@ -166,6 +166,5 @@ namespace rapid.core.app.Services
                     s.Status = status;
             }
         }
-
     }
 }
