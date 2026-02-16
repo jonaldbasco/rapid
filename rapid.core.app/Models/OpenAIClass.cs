@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenAI.Responses;
+using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
@@ -20,6 +21,14 @@ namespace rapid.core.app.Models
                 model: _configuration["OpenAI:Model"],
                 apiKey: _configuration["OpenAI:APIKey"]
             );
+        }
+
+        //Chat Request
+        public async Task ChatAsync(string text)
+        {
+            //OpenAIResponse response = client.CreateResponse(text);
+            //string result = response.GetOutputText();
+            //return JsonSerializer.Deserialize<List<SurgeForecast>>(response);
         }
 
         //Text Request

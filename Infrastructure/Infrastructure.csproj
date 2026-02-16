@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\rapid.core.app\rapid.core.app.csproj" />
+  </ItemGroup>
+
 </Project>

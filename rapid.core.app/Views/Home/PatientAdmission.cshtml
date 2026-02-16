@@ -1,0 +1,40 @@
+﻿@model PatientAdmission
+@{
+    ViewData["Title"] = "Patient Admission";
+}
+@* <div>
+    <button id="btnAddPatient" asp-controller="Home" asp-action="PatientAdmission" class="btn btn-dark border border-secondary d-flex align-items-center gap-2">
+        <i class="fa-solid fa-user-plus"></i>
+        Add Patient
+    </button>
+</div> *@
+<div class="container-fluid py-3">
+    <div class="row g-3">
+        <div class="col-12 col-lg-6">
+
+            <div class="card p-3 mb-3">
+                <div class="d-flex justify-content-between">
+                    <div class="fw-bold">Staffing Requirements</div>
+                    <div class="muted">0/0</div>
+                </div>
+                <div class="empty">No active requirements</div>
+            </div>
+
+            <div id="erFeedCard" class="card p-3">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="fw-bold">ER Admission Feed</div>
+                    <div class="muted">0 recent</div>
+                </div>
+
+                <section id="patientsContainer">
+                    <div class="patients">
+                        <div class="fw-bold">@Model.PatientName</div>
+                        <div class="muted">@Model.AcuityLevel</div>
+                        <span class="badge badge-dark2">Off Duty</span>
+                    </div>
+                    <div id="emptyState" class="empty">No recent admissions</div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

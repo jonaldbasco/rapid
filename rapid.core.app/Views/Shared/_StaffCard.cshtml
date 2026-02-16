@@ -1,0 +1,80 @@
+﻿@model rapid.core.app.Models.StaffMember
+
+@{
+    // "availability" or "requirements"
+    var mode = (ViewData["Mode"] as string ?? "availability").ToLowerInvariant();
+    // Optional: pre-tag decision state for initial rendering
+    var decision = (ViewData["Decision"] as string ?? "pending").ToLowerInvariant();
+    var isAvailability = mode == "availability";
+    var isRequirements = mode == "requirements";
+}
+
+<div class="staff mb-2 staff-card"
+     data-staff-id="@Model.Id"
+     data-role="@Model.Role"
+     data-decision="@decision">
+
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <div class="fw-bold">@Model.Name</div>
+            <div class="muted">@Model.Specialty</div>
+        </div>
+
+        <div class="d-flex gap-2 align-items-center">
+            <!-- Current duty badge -->
+            @if (Model.Status == "on_duty")
+            {
+                <span class="badge bg-success text-white status-badge">On Duty</span>
+            }
+            else if (Model.Status == "available")
+            {
+                <span class="badge bg-info text-black status-badge">Available</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary text-muted-foreground status-badge">Off Duty</span>
+            }
+
+            <!-- Decision badge (updated by JS) -->
+            <span class="badge bg-secondary text-white decision-badge">
+                @(decision == "confirmed" ? "Confirmed"
+                                : decision == "accepted" ? "Accepted"
+                                : decision == "declined" ? "Declined"
+                                : decision == "negotiating" ? "Negotiating…"
+                                : decision == "awaiting" ? "Awaiting"
+                                : "Pending")
+            </span>
+        </div>
+    </div>
+
+    <div class="muted d-flex align-items-center gap-2 mt-2 justify-content-between">
+        <div class="d-flex gap-2">
+            <div class="muted">@Model.DistanceMinutes<span>m</span></div>
+            <div class="muted">@Math.Round(Model.ResponseRate * 100)<span>% resp</span></div>
+        </div>
+        <div class="d-flex gap-1 flex-wrap justify-content-end">
+            @foreach (var cert in Model.Certifications)
+            {
+                <span class="px-1.5 py-0.5 rounded bg-secondary text-[10px] text-muted-foreground">@cert</span>
+            }
+        </div>
+    </div>
+
+    @if (isAvailability)
+    {
+        <!-- Buttons only exist in Availability mode -->
+        <div class="d-flex gap-2 mt-3">
+            <button type="button"
+                    class="btn btn-success btn-sm w-50 action-confirm"
+                    data-action="confirm">
+                Confirm
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline-danger btn-sm w-50 action-decline"
+                    data-action="decline">
+                Decline
+            </button>
+        </div>
+    }
+</div>

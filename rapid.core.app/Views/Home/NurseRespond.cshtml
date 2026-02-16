@@ -1,0 +1,53 @@
+﻿@model NurseRespondViewModel
+
+<div class="nurse-phone-frame">
+    <div class="nurse-phone-notch"></div>
+
+    <div class="nurse-phone-content">
+
+        <a href="/Home/Nurse">← Back</a>
+
+        <div class="card mt-3 @(Model.Request.IsCritical ? "alert-border" : "")">
+            <div class="card-body">
+
+                @if (Model.Request.IsCritical)
+                {
+                    <span class="badge bg-danger mb-2">CRITICAL SURGE</span>
+                }
+
+                <h5 class="fw-bold">@Model.Request.Unit</h5>
+                <div class="muted mb-3">@Model.Request.Description</div>
+
+                <div class="row text-center mb-3">
+                    <div class="col-6">
+                        <div class="label">Duration</div>
+                        <div class="fw-bold">@Model.Request.DurationHours hrs</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="label">Pay</div>
+                        <div class="fw-bold text-info">@Model.Request.PayMultiplier x</div>
+                    </div>
+                </div>
+
+                <div class="label mb-1">Location</div>
+                <div class="muted mb-3">@Model.Request.Location</div>
+
+                <form method="post" action="/Home/NurseAccept">
+                    <input type="hidden" name="requestId" value="@Model.Request.Id" />
+                    <button class="btn btn-success w-100 mb-2">
+                        Accept & Respond
+                    </button>
+                </form>
+
+                <form method="post" action="/Home/NurseDecline">
+                    <input type="hidden" name="requestId" value="@Model.Request.Id" />
+                    <button class="btn btn-outline-danger w-100">
+                        Decline
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

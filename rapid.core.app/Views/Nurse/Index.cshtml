@@ -1,0 +1,208 @@
+﻿@{
+    ViewData["Title"] = "Negotiation Chat";
+    var negotiationId = ViewBag.NegotiationId;
+}
+<div class="nurse-phone-frame">
+    <div class="nurse-phone-notch"></div>
+
+    <div class="nurse-phone-content">
+
+        <a href="/Home/Nurse">← Back</a>
+
+        <div class="card mt-3">
+            <div class="card-body">
+@* 
+                @if (Model.Request.IsCritical)
+                {
+                    <span class="badge bg-danger mb-2">CRITICAL SURGE</span>
+                }
+
+                <h5 class="fw-bold">@Model.Request.Unit</h5>
+                <div class="muted mb-3">@Model.Request.Description</div>
+
+                <div class="row text-center mb-3">
+                    <div class="col-6">
+                        <div class="label">Duration</div>
+                        <div class="fw-bold">@Model.Request.DurationHours hrs</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="label">Pay</div>
+                        <div class="fw-bold text-info">@Model.Request.PayMultiplier x</div>
+                    </div>
+                </div>
+
+                <div class="label mb-1">Location</div>
+                <div class="muted mb-3">@Model.Request.Location</div>
+
+                <form method="post" action="/Home/NurseAccept">
+                    <input type="hidden" name="requestId" value="@Model.Request.Id" />
+                    <button class="btn btn-success w-100 mb-2">
+                        Accept & Respond
+                    </button>
+                </form>
+
+                <form method="post" action="/Home/NurseDecline">
+                    <input type="hidden" name="requestId" value="@Model.Request.Id" />
+                    <button class="btn btn-outline-danger w-100">
+                        Decline
+                    </button>
+                </form> *@
+                <input id="negotiationId" value = "@ViewBag.NegotiationId" type="hidden"/>
+                <div class="chat-shell">
+                    <!-- Header -->
+                    <div class="chat-header">
+                        <div>
+                            <h6>Surge Staffing Negotiation</h6>
+                            <span class="sub">
+                                Unit: @ViewBag.Unit | Nurse: @ViewBag.NurseName
+                            </span>
+                        </div>
+                        <div class="status">LIVE</div>
+                    </div>
+
+                    <!-- Messages -->
+                    <div id="chatWindow" class="chat-window"></div>
+
+                    <!-- Input -->
+                    <div class="chat-input">
+                        <input id="nurseMessage"
+                               placeholder="Type your reply..."
+                               autocomplete="off" />
+                        <button id="sendReply">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    const negotiationId = parseInt($("#negotiationId").val());
+
+        function renderMessage(m) {
+        return `
+          <div class="msg ${m.sender}">
+            <div class="bubble">
+              <span class="sender">${m.sender}</span>
+              <div class="text">${m.message}</div>
+            </div>
+          </div>`;
+    }
+
+        function loadChat() {
+        $.get("/Negotiation/GetMessages",
+            { negotiationId },
+            msgs => {
+                $("#chatWindow").html("");
+                msgs.forEach(m => {
+                    $("#chatWindow").append(renderMessage(m));
+                });
+                $("#chatWindow").scrollTop(
+                    $("#chatWindow")[0].scrollHeight
+                );
+            });
+    }
+
+    $("#sendReply").on("click", function () {
+        const text = $("#nurseMessage").val();
+        if (!text) return;
+
+        const $btn = $(this);
+        $btn.prop("disabled", true);
+
+        $("#chatWindow").append(renderMessage({
+            sender: "You",
+            message: text
+        }));
+
+        $.ajax({
+            url: "/Negotiation/NurseReply",
+            type: "POST",
+            data: {
+                negotiationId: negotiationId,
+                message: text
+            }
+        })
+        .done(function () {
+            $("#nurseMessage").val("");
+            loadChat();
+        })
+        .fail(function (xhr) {
+            alert(xhr.responseText || "Failed to send message");
+        })
+        .always(function () {
+            $btn.prop("disabled", false);
+        });
+    });
+
+    //setInterval(loadChat, 2000);
+    loadChat();
+    
+</script>
+
+
+
+
+   @*  // $(document).ready(() => {
+
+    //   $("#chatWindow").append(
+    //   `<div class="msg AI"><i>AI is typing…</i></div>`);
+
+    //   // $.post("/Negotiation/NextRound", { negotiationId }, loadChat);
+
+    // });
+
+    // function loadChat() {
+    //     $.get("/Negotiation/GetMessages",
+    //         { negotiationId },
+    //         msgs => {
+    //             $("#chatWindow").html("");
+    //             msgs.forEach(m => {
+    //                 $("#chatWindow").append(
+    //                     `<div class="msg ${m.sender}">
+    //                         <b>${m.sender}:</b> ${m.message}
+    //                      </div>`
+    //                 );
+    //             });
+    //             $("#chatWindow").scrollTop(
+    //                 $("#chatWindow")[0].scrollHeight
+    //             );
+    //         });
+    // }
+
+    // $("#sendReply").click(() => {
+    //     const text = $("#nurseMessage").val();
+    //     if (!text) return;
+
+    //     $("#sendReply").prop("disabled", true);
+
+    //     $.post("/Negotiation/NurseReply",
+    //         { negotiationId, message: text },
+    //         () => {
+    //             $("#nurseMessage").val("");
+    //             $("#sendReply").prop("disabled", false);
+    //             loadChat();
+    //         });
+    // });
+
+    // setInterval(loadChat, 2500);
+    // loadChat();
+        //     $("#sendReply").click(() => {
+    //     const text = $("#nurseMessage").val();
+    //     if (!text) return;
+
+    //     $("#sendReply").prop("disabled", true);
+
+    //     $("#chatWindow").append(renderMessage({
+    //         sender: "You",
+    //         message: text
+    //     }));
+    //     debugger;
+    //     $.post("/Negotiation/NurseReply",
+    //         { negotiationId, message: text },
+    //         () => {
+    //             $("#nurseMessage").val("");
+    //             $("#sendReply").prop("disabled", false);
+    //             loadChat();
+    //         });
+    // });*@

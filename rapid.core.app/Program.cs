@@ -1,9 +1,15 @@
-using rapid.core.app.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
+using rapid.core.app.Agents;
+using rapid.core.app.Hub;
+using rapid.core.app.Models;
 using rapid.core.app.Plugin;
+using rapid.core.app.Prompts;
+using rapid.core.app.Services;
+using rapid.core.app.Source;
+using System;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,12 +36,21 @@ builder.WebHost.ConfigureKestrel((context, options) =>
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
 
-//var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
-//builder.Services.AddDbContext<AicoDBContext>(options =>
-//    options.UseSqlite(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
+builder.Services.AddDbContext<RapidDBContext>(options =>
+    options.UseSqlite(connectionString));
 
+//Adding services agents
+builder.Services.AddScoped<AnalyticsAgent>();
+builder.Services.AddScoped<StaffingAgent>();
+builder.Services.AddScoped<NegotiationAgent>();
+builder.Services.AddScoped<OrchestratorAgent>();
+
+//OpenAi Service
+builder.Services.AddSingleton<OpenAIService>();
 
 // -----------------------------
 // Register Kernel
@@ -61,6 +76,16 @@ builder.Services.AddSingleton<Kernel>(sp =>
     return kernel;
 });
 
+//Session Services
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -83,6 +108,8 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession(); 
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -90,5 +117,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");
+
+//app.MapHub<SurgeHub>("/SurgeHub");
 
 app.Run();

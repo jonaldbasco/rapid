@@ -1,15 +1,40 @@
-﻿namespace rapid.core.app.Agents
+﻿using rapid.core.app.Models;
+using rapid.core.app.Source;
+using System;
+
+namespace rapid.core.app.Agents
 {
     public class StaffingAgent
     {
-        public List<(string Unit, int Shortage)> Detect(
-                List<StaffingForecast> forecasts,
-                Dictionary<string, int> current)
+        private readonly RapidDBContext _db;
+
+        public StaffingAgent(RapidDBContext db)
         {
+            _db = db;
+        }
+        public List<(string Unit, int Shortage)> Detect(
+        List<StaffingForecast> forecasts)
+        {
+            var units = _db.Units
+                .ToDictionary(u => u.Name, u => u.CurrentStaff);
+
             return forecasts
-                .Where(f => f.ForecastDemand > current[f.Unit])
-                .Select(f => (f.Unit, f.ForecastDemand - current[f.Unit]))
+                .Where(f => units.ContainsKey(f.Unit))
+                .Where(f => f.ForecastDemand > units[f.Unit])
+                .Select(f => (
+                    f.Unit,
+                    f.ForecastDemand - units[f.Unit]
+                ))
                 .ToList();
         }
+        //public List<(string Unit, int Shortage)> Detect(
+        //        List<StaffingForecast> forecasts,
+        //        Dictionary<string, int> current)
+        //{
+        //    return forecasts
+        //        .Where(f => f.ForecastDemand > current[f.Unit])
+        //        .Select(f => (f.Unit, f.ForecastDemand - current[f.Unit]))
+        //        .ToList();
+        //}
     }
 }

@@ -3,6 +3,7 @@ using rapid.core.app.Services;
 using rapid.core.app.Source;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SemanticKernel;
+using Newtonsoft.Json;
 
 namespace rapid.core.app.Controllers
 {
