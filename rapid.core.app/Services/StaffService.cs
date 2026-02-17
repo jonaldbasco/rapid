@@ -30,7 +30,7 @@ namespace rapid.core.app.Services
 
             foreach (var nurse in staffs)
             {
-                var cached = _db.NegotiationSummarys
+                var cached = _db.Summary
                     .FirstOrDefault(n => n.StaffId == nurse.Id);
 
                 if (cached != null)

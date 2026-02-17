@@ -72,13 +72,13 @@
                             </span> *@
 
                             <!-- Reset Trigger Surge -->
-                            <button class="btn btn-outline-danger d-flex align-items-center gap-2"
+@*                             <button class="btn btn-outline-danger d-flex align-items-center gap-2"
                                     id="btnResetSurge"
-                                    style="display:none;"
+                                    style="display:none; "
                                     onclick="resetSurge()">
                                 <i class="fa-solid fa-rotate-left"></i>
                                 Reset Surge
-                            </button>
+                            </button> *@
 
                             <!-- Trigger Surge -->
                             <button class="btn btn-warning text-dark d-flex align-items-center gap-2"
@@ -171,10 +171,12 @@
 
     <script>
         (function () {
+            const trgrBtn = document.getElementById("btnTriggerSurge");
             async function updateSurgeButtons() {
                 const triggerBtn = document.getElementById("btnTriggerSurge");
-                const resetBtn = document.getElementById("btnResetSurge");
-                if (!triggerBtn || !resetBtn) return;
+                //const resetBtn = document.getElementById("btnResetSurge");
+                // if (!triggerBtn || !resetBtn) return;
+                if (triggerBtn) return;
 
                 try {
                     const res = await fetch("/Home/GetSurgeStatus");
@@ -184,60 +186,64 @@
                         triggerBtn.disabled = true;
                         triggerBtn.classList.add("disabled");
                         triggerBtn.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Surge Active';
-                        resetBtn.style.display = "none";
+                        //resetBtn.style.display = "none";
                     } else {
                         triggerBtn.disabled = false;
                         triggerBtn.classList.remove("disabled");
                         triggerBtn.innerHTML = '<i class="fa-solid fa-play"></i> Trigger Surge';
-                        resetBtn.style.display = "none";
+                        //resetBtn.style.display = "none";
                     }
                 } catch (e) {
                     console.error("Failed to fetch surge status", e);
                 }
-                triggerBtn.addEventListener("click", function() {
-                    $.ajax({
-                        url: '@Url.Action("TriggerSurge", "Home")', // Replace with your controller name
-                        type: 'POST', // HTTP method
-                        dataType: 'json', // Expecting JSON response
-                        success: function(response) {
-
-                            // Update the response message container with the success or error message
-                            if (response.success) {
-                                //alert(response.message); // Success message from the server
-                            } else {
-                                alert('Error: ' + response.message); // Error message from the server
-                            }
-                        },
-                        error: function(xhr, status, error) {
-
-                            alert('Error: ' + error);
-                        }
-                    });
-                });
             }
 
-            window.resetSurge = async function () {
-                const resetBtn = document.getElementById("btnResetSurge");
-                if (resetBtn) resetBtn.disabled = true;
+            // window.resetSurge = async function () {
+            //     const resetBtn = document.getElementById("btnResetSurge");
+            //     if (resetBtn) resetBtn.disabled = true;
 
-                try {
-                    await fetch("/Home/ResetSurge", { method: "POST" });
-                    await updateSurgeButtons();
-                    location.reload();
-                } catch (e) {
-                    console.error("Reset surge failed", e);
-                } finally {
-                    if (resetBtn) resetBtn.disabled = false;
-                }
-            };
+            //     try {
+            //         await fetch("/Home/ResetSurge", { method: "POST" });
+            //         await updateSurgeButtons();
+            //         location.reload();
+            //     } catch (e) {
+            //         console.error("Reset surge failed", e);
+            //     } finally {
+            //         if (resetBtn) resetBtn.disabled = false;
+            //     }
+            // };
+            // document.addEventListener("DOMContentLoaded", function() {
+            //     var trgrBtn = document.getElementById("btnTriggerSurge");
+            //     trgrBtn.addEventListener("click", function() {
+            //         $.ajax({
+            //             url: '@Url.Action("TriggerSurge", "Home")', // Replace with your controller name
+            //             type: 'POST', // HTTP method
+            //             dataType: 'json', // Expecting JSON response
+            //             success: function(response) {
 
+            //                 // Update the response message container with the success or error message
+            //                 if (response.success) {
+            //                     console.log(response.message); // Success message from the server
+            //                 } else {
+            //                     console.log(response.message);
+            //                     alert('Error: ' + response.message); // Error message from the server
+            //                 }
+            //             },
+            //             error: function(xhr, status, error) {
+            //                 console.log(response.message);
+            //                 alert('Error: ' + error);
+            //             }
+            //         });
+            //     });
+            // });
             document.addEventListener("DOMContentLoaded", updateSurgeButtons);
             //setInterval(updateSurgeButtons, 5000);
         })();
-        function triggerSurge()
-        {
-        
-        }
+                $(function() {
+            $("#trgrBtn").click(function() {
+                alert("Button clicked!");
+            });
+        });
     </script>
     @RenderSection("Scripts", required: false)
 </body>

@@ -11,9 +11,10 @@ namespace rapid.core.app.Source
         public DbSet<UserDetailsClass> UserDetails { get; set; }
         public DbSet<UnitsClass> Units { get; set; }
         public DbSet<StaffClass> Staff { get; set; }
+        public DbSet<SummaryClass> Summary { get; set; }
         public DbSet<NegotiationClass> Negotiations => Set<NegotiationClass>();
         public DbSet<NegotiationMessage> NegotiationMessages => Set<NegotiationMessage>();
         public DbSet<SurgeRequest> SurgeRequests => Set<SurgeRequest>();
-        public DbSet<NegotiationSummary> NegotiationSummarys => Set<NegotiationSummary>();
+        
     }
 }

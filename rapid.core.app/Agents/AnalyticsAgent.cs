@@ -118,14 +118,14 @@ namespace rapid.core.app.Agents
             {
                 using var doc = JsonDocument.Parse(response);
 
-                var lastNegotiation = _db.NegotiationSummarys
+                var lastNegotiation = _db.Summary
                          .OrderByDescending(n => n.Id)
                          .FirstOrDefault();
                 var id = 1;
                 if (lastNegotiation != null)
                     id = lastNegotiation.Id + 1;
 
-                _db.NegotiationSummarys.Add(new NegotiationSummary
+                _db.Summary.Add(new SummaryClass
                 {
                     Id = id,
                     NegotiationId = negotiation.Id,

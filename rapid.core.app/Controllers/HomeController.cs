@@ -321,11 +321,10 @@ namespace rapid.core.app.Controllers
             //    durationHours: 4
             //);
 
-            return Ok(new
+            return Json(new
             {
-                ok = true,
-                //added = count,
-                //surgeActive = SurgeStore.IsSurgeActive()
+                success = true,
+                message = "Surge triggered successfully"
             });
 
         }
