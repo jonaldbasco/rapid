@@ -816,3 +816,6 @@ body {
 .chat.Nurse {
     color: #7CFF7C;
 }
+.dropdown-toggle::after {
+    display: none;
+}

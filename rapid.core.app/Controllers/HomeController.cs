@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Maui.Devices.Sensors;
@@ -8,6 +9,7 @@ using rapid.core.app.Services;
 using rapid.core.app.Source;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using static rapid.core.app.Models.PatientAdmission;
 
@@ -33,30 +35,23 @@ namespace rapid.core.app.Controllers
         public async Task<IActionResult> Index()
         {
             //Bringdown();
+            ViewBag.FirstName = HttpContext.Session.GetString("FirstName");
+            ViewBag.LastName = HttpContext.Session.GetString("LastName");
+            ViewBag.Role = HttpContext.Session.GetString("Role");
 
             var patients = PatientStore.GetActive();
-            //var staff = StaffStore.GetAll();
             var staff = await _staffService.GetStaffAsync();
             var vm = new DashboardViewModel
             {
-                Patients = patients.ToList()
+                Patients = patients.ToList(),
+                Staff = staff
             };
-
+            await StaffListPartial();
             return View(vm);
         }
-        public async Task<IActionResult> StaffListPartial(DateTime? lastUpdate)
+        public async Task<IActionResult> StaffListPartial() //int? lastUpdate
         {
             var staff = await _staffService.GetStaffAsync();
-
-            //var latestUpdate = staff.Max(s => s.UpdatedAt);
-
-            //if (lastUpdate.HasValue && lastUpdate.Value >= latestUpdate)
-            //{
-            //    // No changes, return empty result
-            //    return new EmptyResult();
-            //}
-            //// Pass the latest timestamp via data attribute
-            //ViewData["LatestUpdate"] = latestUpdate;
             var vm = new DashboardViewModel
             {
                 Staff = staff
@@ -67,96 +62,96 @@ namespace rapid.core.app.Controllers
         [HttpPost]
         public async Task<IActionResult> RunSurge()
         {
-            await _orchestrator.ExecuteAsync();
+            await _orchestrator.ExecuteSurgeAsync();
             return Ok(new { status = "Orchestrator executed" });
         }
         // ============================
         // NURSE DASHBOARD
         // URL: /Home/Nurse
         // ============================
-        [HttpGet("/Home/Nurse")]
-        public IActionResult Nurse()
-        {
-            ViewBag.HideHeader = true;
-            // TEMP: simulate logged-in nurse
-            var nurse = StaffStore.GetById("s3"); // RN Emily Rodriguez
+        //[HttpGet("/Home/Nurse")]
+        //public IActionResult Nurse()
+        //{
+        //    ViewBag.HideHeader = true;
+        //    // TEMP: simulate logged-in nurse
+        //    var nurse = StaffStore.GetById("s3"); // RN Emily Rodriguez
 
-            if (nurse == null || nurse.Role != "nurse")
-                return Unauthorized();
+        //    if (nurse == null || nurse.Role != "nurse")
+        //        return Unauthorized();
 
-            var requests = SurgeStore.GetActiveForSpecialty(nurse.Specialty)
-                .Select(r => new NurseRequestItem
-                {
-                    Request = r,
-                    Decision = SurgeStore.GetDecision(r.Id, nurse.Id),
-                    TimeAgoLabel = TimeAgo(r.CreatedAtUtc)
-                })
-                .ToList();
+        //    var requests = SurgeStore.GetActiveForSpecialty(nurse.Specialty)
+        //        .Select(r => new NurseRequestItem
+        //        {
+        //            Request = r,
+        //            Decision = SurgeStore.GetDecision(r.Id, nurse.Id),
+        //            TimeAgoLabel = TimeAgo(r.CreatedAtUtc)
+        //        })
+        //        .ToList();
 
-            var vm = new NurseDashboardViewModel
-            {
-                Nurse = nurse,
-                Requests = requests
-            };
+        //    var vm = new NurseDashboardViewModel
+        //    {
+        //        Nurse = nurse,
+        //        Requests = requests
+        //    };
 
-            return View("NurseDashboard", vm);
-        }
+        //    return View("NurseDashboard", vm);
+        //}
 
         // ============================
         // NURSE RESPOND VIEW
         // URL: /Home/NurseRespond/{id}
         // ============================
-        [HttpGet("/Home/NurseRespond/{id}")]
-        public IActionResult NurseRespond(string id)
-        {
-            ViewBag.HideHeader = true;
-            var nurse = StaffStore.GetById("s3");
-            if (nurse == null) return Unauthorized();
+        //[HttpGet("/Home/NurseRespond/{id}")]
+        //public IActionResult NurseRespond(string id)
+        //{
+        //    ViewBag.HideHeader = true;
+        //    var nurse = StaffStore.GetById("s3");
+        //    if (nurse == null) return Unauthorized();
 
-            var req = SurgeStore.GetById(id);
-            if (req == null) return NotFound();
+        //    var req = SurgeStore.GetById(id);
+        //    if (req == null) return NotFound();
 
-            var vm = new NurseRespondViewModel
-            {
-                Nurse = nurse,
-                Request = req,
-                CurrentDecision = SurgeStore.GetDecision(req.Id, nurse.Id)
-            };
+        //    var vm = new NurseRespondViewModel
+        //    {
+        //        Nurse = nurse,
+        //        Request = req,
+        //        CurrentDecision = SurgeStore.GetDecision(req.Id, nurse.Id)
+        //    };
 
-            return View("NurseRespond", vm);
-        }
+        //    return View("NurseRespond", vm);
+        //}
 
         // ============================
         // NURSE DECISIONS
         // ============================
-        [HttpPost("/Home/NurseAccept")]
-        public IActionResult NurseAccept(string requestId)
-        {
-            var nurse = StaffStore.GetById("s3");
-            if (nurse == null) return Unauthorized();
+        //[HttpPost("/Home/NurseAccept")]
+        //public IActionResult NurseAccept(string requestId)
+        //{
+        //    var nurse = StaffStore.GetById("s3");
+        //    if (nurse == null) return Unauthorized();
 
-            SurgeStore.Accept(requestId, nurse.Id);
+        //    SurgeStore.Accept(requestId, nurse.Id);
 
-            StaffCallDecisionStore.SetAccepted(nurse.Id);
+        //    StaffCallDecisionStore.SetAccepted(nurse.Id);
 
-            // Optional: reflect nurse is now available
-            StaffStore.SetStatus(nurse.Id, "available");
+        //    // Optional: reflect nurse is now available
+        //    StaffStore.SetStatus(nurse.Id, "available");
 
-            return RedirectToAction("Nurse");
-        }
+        //    return RedirectToAction("Nurse");
+        //}
 
-        [HttpPost("/Home/NurseDecline")]
-        public IActionResult NurseDecline(string requestId)
-        {
-            var nurse = StaffStore.GetById("s3");
-            if (nurse == null) return Unauthorized();
+        //[HttpPost("/Home/NurseDecline")]
+        //public IActionResult NurseDecline(string requestId)
+        //{
+        //    var nurse = StaffStore.GetById("s3");
+        //    if (nurse == null) return Unauthorized();
 
-            SurgeStore.Decline(requestId, nurse.Id);
+        //    SurgeStore.Decline(requestId, nurse.Id);
 
-            StaffCallDecisionStore.SetDeclined(nurse.Id);
+        //    StaffCallDecisionStore.SetDeclined(nurse.Id);
 
-            return RedirectToAction("Nurse");
-        }
+        //    return RedirectToAction("Nurse");
+        //}
 
         // ============================
         // HELPER
@@ -264,82 +259,66 @@ namespace rapid.core.app.Controllers
         }
 
         [HttpPost]
-        public IActionResult StaffDecision(string id, string decision)
-        {
-            if (string.IsNullOrWhiteSpace(id)) return BadRequest("Missing id.");
+        //public IActionResult StaffDecision(string id, string decision)
+        //{
+        //    if (string.IsNullOrWhiteSpace(id)) return BadRequest("Missing id.");
 
-            decision = (decision ?? "").ToLowerInvariant();
-            if (decision == "confirmed")
-            {
-                StaffDecisionStore.Confirm(id);
-                StaffStore.SetStatus(id, "on_duty");
-            }
-            else if (decision == "declined")
-            {
-                StaffDecisionStore.Decline(id);
-            }
-            else
-            {
-                return BadRequest("Invalid decision.");
-            }
+        //    decision = (decision ?? "").ToLowerInvariant();
+        //    if (decision == "confirmed")
+        //    {
+        //        StaffDecisionStore.Confirm(id);
+        //        StaffStore.SetStatus(id, "on_duty");
+        //    }
+        //    else if (decision == "declined")
+        //    {
+        //        StaffDecisionStore.Decline(id);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest("Invalid decision.");
+        //    }
 
-            return Ok(new { ok = true, id, decision });
-        }
+        //    return Ok(new { ok = true, id, decision });
+        //}
 
         // ============================
         // TRIGGER SURGE
         // ============================
         [HttpPost]
-        public async Task<IActionResult> TriggerSurge(int count = 5)
+        public async Task<IActionResult> TriggerSurge()
         {
-            for (int i = 0; i < count; i++)
-            {
-                var patient = GenerateRandomPatient();
+            //for (int i = 0; i < count; i++)
+            //{
+            //    var patient = GenerateRandomPatient();
 
-                if (RoomStore.TryAssign(patient.Id))
-                {
-                    patient.Status = PatientStatus.InRoom;
-                    patient.AssignedAtUtc = DateTime.UtcNow;
-                }
+            //    if (RoomStore.TryAssign(patient.Id))
+            //    {
+            //        patient.Status = PatientStatus.InRoom;
+            //        patient.AssignedAtUtc = DateTime.UtcNow;
+            //    }
 
-                PatientStore.Add(patient);
-            }
+            //    PatientStore.Add(patient);
+            //}
             await RunSurge();
+            GetSurgeStatus();
 
+            //SurgeStore.ActivateSurge();
 
-            SurgeStore.ActivateSurge();
-            var _id = Guid.NewGuid().ToString("N");
-
-            _db.SurgeRequests.Add(new SurgeRequest
-            {
-                Id = _id,
-                Unit = "Burn Unit",
-                SpecialtyTag = "Burn Unit",
-                IsCritical = true,
-                Description = "Mass casualty event. Burn Unit support urgently needed.",
-                Location = "Metro General Hospital",
-                PayMultiplier = 1.5,
-                DurationHours = 4,
-                CreatedAtUtc = DateTime.UtcNow
-            });
-            _db.SaveChanges();
-
-            SurgeStore.CreateRequest(
-                id: _id,
-                unit: "Burn Unit",
-                specialtyTag: "Burn Unit",
-                critical: true,
-                description: "Mass casualty event. Burn Unit support urgently needed.",
-                location: "Metro General Hospital",
-                payMultiplier: 1.5,
-                durationHours: 4
-            );
+            //SurgeStore.CreateRequest(
+            //    unit: "Burn Unit",
+            //    specialtyTag: "Burn Unit",
+            //    critical: true,
+            //    description: "Mass casualty event. Burn Unit support urgently needed.",
+            //    location: "Metro General Hospital",
+            //    payMultiplier: 1.5,
+            //    durationHours: 4
+            //);
 
             return Ok(new
             {
                 ok = true,
-                added = count,
-                surgeActive = SurgeStore.IsSurgeActive()
+                //added = count,
+                //surgeActive = SurgeStore.IsSurgeActive()
             });
 
         }
@@ -347,10 +326,16 @@ namespace rapid.core.app.Controllers
         [HttpGet]
         public IActionResult GetSurgeStatus()
         {
-            return Json(new
+            //First run in the JS so active should be false or there is no active in the database
+            var surge = _db.SurgeRequests.FirstOrDefault(s => s.isActive == 1);
+            bool isActive = false;
+            if (surge != null)
             {
-                active = SurgeStore.IsSurgeActive(),
-            });
+                isActive = true;
+                return Json(new { active = isActive });
+            }
+            else
+                return Json(new { active = isActive });
         }
 
 
@@ -377,34 +362,51 @@ namespace rapid.core.app.Controllers
         }
 
         [HttpGet]
-        public IActionResult NurseRequestsPartial()
-        {
-            var nurse = StaffStore.GetById("s3");
-            if (nurse == null) return Unauthorized();
+        //public IActionResult NurseRequestsPartial()
+        //{
+        //    var nurse = StaffStore.GetById("s3");
+        //    if (nurse == null) return Unauthorized();
 
-            var requests = SurgeStore.GetActiveForSpecialty(nurse.Specialty)
-                .Select(r => new NurseRequestItem
-                {
-                    Request = r,
-                    Decision = SurgeStore.GetDecision(r.Id, nurse.Id),
-                    TimeAgoLabel = TimeAgo(r.CreatedAtUtc)
-                })
-                .ToList();
+        //    var requests = SurgeStore.GetActiveForSpecialty(nurse.Specialty)
+        //        .Select(r => new NurseRequestItem
+        //        {
+        //            Request = r,
+        //            Decision = SurgeStore.GetDecision(r.Id, nurse.Id),
+        //            TimeAgoLabel = TimeAgo(r.CreatedAtUtc)
+        //        })
+        //        .ToList();
 
-            return PartialView("_NurseRequestList", requests);
-        }
+        //    return PartialView("_NurseRequestList", requests);
+        //}
 
         [HttpGet]
         public IActionResult GetPatientCounts()
         {
-            var patients = PatientStore.GetActive();
+            var unit = _db.Units.FirstOrDefault(u => u.Name == "Burn Unit");//You can change this to unitId
 
-            var inpatient = patients.Count(p => p.Status == PatientStatus.InRoom);
-            var incoming = patients.Count(p => p.Status == PatientStatus.Waiting);
+            var inpatient = 0;
+            var incoming = 0;
+            if (unit != null)
+            {
+                inpatient = unit.InPatients;
+                incoming = unit.Incoming;
+            }
+            //var patients = PatientStore.GetActive();
+
+            //var inpatient = patients.Count(p => p.Status == PatientStatus.InRoom);
+            //var incoming = patients.Count(p => p.Status == PatientStatus.Waiting);
 
             return Json(new { inpatient, incoming });
         }
 
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();   // remove all session data
+            HttpContext.SignOutAsync();    // remove auth cookie (if any)
+
+            return RedirectToAction("Index", "Login");
+        }
 
     }
 }

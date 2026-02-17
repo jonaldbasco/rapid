@@ -3,68 +3,99 @@
   "WorkspaceRootPath": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\services\\staffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\staffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\agents\\staffingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:agents\\staffingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\services\\statsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\statsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\prompts\\negotiationprompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:prompts\\negotiationprompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\nurse\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\nurse\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\controllers\\negotiationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\negotiationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\services\\openaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\openaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\controllers\\nursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\nursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\agents\\negotiationagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:agents\\negotiationagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\userclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\userclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\prompts\\negotiationprompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:prompts\\negotiationprompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\services\\surgestore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\surgestore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\controllers\\negotiationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\negotiationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\nurserespondviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\nurserespondviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\controllers\\nursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\nursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\home\\nursedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\home\\nursedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\BOK\\.nuget\\packages\\buildwebcompiler\\1.12.405\\build\\BuildWebCompiler.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\shared\\_staffcard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\shared\\_staffcard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\services\\openaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\openaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\services\\statsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\statsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\shared\\_stafflist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\shared\\_stafflist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\agents\\orchestratoragent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:agents\\orchestratoragent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\agents\\analyticsagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:agents\\analyticsagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\agents\\staffingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:agents\\staffingagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\staffclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\staffclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\nursedashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\nursedashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\nurse\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\nurse\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\surgerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\surgerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\nurse\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\nurse\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\negotiationmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,16 +106,28 @@
       "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\mobile\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\mobile\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\home\\nursedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\home\\nursedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\home\\nurserespond.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\home\\nurserespond.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\services\\staffstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:services\\staffstore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\userclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\userclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\models\\nurserespondviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:models\\nurserespondviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|c:\\users\\bok\\documents\\github\\rapid\\rapid\\rapid.core.app\\views\\mobile\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{55B2AD79-AEAE-4D24-9888-963D09AD0C43}|rapid.core.app.csproj|solutionrelative:views\\mobile\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -94,7 +137,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -102,91 +145,65 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "StaffService.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StaffService.cs",
-              "RelativeDocumentMoniker": "Services\\StaffService.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StaffService.cs",
-              "RelativeToolTip": "Services\\StaffService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T04:24:18.697Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "StatsService.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StatsService.cs",
-              "RelativeDocumentMoniker": "Services\\StatsService.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StatsService.cs",
-              "RelativeToolTip": "Services\\StatsService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "NurseController.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\NurseController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NurseController.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\NurseController.cs",
+              "RelativeToolTip": "Controllers\\NurseController.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAqwCoAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T03:02:35.644Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAKgAAAAAAAAAAAAAALEAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-16T03:21:18.829Z",
+              "WhenOpened": "2026-02-14T22:42:47.954Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAADsCAAAAAAAAAAAIwFACAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-16T01:30:21.854Z",
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "Controllers\\LoginController.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAowBYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T21:52:01.546Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "StaffingAgent.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\StaffingAgent.cs",
-              "RelativeDocumentMoniker": "Agents\\StaffingAgent.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\StaffingAgent.cs",
-              "RelativeToolTip": "Agents\\StaffingAgent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAsAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "NegotiationAgent.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\NegotiationAgent.cs",
+              "RelativeDocumentMoniker": "Agents\\NegotiationAgent.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\NegotiationAgent.cs",
+              "RelativeToolTip": "Agents\\NegotiationAgent.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAvwB4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-16T01:59:54.393Z",
+              "WhenOpened": "2026-02-16T05:04:27.75Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAowDgAAAANAAAAAAAAAA==",
+              "Title": "NegotiationPrompts.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Prompts\\NegotiationPrompts.cs",
+              "RelativeDocumentMoniker": "Prompts\\NegotiationPrompts.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Prompts\\NegotiationPrompts.cs",
+              "RelativeToolTip": "Prompts\\NegotiationPrompts.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAQwCAAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T14:56:32.698Z",
+              "WhenOpened": "2026-02-14T16:04:22.029Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 3,
               "Title": "NegotiationController.cs",
               "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\NegotiationController.cs",
               "RelativeDocumentMoniker": "Controllers\\NegotiationController.cs",
               "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\NegotiationController.cs",
               "RelativeToolTip": "Controllers\\NegotiationController.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAIAwwFMAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwFMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-14T14:18:58.73Z",
               "EditorCaption": ""
@@ -194,27 +211,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "NegotiationPrompts.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Prompts\\NegotiationPrompts.cs",
-              "RelativeDocumentMoniker": "Prompts\\NegotiationPrompts.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Prompts\\NegotiationPrompts.cs",
-              "RelativeToolTip": "Prompts\\NegotiationPrompts.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAQwBIAAAAxAAAAAAAAAA==",
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAQBAAAAAAAAAAAkwBkBAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T16:04:22.029Z",
+              "WhenOpened": "2026-02-17T11:27:48.849Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Nurse\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Nurse\\Index.cshtml",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Nurse\\Index.cshtml",
-              "RelativeToolTip": "Views\\Nurse\\Index.cshtml",
-              "ViewState": "AgIAAGAAAAAAAAAAAAD4v20AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-14T15:23:25.63Z",
+              "DocumentIndex": 10,
+              "Title": "StatsService.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StatsService.cs",
+              "RelativeDocumentMoniker": "Services\\StatsService.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StatsService.cs",
+              "RelativeToolTip": "Services\\StatsService.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAkwIUAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-16T03:02:35.644Z",
               "EditorCaption": ""
             },
             {
@@ -225,37 +242,287 @@
               "RelativeDocumentMoniker": "Services\\OpenAIService.cs",
               "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\OpenAIService.cs",
               "RelativeToolTip": "Services\\OpenAIService.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAowCYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T11:31:00.553Z"
+              "WhenOpened": "2026-02-14T11:31:00.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAMMAAAAAAAAAAAAAAM0AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-16T12:18:45.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_StaffCard.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_StaffCard.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_StaffCard.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_StaffCard.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_StaffCard.cshtml",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAEYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-16T04:34:31.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BuildWebCompiler.targets",
+              "DocumentMoniker": "C:\\Users\\BOK\\.nuget\\packages\\buildwebcompiler\\1.12.405\\build\\BuildWebCompiler.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\.nuget\\packages\\buildwebcompiler\\1.12.405\\build\\BuildWebCompiler.targets",
+              "ToolTip": "C:\\Users\\BOK\\.nuget\\packages\\buildwebcompiler\\1.12.405\\build\\BuildWebCompiler.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\.nuget\\packages\\buildwebcompiler\\1.12.405\\build\\BuildWebCompiler.targets",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-02-17T13:30:46.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "StaffingAgent.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\StaffingAgent.cs",
+              "RelativeDocumentMoniker": "Agents\\StaffingAgent.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\StaffingAgent.cs",
+              "RelativeToolTip": "Agents\\StaffingAgent.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAAAEQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-16T01:59:54.393Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "LoginController.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\LoginController.cs",
-              "RelativeDocumentMoniker": "Controllers\\LoginController.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\LoginController.cs",
-              "RelativeToolTip": "Controllers\\LoginController.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAIAwwDQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T21:52:01.546Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "NurseController.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\NurseController.cs",
-              "RelativeDocumentMoniker": "Controllers\\NurseController.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Controllers\\NurseController.cs",
-              "RelativeToolTip": "Controllers\\NurseController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAowCEAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T22:42:47.954Z"
+              "Title": "_StaffList.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_StaffList.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_StaffList.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Shared\\_StaffList.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_StaffList.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-17T12:55:49.239Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
+              "Title": "OrchestratorAgent.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\OrchestratorAgent.cs",
+              "RelativeDocumentMoniker": "Agents\\OrchestratorAgent.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\OrchestratorAgent.cs",
+              "RelativeToolTip": "Agents\\OrchestratorAgent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG4AAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T08:21:42.092Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AnalyticsAgent.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\AnalyticsAgent.cs",
+              "RelativeDocumentMoniker": "Agents\\AnalyticsAgent.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Agents\\AnalyticsAgent.cs",
+              "RelativeToolTip": "Agents\\AnalyticsAgent.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowA8AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T12:29:55.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Login\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Login\\Index.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Login\\Index.cshtml",
+              "RelativeToolTip": "Views\\Login\\Index.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-17T11:49:16.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "StaffClass.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\StaffClass.cs",
+              "RelativeDocumentMoniker": "Models\\StaffClass.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\StaffClass.cs",
+              "RelativeToolTip": "Models\\StaffClass.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA0wBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-16T04:31:26.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "NurseDashboardViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\NurseDashboardViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\NurseDashboardViewModel.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\NurseDashboardViewModel.cs",
+              "RelativeToolTip": "Models\\NurseDashboardViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T11:04:46.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Nurse\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Nurse\\Index.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Nurse\\Index.cshtml",
+              "RelativeToolTip": "Views\\Nurse\\Index.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-17T11:04:12.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SurgeRequest.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\SurgeRequest.cs",
+              "RelativeDocumentMoniker": "Models\\SurgeRequest.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\SurgeRequest.cs",
+              "RelativeToolTip": "Models\\SurgeRequest.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAIwBMAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T11:08:45.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "DashboardViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\DashboardViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\DashboardViewModel.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\DashboardViewModel.cs",
+              "RelativeToolTip": "Models\\DashboardViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T11:09:14.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAGsBAAAAAAAAAAAIwFUCAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-16T01:30:21.854Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Chat.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Nurse\\Chat.cshtml",
+              "RelativeDocumentMoniker": "Views\\Nurse\\Chat.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Nurse\\Chat.cshtml",
+              "RelativeToolTip": "Views\\Nurse\\Chat.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAIAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-14T15:23:25.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "main.css",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\wwwroot\\css\\main.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\main.css",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\wwwroot\\css\\main.css",
+              "RelativeToolTip": "wwwroot\\css\\main.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-02-14T15:54:04.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "NegotiationMessage.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\NegotiationMessage.cs",
+              "RelativeDocumentMoniker": "Models\\NegotiationMessage.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\NegotiationMessage.cs",
+              "RelativeToolTip": "Models\\NegotiationMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T18:37:45.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-14T17:52:59.115Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "NurseDashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseDashboard.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\NurseDashboard.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseDashboard.cshtml",
+              "RelativeToolTip": "Views\\Home\\NurseDashboard.cshtml",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAmwIMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-14T10:13:06.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "NurseRespond.cshtml",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseRespond.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\NurseRespond.cshtml",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseRespond.cshtml",
+              "RelativeToolTip": "Views\\Home\\NurseRespond.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-14T15:22:03.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "StaffStore.cs",
+              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StaffStore.cs",
+              "RelativeDocumentMoniker": "Services\\StaffStore.cs",
+              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\StaffStore.cs",
+              "RelativeToolTip": "Services\\StaffStore.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAgwJkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-16T05:59:20.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
               "Title": "UserClass.cs",
               "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\UserClass.cs",
               "RelativeDocumentMoniker": "Models\\UserClass.cs",
@@ -267,19 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "SurgeStore.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\SurgeStore.cs",
-              "RelativeDocumentMoniker": "Services\\SurgeStore.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Services\\SurgeStore.cs",
-              "RelativeToolTip": "Services\\SurgeStore.cs",
-              "ViewState": "AgIAAH4AAAAAAAAAAAA3wIsAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T20:55:30.455Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 30,
               "Title": "NurseRespondViewModel.cs",
               "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\NurseRespondViewModel.cs",
               "RelativeDocumentMoniker": "Models\\NurseRespondViewModel.cs",
@@ -291,67 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "NurseDashboard.cshtml",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseDashboard.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\NurseDashboard.cshtml",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseDashboard.cshtml",
-              "RelativeToolTip": "Views\\Home\\NurseDashboard.cshtml",
-              "ViewState": "AgIAAG8AAAAAAAAAAAAAAIMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-14T10:13:06.988Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "NegotiationMessage.cs",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\NegotiationMessage.cs",
-              "RelativeDocumentMoniker": "Models\\NegotiationMessage.cs",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Models\\NegotiationMessage.cs",
-              "RelativeToolTip": "Models\\NegotiationMessage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T18:37:45.46Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAACzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-14T17:52:59.115Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "main.css",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\wwwroot\\css\\main.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\main.css",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\wwwroot\\css\\main.css",
-              "RelativeToolTip": "wwwroot\\css\\main.css",
-              "ViewState": "AgIAACADAAAAAAAAAAAgwDEDAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-02-14T15:54:04.251Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "NurseRespond.cshtml",
-              "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseRespond.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\NurseRespond.cshtml",
-              "ToolTip": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Home\\NurseRespond.cshtml",
-              "RelativeToolTip": "Views\\Home\\NurseRespond.cshtml",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAADQAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-14T15:22:03.553Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 31,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\BOK\\Documents\\GitHub\\rapid\\rapid\\rapid.core.app\\Views\\Mobile\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Mobile\\Index.cshtml",

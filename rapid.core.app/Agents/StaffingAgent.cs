@@ -8,10 +8,12 @@ namespace rapid.core.app.Agents
     public class StaffingAgent
     {
         private readonly RapidDBContext _db;
+        private readonly NegotiationAgent _negotiation;
 
-        public StaffingAgent(RapidDBContext db)
+        public StaffingAgent(RapidDBContext db, NegotiationAgent negotiation)
         {
             _db = db;
+            _negotiation = negotiation;
         }
         public List<(string Unit, int Shortage)> Detect(
         List<StaffingForecast> forecasts)
@@ -34,5 +36,36 @@ namespace rapid.core.app.Agents
             .Where(s => s.Role == "RN")
             .ToListAsync();
         }
+
+        public async Task<int> CheckStaffNegotiation(string userId)
+        {
+            var negotiation = 0;
+            var staff = _db.Staff.FirstOrDefault(s => s.Id == userId);
+
+            if (staff.Decision == "Negotiating")
+                negotiation = await _negotiation.CreateNegotiationAsync(userId);
+
+            return negotiation;
+        }
+        public async Task<bool> SetStafftoAvailable()
+        {
+            var nurse = _db.Staff
+                           .Where(s => s.isAvailable == "true")
+                           .ToList();
+            if (nurse == null)
+                return false;
+
+
+            foreach (var staff in nurse)
+            {
+                if (staff.Decision == "Unavailable")
+                {
+                    staff.Decision = "Available";
+                }
+            }
+            await _db.SaveChangesAsync();
+            return true;
+        }
+        
     }
 }

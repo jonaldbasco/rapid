@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace rapid.core.app.Models
 {
@@ -16,6 +17,16 @@ namespace rapid.core.app.Models
         public double ResponseRate { get; set; } 
         public int DistanceMinutes { get; set; } 
         public required string isAvailable { get; set; }
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        //public string UpdatedAt { get; set; } = DateTime.UtcNow.ToString("o"); // "2026-02-16T12:34:56Z"
+
+        // Store as UTC ticks or ISO string
+        public long UpdatedAtTicks { get; set; } = DateTime.UtcNow.Ticks;
+
+        [NotMapped] // convenience property
+        public DateTime UpdatedAt
+        {
+            get => new DateTime(UpdatedAtTicks, DateTimeKind.Utc);
+            set => UpdatedAtTicks = value.Ticks;
+        }
     }
 }

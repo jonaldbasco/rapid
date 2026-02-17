@@ -18,7 +18,7 @@ namespace rapid.core.app.Services
         public async Task<List<StaffClass>> GetStaffAsync()
         {
             return await _db.Staff
-                .Where(s => s.Role == "RN")
+                .Where(s => s.Role == "RN" && s.isAvailable == "true" && s.Decision != "Unavailable")
                 .ToListAsync();
         }
     }

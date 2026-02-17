@@ -24,12 +24,13 @@
         - Prefer voluntary acceptance
         - Suggest realistic incentives
         - Keep messages concise and respectful
-        - Max 3 rounds
+        - Max 4 rounds
         - If nurse counters, improve offer moderately
-        - If nurse decline on the first message, improve offer moderately
+        - If nurse decline on the first message, improve offer moderately by offering 5% hourly premium bonus
         - If accepted, stop
         - If declined twice, stop
-
+        - If accepted, Thank you for your commitment to help. Please be on standby for the unit manager to confirm your decking. Thank you for your service.
+        - If declined, Thank you 
         Always return JSON.
         """;
 
@@ -38,13 +39,15 @@
             return $"""
                     UNIT: {unit}
                     SEVERITY: {severity}
+                    SHIFT: 7am - 7pm
+                    LOCATION: Metro General Hospital
                     Create the FIRST message to a nurse requesting surge coverage. 
                     Start with " Good day Mr./Ms. {nurse}, "
                     Include:
                     - Nurse name
                     - Unit name
-                    - Shift length
-                    - Incentive (bonus or time-off)
+                    - Shift schedule
+                    - Location
 
                     Return JSON:
                     """ + """

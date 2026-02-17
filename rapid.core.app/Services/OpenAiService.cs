@@ -8,14 +8,10 @@ namespace rapid.core.app.Services
 {
     public class OpenAIService
     {
-        private readonly ChatClient _client;
         private readonly HttpClient _http;
 
         public OpenAIService(IConfiguration config)
         {
-            //_client = new ChatClient(
-            //    model: config["OpenAI:Model"],
-            //    apiKey: config["OpenAI:ApiKey"]);
             _http = new HttpClient();
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config["OpenAI:ApiKey"]);
         }
@@ -44,20 +40,6 @@ namespace rapid.core.app.Services
                 .GetProperty("message")
                 .GetProperty("content")
                 .GetString()!;
-        }
-
-        public async Task<string> CompleteAsync(string prompt)
-        {
-            var result = await _client.CompleteChatAsync(
-                new ChatMessage[]
-                {
-                new SystemChatMessage(
-                    "You are a task planner. " +
-                    "Return ONLY valid JSON: [{ agent, task }]."),
-                new UserChatMessage(prompt)
-                });
-
-            return result.Value.Content[0].Text;
         }
     }
 }

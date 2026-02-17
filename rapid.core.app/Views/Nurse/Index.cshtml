@@ -1,208 +1,134 @@
-﻿@{
-    ViewData["Title"] = "Negotiation Chat";
-    var negotiationId = ViewBag.NegotiationId;
+﻿@model NurseDashboardViewModel
+@{
+
 }
 <div class="nurse-phone-frame">
     <div class="nurse-phone-notch"></div>
 
     <div class="nurse-phone-content">
 
-        <a href="/Home/Nurse">← Back</a>
-
-        <div class="card mt-3">
-            <div class="card-body">
-@* 
-                @if (Model.Request.IsCritical)
-                {
-                    <span class="badge bg-danger mb-2">CRITICAL SURGE</span>
-                }
-
-                <h5 class="fw-bold">@Model.Request.Unit</h5>
-                <div class="muted mb-3">@Model.Request.Description</div>
-
-                <div class="row text-center mb-3">
-                    <div class="col-6">
-                        <div class="label">Duration</div>
-                        <div class="fw-bold">@Model.Request.DurationHours hrs</div>
-                    </div>
-                    <div class="col-6">
-                        <div class="label">Pay</div>
-                        <div class="fw-bold text-info">@Model.Request.PayMultiplier x</div>
-                    </div>
-                </div>
-
-                <div class="label mb-1">Location</div>
-                <div class="muted mb-3">@Model.Request.Location</div>
-
-                <form method="post" action="/Home/NurseAccept">
-                    <input type="hidden" name="requestId" value="@Model.Request.Id" />
-                    <button class="btn btn-success w-100 mb-2">
-                        Accept & Respond
-                    </button>
-                </form>
-
-                <form method="post" action="/Home/NurseDecline">
-                    <input type="hidden" name="requestId" value="@Model.Request.Id" />
-                    <button class="btn btn-outline-danger w-100">
-                        Decline
-                    </button>
-                </form> *@
-                <input id="negotiationId" value = "@ViewBag.NegotiationId" type="hidden"/>
-                <div class="chat-shell">
-                    <!-- Header -->
-                    <div class="chat-header">
-                        <div>
-                            <h6>Surge Staffing Negotiation</h6>
-                            <span class="sub">
-                                Unit: @ViewBag.Unit | Nurse: @ViewBag.NurseName
-                            </span>
-                        </div>
-                        <div class="status">LIVE</div>
-                    </div>
-
-                    <!-- Messages -->
-                    <div id="chatWindow" class="chat-window"></div>
-
-                    <!-- Input -->
-                    <div class="chat-input">
-                        <input id="nurseMessage"
-                               placeholder="Type your reply..."
-                               autocomplete="off" />
-                        <button id="sendReply">Send</button>
-                    </div>
-                </div>
-            </div>
+        <!-- Nurse Header -->
+        <div class="mb-3">
+            <div class="nurse-name fs-5">@Model.Nurse.Name</div>
+            <div class="nurse-role">@Model.Nurse.Specialty Nurse</div>
         </div>
+
+        <div class="label mb-2">SURGE REQUESTS</div>
+
+        @if (!Model.Requests.Any())
+        {
+            <div class="empty">No surge requests at the moment</div>
+        }
+        else
+        {
+            @foreach (var item in Model.Requests)
+            {
+                var req = item.Request;
+
+                string statusClass = item.Decision switch
+                {
+                    NurseDecision.Accepted => "bg-success",
+                    NurseDecision.Declined => "bg-danger",
+                    _ => "bg-secondary"
+                };
+
+                string statusText = item.Decision switch
+                {
+                    NurseDecision.Accepted => "ACCEPTED",
+                    NurseDecision.Declined => "DECLINED",
+                    _ => "PENDING"
+                };
+
+                string cardStateClass = item.Decision switch
+                {
+                    NurseDecision.Accepted => "nurse-card-accepted",
+                    NurseDecision.Declined => "nurse-card-declined",
+                    _ => ""
+                };
+
+                bool disableClick = item.Decision == NurseDecision.Declined;
+
+                if (disableClick)
+                {
+                    <div class="nurse-link-disabled">
+                        <div class="card mb-3 @(req.IsCritical ? "alert-border" : "") @cardStateClass">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge @statusClass">@statusText</span>
+
+                                    @if (req.IsCritical)
+                                    {
+                                        <span class="badge bg-danger">CRITICAL</span>
+                                    }
+                                </div>
+
+                                <div class="fw-bold">@req.Unit</div>
+                                <div class="muted">@req.Description</div>
+
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="muted">@item.TimeAgoLabel</span>
+                                    @* <span class="text-info fw-semibold">@req.PayMultiplier x</span> *@
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <a href="/Home/NurseRespond/@req.Id" class="text-decoration-none">
+                        <div class="card mb-3 @(req.IsCritical ? "alert-border" : "") @cardStateClass">
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge @statusClass">@statusText</span>
+
+                                    @if (req.IsCritical)
+                                    {
+                                        <span class="badge bg-danger">CRITICAL</span>
+                                    }
+                                </div>
+
+                                <div class="fw-bold">@req.Unit</div>
+                                <div class="muted">@req.Description</div>
+
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="muted">@item.TimeAgoLabel</span>
+                                    @* <span class="text-info fw-semibold">@req.PayMultiplier x</span> *@
+                                </div>
+
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        }
 
     </div>
 </div>
-<script>
-    const negotiationId = parseInt($("#negotiationId").val());
 
-        function renderMessage(m) {
-        return `
-          <div class="msg ${m.sender}">
-            <div class="bubble">
-              <span class="sender">${m.sender}</span>
-              <div class="text">${m.message}</div>
-            </div>
-          </div>`;
-    }
+@section Scripts {
+    <script>
+        (function () {
+            // If requests are already displayed, don't poll.
+            const hasCards = document.querySelectorAll('.card').length > 0;
+            if (hasCards) return;
 
-        function loadChat() {
-        $.get("/Negotiation/GetMessages",
-            { negotiationId },
-            msgs => {
-                $("#chatWindow").html("");
-                msgs.forEach(m => {
-                    $("#chatWindow").append(renderMessage(m));
-                });
-                $("#chatWindow").scrollTop(
-                    $("#chatWindow")[0].scrollHeight
-                );
-            });
-    }
+            const interval = setInterval(async () => {
+                try {
+                    const res = await fetch('/Home/GetSurgeStatus', { cache: 'no-store' });
+                    const data = await res.json();
 
-    $("#sendReply").on("click", function () {
-        const text = $("#nurseMessage").val();
-        if (!text) return;
-
-        const $btn = $(this);
-        $btn.prop("disabled", true);
-
-        $("#chatWindow").append(renderMessage({
-            sender: "You",
-            message: text
-        }));
-
-        $.ajax({
-            url: "/Negotiation/NurseReply",
-            type: "POST",
-            data: {
-                negotiationId: negotiationId,
-                message: text
-            }
-        })
-        .done(function () {
-            $("#nurseMessage").val("");
-            loadChat();
-        })
-        .fail(function (xhr) {
-            alert(xhr.responseText || "Failed to send message");
-        })
-        .always(function () {
-            $btn.prop("disabled", false);
-        });
-    });
-
-    //setInterval(loadChat, 2000);
-    loadChat();
-    
-</script>
-
-
-
-
-   @*  // $(document).ready(() => {
-
-    //   $("#chatWindow").append(
-    //   `<div class="msg AI"><i>AI is typing…</i></div>`);
-
-    //   // $.post("/Negotiation/NextRound", { negotiationId }, loadChat);
-
-    // });
-
-    // function loadChat() {
-    //     $.get("/Negotiation/GetMessages",
-    //         { negotiationId },
-    //         msgs => {
-    //             $("#chatWindow").html("");
-    //             msgs.forEach(m => {
-    //                 $("#chatWindow").append(
-    //                     `<div class="msg ${m.sender}">
-    //                         <b>${m.sender}:</b> ${m.message}
-    //                      </div>`
-    //                 );
-    //             });
-    //             $("#chatWindow").scrollTop(
-    //                 $("#chatWindow")[0].scrollHeight
-    //             );
-    //         });
-    // }
-
-    // $("#sendReply").click(() => {
-    //     const text = $("#nurseMessage").val();
-    //     if (!text) return;
-
-    //     $("#sendReply").prop("disabled", true);
-
-    //     $.post("/Negotiation/NurseReply",
-    //         { negotiationId, message: text },
-    //         () => {
-    //             $("#nurseMessage").val("");
-    //             $("#sendReply").prop("disabled", false);
-    //             loadChat();
-    //         });
-    // });
-
-    // setInterval(loadChat, 2500);
-    // loadChat();
-        //     $("#sendReply").click(() => {
-    //     const text = $("#nurseMessage").val();
-    //     if (!text) return;
-
-    //     $("#sendReply").prop("disabled", true);
-
-    //     $("#chatWindow").append(renderMessage({
-    //         sender: "You",
-    //         message: text
-    //     }));
-    //     debugger;
-    //     $.post("/Negotiation/NurseReply",
-    //         { negotiationId, message: text },
-    //         () => {
-    //             $("#nurseMessage").val("");
-    //             $("#sendReply").prop("disabled", false);
-    //             loadChat();
-    //         });
-    // });*@
+                    // Reload only when the server actually has requests.
+                    if (data.requestCount && data.requestCount > 0) {
+                        clearInterval(interval);
+                        location.reload();
+                    }
+                } catch (e) {
+                    console.log('Nurse dashboard polling failed:', e);
+                }
+            }, 2000); // check every 2 seconds
+        })();
+    </script>
+}

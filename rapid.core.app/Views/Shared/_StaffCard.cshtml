@@ -7,12 +7,17 @@
     var decision = (Model.Decision as string ?? "pending").ToLowerInvariant();
     var isAvailability = mode == "availability";
     var isRequirements = mode == "requirements";
+    //Certifications
+    var certifications = (Model.Certification ?? "")
+        .Split('/', StringSplitOptions.RemoveEmptyEntries)
+        .Select(c => c.Trim())
+        .ToList();
 }
 
 <div class="staff mb-2 staff-card"
      data-staff-id="@Model.Id"
      data-role="@Model.Role"
-     data-decision="@Model.Decision">
+     data-decision="@decision">
 
     <div class="d-flex justify-content-between align-items-start">
         <div>
@@ -37,7 +42,7 @@
 
             <!-- Decision badge (updated by JS) -->
             <span class="badge bg-secondary text-white decision-badge">
-                @(Model.Decision == "confirmed" ? "Confirmed"
+                @(decision == "confirmed" ? "Confirmed"
                                 : decision == "accepted" ? "Accepted"
                                 : decision == "declined" ? "Declined"
                                 : decision == "negotiating" ? "Negotiating…"
@@ -53,28 +58,40 @@
             <div class="muted">@Math.Round(Model.ResponseRate * 100)<span>% resp</span></div>
         </div>
         <div class="d-flex gap-1 flex-wrap justify-content-end">
-          @*  @foreach (var cert in Model.Certification)
+            @foreach (var cert in certifications)
             {
                 <span class="px-1.5 py-0.5 rounded bg-secondary text-[10px] text-muted-foreground">@cert</span>
-            } *@
+            }
         </div>
     </div>
 
-    @if (Convert.ToBoolean(@Model.isAvailable))
+    @if (Model.Decision == "Negotiating")
     {
-        <!-- Buttons only exist in Availability mode -->
-        <div class="d-flex gap-2 mt-3">
-            <button type="button"
-                    class="btn btn-success btn-sm w-50 action-confirm"
-                    data-action="confirm">
-                Confirm
-            </button>
-
-            <button type="button"
-                    class="btn btn-outline-danger btn-sm w-50 action-decline"
-                    data-action="decline">
-                Decline
-            </button>
-        </div>
+        <button type="button"
+        class="btn btn-info btn-sm w-100 action-confirm"
+        data-action="negotiating">
+            Negotiating...
+        </button>
     }
+    else
+    {
+        @if (Convert.ToBoolean(Model.isAvailable))
+        {
+            <!-- Buttons only exist in Availability mode -->
+            <div class="d-flex gap-2 mt-3">
+                <button type="button"
+                        class="btn btn-success btn-sm w-50 action-confirm"
+                        data-action="confirm">
+                    Confirm
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-danger btn-sm w-50 action-decline"
+                        data-action="decline">
+                    Decline
+                </button>
+            </div>
+        }
+    }
+
 </div>

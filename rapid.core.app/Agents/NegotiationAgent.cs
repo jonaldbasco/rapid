@@ -21,10 +21,10 @@ namespace rapid.core.app.Agents
             _db = db;
             _ai = ai;
         }
-        public async Task<bool> HasActiveNegotiationAsync()
+        public async Task<bool> HasActiveNegotiationAsync(string userId)
         {
             return await _db.Negotiations
-                .AnyAsync(n => n.Status == "Active");
+                .AnyAsync(n => n.StaffId == userId && n.Status == "Active");
         }
 
         public async Task RunNextRoundAsync(int negotiationId)
@@ -32,15 +32,15 @@ namespace rapid.core.app.Agents
             try
             {
                 var negotiation = await _db.Negotiations.FindAsync(negotiationId);
-                var ai = await _db.NegotiationMessages.FindAsync(negotiationId);
+                //var ai = await _db.NegotiationMessages.FindAsync(negotiationId);
                 if (negotiation == null)
                     throw new Exception($"Negotiation {negotiationId} not found");
                 if (negotiation == null || negotiation.Status != "Active")
                     return;
-                if (ai == null)
-                    throw new Exception($"Negotiation {negotiationId} not found");
-                if (ai == null || ai.NegotiationId != negotiation.Id)
-                    return;
+                //if (ai == null)
+                //    throw new Exception($"Negotiation {negotiationId} not found");
+                //if (ai == null || ai.NegotiationId != negotiation.Id)
+                //    return;
                 //// 🔹 NEW: AI always starts
                 //if (negotiation.CurrentRound == 0)
                 //{
@@ -91,24 +91,13 @@ namespace rapid.core.app.Agents
 
                 if (nurseResponse == "Accept")
                 {
-                    //var id = negotiation.StaffId;
-                    //var staff =  await _db.Staff.Where(s => s.Id == id).FirstOrDefault();
-
-                    //if (staff == null)
-                    //    return;
-
-                    //staff.Status = "Accepted";
-
-                    //await _db.SaveChangesAsync();
-                    //negotiation.Status = "Accepted";
-                    //await SaveMessage(negotiationId, negotiation.NurseName,
-                    //    "I can take the shift.", negotiation.CurrentRound);
+                    negotiation.Status = "Accepted";
+                    await NegotiationDecision(negotiationId, negotiation.Status, negotiation.CurrentRound);
                 }
                 else if (nurseResponse == "Decline")
                 {
-                    //negotiation.Status = "Declined";
-                    //await SaveMessage(negotiationId, negotiation.NurseName,
-                    //    "I’m unavailable for this shift.", negotiation.CurrentRound);
+                    negotiation.Status = "Declined";
+                    await NegotiationDecision(negotiationId, negotiation.Status,negotiation.CurrentRound);
                 }
                 else
                 {
@@ -153,29 +142,33 @@ namespace rapid.core.app.Agents
 
             await _db.SaveChangesAsync();
         }
-        private async Task SaveAndBroadcast(
+        private async Task NegotiationDecision(
         int negotiationId,
-        string sender,
-        string message,
+        string status,
         int round)
         {
-            var lastNegotiation = _db.NegotiationMessages
-                         .OrderByDescending(n => n.Id)
-                         .FirstOrDefault();
-            var id = 1;
+            var lastNegotiation = _db.Negotiations.FirstOrDefault(n => n.Id == negotiationId);
 
             if (lastNegotiation != null)
-                id = lastNegotiation.Id + 1;
-
-            _db.NegotiationMessages.Add(new NegotiationMessage
             {
-                Id = id,
-                NegotiationId = negotiationId,
-                Sender = sender,
-                Message = message,
-                Round = round
-            });
+                // Update only specific properties
+                lastNegotiation.Status = status;  // Example: updating only the "Message" column
+                lastNegotiation.CurrentRound = round;
 
+                // Save changes to the database
+                _db.SaveChanges();
+            }
+
+            var staffDecision = _db.Staff.FirstOrDefault(n => n.Id == lastNegotiation.StaffId);
+
+            if (staffDecision != null)
+            {
+                // Update only specific properties
+                staffDecision.Decision = status;  // Example: updating only the "Message" column
+
+                // Save changes to the database
+                _db.SaveChanges();
+            }
             //await _hub.Clients.All.SendAsync(
             //    "NegotiationMessage",
             //    new { negotiationId, sender, message, round });
@@ -184,7 +177,7 @@ namespace rapid.core.app.Agents
         {
             var negotiation = _db.Negotiations
                 .Where(u => u.Id == negotiationId).FirstOrDefault();
-            var severity = "Critical";
+            var severity = "Surge";
             var prompt = NegotiationPrompts.Opening(negotiation.Unit, negotiation.NurseName, severity);
 
             var response = await _ai.ChatAsync(
@@ -218,15 +211,13 @@ namespace rapid.core.app.Agents
             await _db.SaveChangesAsync();
             return negotiation.Id;
         }
-        public async Task RunAsync(string unit, int shortage)
+        public async Task<int> CreateNegotiationAsync(string userId)
         {
-            // TODO: trigger negotiation agent
-            var nurse = _db.Staff
-                           .Where(s => s.isAvailable == "true")
-                           .FirstOrDefault();
-
+            // TODO: trigger createnegotiation
+            var nurse = _db.Staff.FirstOrDefault(s => s.Id == userId);
+            var surge = _db.SurgeRequests.FirstOrDefault(r => r.isActive == 1);
             if (nurse == null)
-                return;
+                return 0;
 
             var lastNegotiation = _db.Negotiations
                          .OrderByDescending(n => n.Id)
@@ -241,12 +232,14 @@ namespace rapid.core.app.Agents
                 Id = id,
                 StaffId = nurse.Id,
                 NurseName = nurse.Name,
-                Unit = unit
+                Unit = surge.Unit
             };
 
             _db.Negotiations.Add(negotiation);
             await _db.SaveChangesAsync();
+            return id;
         }
+
         private static string SafeExtract(
         string response,
         string propertyName)

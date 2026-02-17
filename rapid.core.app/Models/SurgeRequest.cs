@@ -7,9 +7,11 @@
         public string Location { get; set; } = "";          // e.g., "Metro General Hospital - Trauma Bay"
         public string Description { get; set; } = "";       // message shown on cards
         public bool IsCritical { get; set; }                // adds red border
+        public bool IsAlert { get; set; }
         public double PayMultiplier { get; set; } = 1.0;    // e.g., 1.5
         public int DurationHours { get; set; } = 4;         // e.g., 4 hours
         public string SpecialtyTag { get; set; } = "";      // match nurse specialty (Trauma/ICU/etc.)
+        public int isActive { get; set; }
         public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using rapid.core.app.Agents;
 using rapid.core.app.Models;
 using rapid.core.app.Source;
@@ -67,7 +68,7 @@ namespace rapid.core.app.Controllers
                         return Json(new
                         {
                             success = true,
-                            redirectUrl = Url.Action("Index", "Nurse")
+                            redirectUrl = Url.Action("Chat", "Nurse")
                         });
                     }
 

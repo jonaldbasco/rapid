@@ -87,8 +87,8 @@ namespace rapid.core.app.Services
             });
 
             // Demo decisions for nurse s3 (optional)
-            _responses[("req-trauma-accepted", "s3")] = NurseDecision.Accepted;
-            _responses[("req-trauma-declined", "s3")] = NurseDecision.Declined;
+            //_responses[("req-trauma-accepted", "s3")] = NurseDecision.Accepted;
+            //_responses[("req-trauma-declined", "s3")] = NurseDecision.Declined;
         }
 
         public static IEnumerable<SurgeRequest> GetActiveForSpecialty(string specialty)
