@@ -66,6 +66,20 @@ namespace rapid.core.app.Agents
             await _db.SaveChangesAsync();
             return true;
         }
-        
+
+        public async Task ResetStaffContact()
+        {
+            var nurse = _db.Staff
+               .Where(s => s.isAvailable == "true")
+               .ToList();
+            if (nurse == null)
+                return;
+
+            foreach (var staff in nurse)
+            {
+                staff.Decision = "Unavailable";
+            }
+            await _db.SaveChangesAsync();
+        }
     }
 }

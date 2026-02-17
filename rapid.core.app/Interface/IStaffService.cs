@@ -4,6 +4,6 @@ namespace rapid.core.app.Interface
 {
     public interface IStaffService
     {
-        Task<List<StaffClass>> GetStaffAsync();
+        Task<List<StaffMember>> GetStaffAsync();
     }
 }

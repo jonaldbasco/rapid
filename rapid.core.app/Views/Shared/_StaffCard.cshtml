@@ -1,4 +1,4 @@
-﻿@model rapid.core.app.Models.StaffClass
+﻿@model rapid.core.app.Models.StaffMember
 
 @{
     // "availability" or "requirements"
@@ -64,14 +64,21 @@
             }
         </div>
     </div>
-
+    @if (Model.Decision == "Accepted" || Model.Decision == "Declined")
+    {
+        <div class="d-flex gap-2 mt-3">
+            Summary: @Model.Summary
+        </div>
+    }
     @if (Model.Decision == "Negotiating")
     {
-        <button type="button"
-        class="btn btn-info btn-sm w-100 action-confirm"
-        data-action="negotiating">
-            Negotiating...
-        </button>
+        <div class="d-flex gap-2 mt-3">
+            <button type="button"
+            class="btn btn-info btn-sm w-100 action-confirm"
+            data-action="negotiating">
+                Negotiating...
+            </button>
+        </div>
     }
     else
     {

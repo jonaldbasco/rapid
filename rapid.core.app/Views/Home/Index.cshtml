@@ -168,7 +168,7 @@
                         </span>
 
                         <span>
-                            <span class="text-success fw-semibold" id="availConfirmed">0</span> confirmed
+                            <span class="text-success fw-semibold" id="availConfirmed">0</span> accepted
                         </span>
 
                         <span>
@@ -226,7 +226,7 @@
             const availabilityWrap = $('staffFeedScrollContainer');
             const reqWrap = $('reqListNurse');
 
-            //if (availabilityWrap) availabilityWrap.style.display = 'none';
+            if (availabilityWrap) availabilityWrap.style.display = 'block';
 
             // ------------------------------------------------------------
             // 1) Forecast helpers (VISUAL ONLY)  ✅ safe integration
@@ -346,9 +346,9 @@
               } else if (decision === 'declined') {
                 badge.textContent = 'Declined';
                 badge.classList.add('bg-danger','text-white');
-              } else if (decision === 'negotiating') {
-                badge.textContent = 'Negotiating…';
-                badge.classList.add('bg-info','text-black');
+              // } else if (decision === 'negotiating') {
+              //   badge.textContent = 'Negotiating…';
+              //   badge.classList.add('bg-info','text-black');
               } else if (decision === 'awaiting') {
                 badge.textContent = 'Awaiting';
                 badge.classList.add('bg-warning','text-black');
@@ -377,14 +377,14 @@
               const n = $('availNegotiating');
               const nWrap = $('availNegotiatingWrap');
 
-              if (!surgeTriggered) {
-                if (p) p.textContent = '0';
-                if (c) c.textContent = '0';
-                if (d) d.textContent = '0';
-                if (n) n.textContent = '0';
-                if (nWrap) nWrap.classList.add('d-none');
-                return;
-              }
+              // if (!surgeTriggered) {
+              //   if (p) p.textContent = '0';
+              //   if (c) c.textContent = '0';
+              //   if (d) d.textContent = '0';
+              //   if (n) n.textContent = '0';
+              //   if (nWrap) nWrap.classList.add('d-none');
+              //   return;
+              // }
 
               let pending = 0, declined = 0, negotiating = 0, awaiting = 0, accepted = 0;
 
@@ -403,8 +403,8 @@
                 ? reqWrap.querySelectorAll('.staff-card[data-decision="confirmed"]').length
                 : 0;
 
-              if (p) p.textContent = String(pending + awaiting + accepted);
-              if (c) c.textContent = String(confirmed);
+              if (p) p.textContent = String(pending + awaiting);
+              if (c) c.textContent = String(confirmed + accepted);
               if (d) d.textContent = String(declined);
               if (n) n.textContent = String(negotiating);
               if (nWrap) nWrap.classList.toggle('d-none', negotiating === 0);
@@ -557,9 +557,9 @@
 
               requiredNurses = calculateRequiredNurses(pct);
 
-              if (availabilityWrap) {
-                availabilityWrap.style.display = surgeTriggered ? 'block' : 'none';
-              }
+              // if (availabilityWrap) {
+              //   availabilityWrap.style.display = surgeTriggered ? 'block' : 'none';
+              // }
 
               updateProgressUI();
             }
@@ -571,7 +571,7 @@
 
               surgeTriggered = true;
 
-              if (availabilityWrap) availabilityWrap.style.display = 'block';
+              //if (availabilityWrap) availabilityWrap.style.display = 'block';
 
               loadStaffFeed();
               refreshPatientCounts();

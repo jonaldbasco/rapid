@@ -93,8 +93,8 @@ namespace rapid.core.app.Services
             var needNurses = Math.Max(0, staffingReq.Nurses - availableNurses);
 
             // Build suggestion lists (off-duty, best responders, nearest)
-            IEnumerable<StaffMember> suggestedDoctors = Enumerable.Empty<StaffMember>();
-            IEnumerable<StaffMember> suggestedNurses = Enumerable.Empty<StaffMember>();
+            IEnumerable<StaffMembers> suggestedDoctors = Enumerable.Empty<StaffMembers>();
+            IEnumerable<StaffMembers> suggestedNurses = Enumerable.Empty<StaffMembers>();
 
             // Only suggest when level is alert/critical/surge (skip normal)
             if (surgeLevel != "normal")
@@ -148,7 +148,7 @@ namespace rapid.core.app.Services
             List<object> BuildReqItems(
                 string role,
                 Dictionary<int, double> weights,
-                Func<Models.StaffMember, bool> rolePredicate)
+                Func<Models.StaffMembers, bool> rolePredicate)
             {
                 // availability (ready staff) grouped by specialty→group
                 var readyByGroup = StaffStore.GetAvailable()

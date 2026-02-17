@@ -65,6 +65,13 @@ namespace rapid.core.app.Controllers
             await _orchestrator.ExecuteSurgeAsync();
             return Ok(new { status = "Orchestrator executed" });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SurgeReset()
+        {
+            await _orchestrator.ResetSurge();
+            return Ok(new { status = "Orchestrator executed" });
+        }
         // ============================
         // NURSE DASHBOARD
         // URL: /Home/Nurse
@@ -342,26 +349,27 @@ namespace rapid.core.app.Controllers
         [HttpPost("/Home/ResetSurge")]
         public IActionResult ResetSurge()
         {
-            SurgeStore.ResetSurge();
+            //_ = await SurgeReset();
+            ////SurgeStore.ResetSurge();
 
-            // optional but recommended
-            StaffStore.ResetStatusesToInitial();
+            ////// optional but recommended
+            ////StaffStore.ResetStatusesToInitial();
 
-            return Ok(new { ok = true, active = SurgeStore.IsSurgeActive() });
+            return Ok(new { ok = true });
         }
 
 
-        [HttpGet("/Home/NurseRequests")]
-        public IActionResult NurseRequests()
-        {
-            var nurse = StaffStore.GetById("s3");
-            if (nurse == null) return Unauthorized();
+        //[HttpGet("/Home/NurseRequests")]
+        //public IActionResult NurseRequests()
+        //{
+        //    var nurse = StaffStore.GetById("s3");
+        //    if (nurse == null) return Unauthorized();
 
-            var reqs = SurgeStore.GetActiveForSpecialty(nurse.Specialty).ToList();
-            return Json(new { count = reqs.Count });
-        }
+        //    var reqs = SurgeStore.GetActiveForSpecialty(nurse.Specialty).ToList();
+        //    return Json(new { count = reqs.Count });
+        //}
 
-        [HttpGet]
+        //[HttpGet]
         //public IActionResult NurseRequestsPartial()
         //{
         //    var nurse = StaffStore.GetById("s3");

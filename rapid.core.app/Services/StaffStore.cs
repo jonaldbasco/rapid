@@ -5,7 +5,7 @@ namespace rapid.core.app.Services
 {
     public static class StaffStore
     {
-        private static readonly List<StaffMember> _staff = new()
+        private static readonly List<StaffMembers> _staff = new()
         {
             //new StaffMember {
             //    Id = "s1",
@@ -122,16 +122,16 @@ namespace rapid.core.app.Services
         private static readonly Dictionary<string, string> _initialStatus =
             _staff.ToDictionary(s => s.Id, s => s.Status);
 
-        public static IEnumerable<StaffMember> GetAll() => _staff;
+        public static IEnumerable<StaffMembers> GetAll() => _staff;
 
-        public static IEnumerable<StaffMember> GetOffDuty() =>
+        public static IEnumerable<StaffMembers> GetOffDuty() =>
             _staff.Where(s => s.Status == "off_duty");
 
-        public static IEnumerable<StaffMember> GetAvailable() =>
+        public static IEnumerable<StaffMembers> GetAvailable() =>
             _staff.Where(s => s.Status == "available" || s.Status == "on_duty");
 
         // ✅ Keep ONLY ONE GetById method (fixes CS0111)
-        public static StaffMember? GetById(string id) =>
+        public static StaffMembers? GetById(string id) =>
             _staff.FirstOrDefault(s => s.Id == id);
 
         // Controlled status change
@@ -144,7 +144,7 @@ namespace rapid.core.app.Services
             return true;
         }
 
-        public static StaffMember? ActivateNearest(string role)
+        public static StaffMembers? ActivateNearest(string role)
         {
             var pick = GetOffDuty()
                 .Where(s => s.Role == role)

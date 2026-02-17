@@ -14,5 +14,6 @@ namespace rapid.core.app.Source
         public DbSet<NegotiationClass> Negotiations => Set<NegotiationClass>();
         public DbSet<NegotiationMessage> NegotiationMessages => Set<NegotiationMessage>();
         public DbSet<SurgeRequest> SurgeRequests => Set<SurgeRequest>();
+        public DbSet<NegotiationSummary> NegotiationSummarys => Set<NegotiationSummary>();
     }
 }

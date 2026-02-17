@@ -110,5 +110,23 @@ namespace rapid.core.app.Agents
 
             return await _negotiation.StartNegotiationAsync(negotiationId);
         }
+
+        public async Task ResetSurge()
+        {
+            var surge = _db.SurgeRequests
+               .Where(s => s.isActive == 1)
+               .ToList();
+            if (surge != null)
+                
+            foreach (var request in surge)
+            {
+                    await _analytics.ResetUnitSurge(request.Unit);
+                    request.isActive = 1;
+            }
+            await _db.SaveChangesAsync();
+
+            
+            await _staffing.ResetStaffContact();
+        }
     }
 }
