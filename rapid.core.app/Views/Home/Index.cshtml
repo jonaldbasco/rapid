@@ -216,10 +216,10 @@
             const $ = (id) => document.getElementById(id);
             
             // Onload 
-                window.onload = async function() {
-                    // Your async function
-                     await refreshPatientCounts();
-                };
+                // window.onload = async function() {
+                //     // Your async function
+                //      await refreshPatientCounts();
+                // };
             // ------------------------------------------------------------
             // 0) Grab elements early + always hide staff list on load
             // ------------------------------------------------------------
@@ -346,9 +346,9 @@
               } else if (decision === 'declined') {
                 badge.textContent = 'Declined';
                 badge.classList.add('bg-danger','text-white');
-              // } else if (decision === 'negotiating') {
-              //   badge.textContent = 'Negotiating…';
-              //   badge.classList.add('bg-info','text-black');
+              } else if (decision === 'negotiating') {
+                badge.textContent = 'Negotiating…';
+                badge.classList.add('bg-info','text-black');
               } else if (decision === 'awaiting') {
                 badge.textContent = 'Awaiting';
                 badge.classList.add('bg-warning','text-black');
@@ -429,10 +429,10 @@
                 if (!document.body.contains(card)) return;
                 if ((card.dataset.decision || '').toLowerCase() !== 'awaiting') return;
 
-                if (forcedDeclineIds.has(id)) {
-                  markDeclined(card);
-                  return;
-                }
+                // if (forcedDeclineIds.has(id)) {
+                //   markDeclined(card);
+                //   return;
+                // }
 
                 setDecisionBadge(card, 'accepted');
                 setButtonsEnabled(card, true);
@@ -518,34 +518,42 @@
               forcedDeclineIds = new Set();
               const cards = Array.from(availabilityWrap.querySelectorAll('.staff-card'));
 
-              cards.forEach(card => {
-                setDecisionBadge(card, 'negotiating');
-                setButtonsEnabled(card, false);
-                cancelAutoResolve(card);
-              });
+              // cards.forEach(card => {
+              //   setDecisionBadge(card, 'negotiating');
+              //   setButtonsEnabled(card, false);
+              //   cancelAutoResolve(card);
+              // });
               updateAvailabilityHeader();
 
-              setTimeout(() => {
-                const eligible = cards.slice();
-                const declineCount = Math.min(eligible.length, 1 + Math.floor(Math.random() * 2));
+              // setTimeout(() => {
+              //   const eligible = cards.slice();
+              //   const declineCount = Math.min(eligible.length, 1 + Math.floor(Math.random() * 2));
 
-                for (let i = eligible.length - 1; i > 0; i--) {
-                  const j = Math.floor(Math.random() * (i + 1));
-                  [eligible[i], eligible[j]] = [eligible[j], eligible[i]];
-                }
+              //   for (let i = eligible.length - 1; i > 0; i--) {
+              //     const j = Math.floor(Math.random() * (i + 1));
+              //     [eligible[i], eligible[j]] = [eligible[j], eligible[i]];
+              //   }
 
-                eligible.slice(0, declineCount).forEach(card => forcedDeclineIds.add(getStaffId(card)));
+              //   eligible.slice(0, declineCount).forEach(card => forcedDeclineIds.add(getStaffId(card)));
 
                 cards.forEach(card => {
                   if ((card.dataset.decision || '').toLowerCase() === 'negotiating') {
-                    setDecisionBadge(card, 'awaiting');
-                    setButtonsEnabled(card, true);
-                    scheduleAutoResolve(card);
+                    setDecisionBadge(card, 'negotiating');
+                    setButtonsEnabled(card, false);
+                    //scheduleAutoResolve(card);
                   }
+                  else if ((card.dataset.decision || '').toLowerCase() === 'accepted') {
+                     setDecisionBadge(card, 'accepted');
+                     setButtonsEnabled(card, true);
+                   }
+                  else if ((card.dataset.decision || '').toLowerCase() === 'declined') {
+                      setDecisionBadge(card, 'declined');
+                      setButtonsEnabled(card, false);
+                    }
                 });
 
                 updateAvailabilityHeader();
-              }, 1400);
+              // }, 1400);
             }
 
             function setSurgeUI(pct) {
@@ -566,14 +574,15 @@
 
             // ✅ DELEGATED trigger handler so it works even if button is in _Layout
             document.addEventListener('click', (e) => {
+                 console.log('Document clicked:', e.target);
+
               const btn = e.target.closest('#btnTriggerSurge');
               if (!btn) return;
 
-              surgeTriggered = true;
+              //surgeTriggered = true;
 
               //if (availabilityWrap) availabilityWrap.style.display = 'block';
 
-              loadStaffFeed();
               refreshPatientCounts();
               setSurgeUI(120);
               beginNegotiation();
@@ -588,46 +597,12 @@
 
             setSurgeUI(120);
             updateAvailabilityHeader();
-
+            beginNegotiation();
           } catch (err) {
             console.error('Index.cshtml script failed:', err);
           }
         })();
-        // let lastUpdateTicks = Number(
-        //     $('#staffList').data('lastupdateticks')
-        // );
-        function loadStaffFeed() {
-             $.ajax({
-                 url: '@Url.Action("StaffListPartial", "Home")', // Replace with your controller name
-                type: 'POST', // HTTP method
-                dataType: 'json', // Expecting JSON response
-                success: function(response) {
 
-                    // Update the response message container with the success or error message
-                    if (response.success) {
-                        alert(response.message); // Success message from the server
-                    } else {
-                        alert('Error: ' + response.message); // Error message from the server
-                    }
-                },
-                error: function(xhr, status, error) {
-
-                    alert('Error: ' + error);
-                }
-            });
-            //  $.get('/Home/StaffListPartial', { lastUpdate: lastUpdateTicks }, function(html) {
-            //     if (html) {
-            //         // Replace only if server returned updated HTML
-            //         $('#staffFeedScrollContainer').html(html);
-
-            //         // Update lastUpdate from the new partial
-            //          lastUpdateTicks = Number(
-            //             $('#staffList').data('lastupdateticks')
-            //             );
-            //              //updateAvailabilityHeader();
-            //     }
-            // });
-        }
        // setInterval(loadStaffFeed, 30000);
     </script>
 }

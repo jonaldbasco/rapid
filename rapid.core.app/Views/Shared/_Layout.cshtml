@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="~/css/chat.css" />
     @* <script src="~/js/rapid-main.js"></script> *@
     <script src="~/js/rapid-main.js" asp-append-version="true"></script>
+    <script src="~/js/staff.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/css/aicobootstrap.css" asp-append-version="true" />
     <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
 
@@ -170,33 +171,33 @@
     </footer>
 
     <script>
-        (function () {
-            const trgrBtn = document.getElementById("btnTriggerSurge");
-            async function updateSurgeButtons() {
-                const triggerBtn = document.getElementById("btnTriggerSurge");
-                //const resetBtn = document.getElementById("btnResetSurge");
-                // if (!triggerBtn || !resetBtn) return;
-                if (triggerBtn) return;
+        // (function () {
+        //     const trgrBtn = document.getElementById("btnTriggerSurge");
+        //     async function updateSurgeButtons() {
+        //         const triggerBtn = document.getElementById("btnTriggerSurge");
+        //         //const resetBtn = document.getElementById("btnResetSurge");
+        //         // if (!triggerBtn || !resetBtn) return;
+        //         if (triggerBtn) return;
 
-                try {
-                    const res = await fetch("/Home/GetSurgeStatus");
-                    const data = await res.json();
-                    console.log(data);
-                    if (data.active == true) {
-                        triggerBtn.disabled = true;
-                        triggerBtn.classList.add("disabled");
-                        triggerBtn.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Surge Active';
-                        //resetBtn.style.display = "none";
-                    } else {
-                        triggerBtn.disabled = false;
-                        triggerBtn.classList.remove("disabled");
-                        triggerBtn.innerHTML = '<i class="fa-solid fa-play"></i> Trigger Surge';
-                        //resetBtn.style.display = "none";
-                    }
-                } catch (e) {
-                    console.error("Failed to fetch surge status", e);
-                }
-            }
+        //         try {
+        //             const res = await fetch("/Home/GetSurgeStatus");
+        //             const data = await res.json();
+        //             console.log(data);
+        //             if (data.active == true) {
+        //                 triggerBtn.disabled = true;
+        //                 triggerBtn.classList.add("disabled");
+        //                 triggerBtn.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Surge Active';
+        //                 //resetBtn.style.display = "none";
+        //             } else {
+        //                 triggerBtn.disabled = false;
+        //                 triggerBtn.classList.remove("disabled");
+        //                 triggerBtn.innerHTML = '<i class="fa-solid fa-play"></i> Trigger Surge';
+        //                 //resetBtn.style.display = "none";
+        //             }
+        //         } catch (e) {
+        //             console.error("Failed to fetch surge status", e);
+        //         }
+        //     }
 
             // window.resetSurge = async function () {
             //     const resetBtn = document.getElementById("btnResetSurge");
@@ -215,33 +216,33 @@
             // document.addEventListener("DOMContentLoaded", function() {
             //     var trgrBtn = document.getElementById("btnTriggerSurge");
             //     trgrBtn.addEventListener("click", function() {
-            //         $.ajax({
-            //             url: '@Url.Action("TriggerSurge", "Home")', // Replace with your controller name
-            //             type: 'POST', // HTTP method
-            //             dataType: 'json', // Expecting JSON response
-            //             success: function(response) {
 
-            //                 // Update the response message container with the success or error message
-            //                 if (response.success) {
-            //                     console.log(response.message); // Success message from the server
-            //                 } else {
-            //                     console.log(response.message);
-            //                     alert('Error: ' + response.message); // Error message from the server
-            //                 }
-            //             },
-            //             error: function(xhr, status, error) {
-            //                 console.log(response.message);
-            //                 alert('Error: ' + error);
-            //             }
-            //         });
             //     });
             // });
-            document.addEventListener("DOMContentLoaded", updateSurgeButtons);
-            //setInterval(updateSurgeButtons, 5000);
-        })();
-                $(function() {
-            $("#trgrBtn").click(function() {
-                alert("Button clicked!");
+        //     document.addEventListener("DOMContentLoaded", updateSurgeButtons);
+        //     //setInterval(updateSurgeButtons, 5000);
+        // })();
+       $(function() {
+             $("#btnTriggerSurge").click(function() {
+                $.ajax({
+                    url: '@Url.Action("TriggerSurge", "Home")', // Replace with your controller name
+                    type: 'POST', // HTTP method
+                    dataType: 'json', // Expecting JSON response
+                    success: function(response) {
+
+                        // Update the response message container with the success or error message
+                        if (response.success) {
+                            console.log(response.message); // Success message from the server
+                        } else {
+                            console.log(response.message);
+                            alert('Error: ' + response.message); // Error message from the server
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(response.message);
+                        alert('Error: ' + error);
+                    }
+                });
             });
         });
     </script>

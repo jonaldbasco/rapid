@@ -663,7 +663,7 @@ body {
 ========================= */
 
 .nurse-phone-frame {
-    max-width: 390px; /* iPhone-like width */
+    max-width: 500px; /* iPhone-like width */
     height: 780px; /* Phone-like height */
     margin: 24px auto;
     background: #05070c;

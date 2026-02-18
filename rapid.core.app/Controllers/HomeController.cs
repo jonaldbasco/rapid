@@ -46,7 +46,7 @@ namespace rapid.core.app.Controllers
                 Patients = patients.ToList(),
                 Staff = staff
             };
-            await StaffListPartial();
+            
             return View(vm);
         }
         public async Task<IActionResult> StaffListPartial() //int? lastUpdate
@@ -308,7 +308,6 @@ namespace rapid.core.app.Controllers
             //}
             await RunSurge();
             GetSurgeStatus();
-
             //SurgeStore.ActivateSurge();
 
             //SurgeStore.CreateRequest(

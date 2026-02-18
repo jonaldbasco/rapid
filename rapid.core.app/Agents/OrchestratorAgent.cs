@@ -87,7 +87,8 @@ namespace rapid.core.app.Agents
         public async Task<int> NegotiationAsync(string userId)
         {
             var negotiationId = 0;
-            if (!await _negotiation.HasActiveNegotiationAsync(userId))
+            var check = await _negotiation.HasActiveNegotiationAsync(userId);
+            if ( check == 0)
             {
                 var checkStaff = await _staffing.CheckStaffNegotiation(userId);
 

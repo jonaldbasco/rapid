@@ -52,12 +52,12 @@
                     <!-- Header -->
                     <div class="chat-header">
                         <div>
-                            <h6>Surge Staffing Negotiation</h6>
-                            <span class="sub">
+                            <h6>Surge Staffing Agent Negotiatior</h6>
+@*                             <span class="sub">
                                 Unit: @ViewBag.Unit | Nurse: @ViewBag.NurseName
-                            </span>
+                            </span> *@
                         </div>
-                        <div class="status">LIVE</div>
+                        <div class="badge bg-danger">CRITICAL</div> <!--remove the class status-->
                     </div>
 
                     <!-- Messages -->
@@ -80,13 +80,28 @@
     const negotiationId = parseInt($("#negotiationId").val());
 
         function renderMessage(m) {
-        return `
-          <div class="msg ${m.sender}">
-            <div class="bubble">
-              <span class="sender">${m.sender}</span>
-              <div class="text">${m.message}</div>
-            </div>
-          </div>`;
+
+            if (m.sender !== "AI")
+            {
+                return `
+                  <div class="msg HumanNurse">
+                    <div class="bubble">
+                      <span class="sender">You</span>
+                      <div class="text">${m.message}</div>
+                    </div>
+                  </div>`;
+            }
+            else
+            {
+                return `
+                  <div class="msg ${m.sender}">
+                    <div class="bubble">
+                      <span class="sender">${m.sender}</span>
+                      <div class="text">${m.message}</div>
+                    </div>
+                  </div>`;
+           }
+
     }
 
         function loadChat() {
@@ -96,6 +111,7 @@
                 $("#chatWindow").html("");
                 msgs.forEach(m => {
                     $("#chatWindow").append(renderMessage(m));
+                    console.log(m.sender);
                 });
                 $("#chatWindow").scrollTop(
                     $("#chatWindow")[0].scrollHeight

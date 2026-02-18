@@ -11,7 +11,7 @@ namespace rapid.core.app.Agents
 {
     public class NegotiationAgent
     {
-        private const int MaxRounds = 3;
+        private const int MaxRounds = 6;
 
         private readonly RapidDBContext _db;
         private readonly OpenAIService _ai;
@@ -21,10 +21,14 @@ namespace rapid.core.app.Agents
             _db = db;
             _ai = ai;
         }
-        public async Task<bool> HasActiveNegotiationAsync(string userId)
+        public async Task<int> HasActiveNegotiationAsync(string userId)
         {
-            return await _db.Negotiations
-                .AnyAsync(n => n.StaffId == userId && n.Status == "Active");
+            var active = await _db.Negotiations
+                .FirstOrDefaultAsync(n => n.StaffId == userId && n.Status == "Active");
+            if (active == null)
+                return 0;
+            else
+                return active.Id;
         }
 
         public async Task RunNextRoundAsync(int negotiationId)
@@ -51,7 +55,28 @@ namespace rapid.core.app.Agents
                 {
                     negotiation.Status = "Escalated";
                     await _db.SaveChangesAsync();
-                    return;
+
+                    var exitPrompt = $"""
+                    Due to exceeding maximum rounds the user, stop the conversation and Thank the nurse properly.
+                    Keep it concise and professional.
+                    Give them thanks professionally and empathetically.
+                    Return JSON:
+                    """ + """
+                    {
+                      "aiMessage": ""
+                    }
+                    """;
+
+                        var res = await _ai.ChatAsync(
+                            NegotiationPrompts.System,
+                            exitPrompt);
+
+                        var json2 = JsonDocument.Parse(res).RootElement;
+
+                        await SaveMessage(negotiationId, "AI",
+                            json2.GetProperty("aiMessage").GetString()!,
+                            negotiation.CurrentRound);
+                        return;
                 }
 
                 negotiation.CurrentRound++;
