@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("rapid.core.app")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70c4b33b3ba604c4e557a055f4b88880160eb7fc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3c51114d2740638fa5fc6be8e21c3b301daa817")]
 [assembly: System.Reflection.AssemblyProductAttribute("rapid.core.app")]
 [assembly: System.Reflection.AssemblyTitleAttribute("rapid.core.app")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

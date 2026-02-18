@@ -82,5 +82,13 @@ namespace rapid.core.app.Controllers
             //await _orchestrator.NegotiationAsync(userId);
             //return Ok(new { status = "Orchestrator executed" });
         }
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();   // remove all session data
+            //await HttpContext.SignOutAsync();    // remove auth cookie (if any)
+
+            return RedirectToAction("Index", "Login");
+        }
     }
 }

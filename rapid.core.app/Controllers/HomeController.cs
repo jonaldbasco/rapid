@@ -49,6 +49,7 @@ namespace rapid.core.app.Controllers
             
             return View(vm);
         }
+        [HttpPost]
         public async Task<IActionResult> StaffListPartial() //int? lastUpdate
         {
             var staff = await _staffService.GetStaffAsync();
