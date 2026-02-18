@@ -819,3 +819,13 @@ body {
 .dropdown-toggle::after {
     display: none;
 }
+#logoutForm button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: inherit;
+    width: 100%;
+    text-align: left;
+}

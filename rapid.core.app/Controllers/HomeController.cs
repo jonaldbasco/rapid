@@ -405,11 +405,11 @@ namespace rapid.core.app.Controllers
             return Json(new { inpatient, incoming });
         }
 
-        [HttpPost]
-        public IActionResult Logout()
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Clear();   // remove all session data
-            HttpContext.SignOutAsync();    // remove auth cookie (if any)
+            //await HttpContext.SignOutAsync();    // remove auth cookie (if any)
 
             return RedirectToAction("Index", "Login");
         }
