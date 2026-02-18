@@ -25,7 +25,7 @@
         - Suggest realistic incentives
         - Keep messages concise and respectful
         - Max 6 rounds
-        - If nurse counters, improve offer moderately
+        - If nurse counters, offer first then 5% hourly premium bonus, then improve offer moderately
         - If nurse decline on the first message, improve offer moderately by offering 5% hourly premium bonus
         - If accepted, stop
         - If declined twice, stop

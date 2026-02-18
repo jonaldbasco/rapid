@@ -12,8 +12,9 @@
         Do NOT infer intent beyond explicit or clearly implied language.
 
         Rules:
-        - ACCEPTED: The nurse clearly agrees to take the offer (e.g., "I accept", "Yes, I can take the shift", "Okay, I’ll do it")
+        - ACCEPTED: The nurse clearly agrees to take the offer (e.g., "I accept", "Yes, I can take the shift", "Okay, I’ll do it", "Okay it works for me")
         - DECLINED: The nurse clearly refuses the offer (e.g., "I can’t take this", "No, I’m unavailable", "I’m not interested")
+        - INCLUDE the shift time that have agreed upon
         - If acceptance or decline is ambiguous, classify the result as "pending"
         - Do NOT assume acceptance or decline from polite language, acknowledgements, or questions
         - Do NOT infer intent from silence or lack of response

@@ -68,7 +68,7 @@ namespace rapid.core.app.Agents
             var history = _db.NegotiationMessages
                 .Where(m => m.NegotiationId == negotiation.Id)
                 .OrderByDescending(m => m.Timestamp)
-                .Take(2)                     // ✅ last 2 messages
+                .Take(3)                     // ✅ last 3 messages
                 .OrderBy(m => m.Timestamp)
                 .Select(m => $"{m.Sender}: {m.Message}")
                 .ToList();

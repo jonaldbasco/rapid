@@ -3559,3 +3559,8 @@ body {
 [data-side=right] .\[\[data-side\=right\]_\&\]\:cursor-e-resize {
     cursor: e-resize
 }
+.logo {
+    display: block;
+    margin: auto;
+    width: 45%;
+}
