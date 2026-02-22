@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Dashboard</title>
+
+    <!-- BOOTSTRAP + ICONS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: #f2f6fb;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* Flashing Surge Banner */
+        .surge-banner {
+            width: 100%;
+            background: #d00000;
+            color: white;
+            text-align: center;
+            padding: 6px 0;
+            font-weight: bold;
+            font-size: 16px;
+            animation: flashBanner 1s infinite;
+            position: fixed;
+            top: 0;
+            z-index: 1200;
+        }
+        @keyframes flashBanner {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #0c9fc4;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 40px;
+            padding: 20px 10px;
+            color: white;
+            z-index: 999;
+            transition: 0.3s;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 40px);
+            background: rgba(0,0,0,0.4);
+            z-index: 998;
+        }
+
+        .sidebar.active + #overlay {
+            display: block;
+        }
+
+        .sidebar .nav-link {
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+            .sidebar .nav-link:hover {
+                background: rgba(255,255,255,0.2);
+            }
+
+        /* Main Content Area */
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            margin-top: 60px;
+        }
+
+        /* Top Bar */
+        .topbar {
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .custom-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .status-pending {
+            background: #fdebb4;
+            color: #bb8a00;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .status-complete {
+            background: #c7f7c1;
+            color: #2e8b4f;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* Surge Alert Button */
+        .surge-alert-btn {
+            background: #cc0000;
+            color: white;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 6px;
+            animation: flash 1s infinite;
+            border: none;
+            white-space: nowrap;
+        }
+        @keyframes flash {
+            0% {
+                background: #cc0000;
+            }
+
+            50% {
+                background: #ff1a1a;
+            }
+
+            100% {
+                background: #cc0000;
+            }
+        }
+
+        .surge-badge {
+            background: yellow;
+            color: black;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
+        /* MOBILE FIXES */
+        @media(max - width: 900px)
+
+        {
+            .sidebar {
+                left: -270px;
+            }
+
+                .sidebar.active {
+                    left: 0;
+                }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .topbar .d-flex.align-items-center.gap-3 {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 10px !important;
+            }
+
+            .surge-alert-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SURGE BANNER -->
+    <div class="surge-banner">
+        ⚠️ SURGE EVENT IN PROGRESS — Immediate Attention Required ⚠️
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="https://via.placeholder.com/70x70?text=HM" alt="Logo">
+            <h5 class="mt-2">MedCare+</h5>
+        </div>
+
+        <nav class="nav flex-column">
+            <a class="nav-link"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            <a class="nav-link"><i class="bi bi-person-badge"></i> Staff</a>
+            <a class="nav-link"><i class="bi bi-people"></i> Patients</a>
+            <a class="nav-link"><i class="bi bi-heart-pulse"></i> Treatments</a>
+            <a class="nav-link"><i class="bi bi-prescription2"></i> Medication</a>
+            <a class="nav-link"><i class="bi bi-building"></i> Wards</a>
+            <a class="nav-link"><i class="bi bi-bar-chart"></i> Analytics</a>
+            <a class="nav-link"><i class="bi bi-gear"></i> Settings</a>
+        </nav>
+    </div>
+
+    <div id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+        <!-- TOP BAR -->
+        <div class="topbar d-flex justify-content-between align-items-center">
+
+            <button class="btn btn-outline-primary d-lg-none" onclick="toggleSidebar()">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div class="d-flex align-items-center gap-3 w-100 justify-content-end">
+
+                <button class="surge-alert-btn">
+                    SURGE ALERT!
+                    <span class="surge-badge">3</span>
+                </button>
+
+                <i class="bi bi-bell fs-4"></i>
+                <i class="bi bi-envelope fs-4"></i>
+
+                <div class="dropdown">
+                    <button class="btn d-flex align-items-center" data-bs-toggle="dropdown" style="border:none;">
+                        <img src="https://i.pravatar.cc/40" class="rounded-circle">
+                        <span class="ms-2 fw-semibold">Admin</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li><a class="dropdown-item"><i class="bi bi-person"></i> Profile</a></li>
+                        <li><a class="dropdown-item"><i class="bi bi-gear"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- DOCTOR ALLOTMENT (UNCHANGED) -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="custom-card">
+                    <h5 class="mb-3">Doctor Allotment</h5>
+
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Patient ID</th>
+                                <th>Treatment</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Maria Santos</td><td>10234</td><td>Cardiac Checkup</td><td><span class="status-pending">Pending</span></td></tr>
+                            <tr><td>John Perez</td><td>45211</td><td>Fracture Surgery</td><td><span class="status-complete">Complete</span></td></tr>
+                            <tr><td>Ana Reyes</td><td>89123</td><td>Dialysis</td><td><span class="status-complete">Complete</span></td></tr>
+                            <tr><td>Mark Cruz</td><td>67330</td><td>COVID Observation</td><td><span class="status-pending">Pending</span></td></tr>
+                            <tr><td>Liza Mendez</td><td>55390</td><td>MRI Scan</td><td><span class="status-complete">Complete</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MESSAGES (UNCHANGED) -->
+            <div class="col-lg-4">
+                <div class="custom-card">
+                    <h5 class="mb-3">Messages</h5>
+
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://i.pravatar.cc/50?img=15" class="rounded-circle me-2" width="45">
+                        <div>
+                            <strong>Dr. Mendoza</strong><br>
+                            <small>Review lab test updates.</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://i.pravatar.cc/50?img=32" class="rounded-circle me-2" width="45">
+                        <div>
+                            <strong>Dr. Uy</strong><br>
+                            <small>Need approval for OR schedule.</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://i.pravatar.cc/50?img=12" class="rounded-circle me-2" width="45">
+                        <div>
+                            <strong>Dr. Ramos</strong><br>
+                            <small>Update on patient transfer.</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <img src="https://i.pravatar.cc/50?img=7" class="rounded-circle me-2" width="45">
+                        <div>
+                            <strong>Dr. Lim</strong><br>
+                            <small>Request for supply inventory.</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW CHART -->
+        <div class="custom-card mt-3">
+            <h5 class="mb-3">Patient Admission Trend</h5>
+            <canvas id="admissionChart" height="100"></canvas>
+        </div>
+
+    </div>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("active");
+        }
+
+        /* Patient Admission Trend Chart */
+        new Chart(document.getElementById('admissionChart'), {
+            type: 'line',
+            data: {
+                labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                datasets: [{
+                    label: 'Admissions',
+                    data: [42, 58, 60, 71, 65, 80, 77],
+                    borderColor: '#0c9fc4',
+                    borderWidth: 3,
+                    fill: true,
+                    backgroundColor: 'rgba(12,159,196,0.20)',
+                    tension: 0.3
+                }]
+            }
+        });
+    </script>
+
+</body>
+</html>
